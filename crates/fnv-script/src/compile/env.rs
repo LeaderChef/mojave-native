@@ -92,6 +92,9 @@ impl<'a> LoadOrderIndex<'a> {
                 scripts.entry(*form).or_default().push((pi, u.variables.clone()));
             }
         }
+        for versions in scripts.values_mut() {
+            versions.sort_by_key(|(plugin, _)| *plugin);
+        }
         LoadOrderIndex { lo, visible, defs, edids, scripts }
     }
 
@@ -146,9 +149,8 @@ impl Env for PluginEnv<'_> {
         let d = self.ix.def(form, self.plugin)?;
         let script = d.script.or_else(|| self.ix.def(d.base?, self.plugin)?.script)?;
         let vis = &self.ix.visible[self.plugin];
-        // The version the viewer sees; when only a later plugin's is at hand (a game reads
-        // the winning records only), that one.
+        // A later, invisible override cannot supply the compiling plugin's names.
         let versions = self.ix.scripts.get(&script)?;
-        versions.iter().rev().find(|(p, _)| vis[*p]).or_else(|| versions.last()).map(|(_, v)| v.clone())
+        versions.iter().rev().find(|(p, _)| vis[*p]).map(|(_, v)| v.clone())
     }
 }
