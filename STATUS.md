@@ -11,6 +11,7 @@ No public playable release yet.
 | Shared compiler changes | 72 compiler checks + 3 event-filter checks pass; fixed 337-input corpus: 319 pass, 18 errors, no new failures |
 | Full mod experience | TTW/Nuclear Sunset dependency warnings and missing native extension behavior remain |
 | Long 15 | Planned; no accepted native gameplay claim |
+| New Vegas Drivables | Future vehicles/NPC-traffic integration after the author's release; no native implementation accepted |
 | Community source | Source-only export/reproduction work in progress; old archives cannot stand in for current matching source |
 | Multiplayer | Future goal; no completed shared-session test |
 

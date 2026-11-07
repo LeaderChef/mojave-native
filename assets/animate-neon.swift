@@ -12,8 +12,8 @@ guard let source = CGImageSourceCreateWithURL(sourceURL as CFURL, nil),
       let sourceImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
     fatalError("Cannot read the original key art")
 }
-let width = 768, height = 432, frameCount = 64
-let frameDelay = 1.0 / 16.0
+let width = 768, height = 432, frameCount = 96
+let frameDelay = 0.08
 let colorSpace = CGColorSpaceCreateDeviceRGB()
 let bitmapInfo = CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
 var base = [UInt8](repeating: 0, count: width * height * 4)
@@ -43,6 +43,24 @@ let frameProperties = [kCGImagePropertyGIFDictionary: [
     kCGImagePropertyGIFUnclampedDelayTime: frameDelay
 ]] as CFDictionary
 let tau = 2 * Double.pi
+var darkPreview: CGImage?
+var litPreview: CGImage?
+
+func clamp(_ value: Double) -> Double { max(0, min(1, value)) }
+
+// A visible, slow relighting sequence. The first and last frames are fully lit.
+// During the middle, each letter's existing neon is switched back on in order.
+func signPower(frame: Int, horizontal: Double, letters: Bool) -> Double {
+    if frame < 16 { return 1 }
+    if frame < 24 { return 1 - Double(frame - 16) / 8 }
+    if frame < 32 { return 0 }
+    if frame < 64 {
+        if !letters { return 0.25 + 0.75 * Double(frame - 32) / 32 }
+        let column = floor(clamp((horizontal - 0.375) / 0.515) * 12.999)
+        return clamp((Double(frame - 32) - column * 1.9) / 3)
+    }
+    return 0.95 + 0.05 * cos(Double(frame - 64) * tau / 32)
+}
 
 for frame in 0..<frameCount {
     autoreleasepool {
@@ -53,19 +71,35 @@ for frame in 0..<frameCount {
             for x in 0..<width {
                 let nx = Double(x) / Double(width)
                 let i = (y * width + x) * 4
-                let r = Double(base[i]) / 255, g = Double(base[i+1]) / 255
+                let r = Double(base[i]) / 255
                 let b = Double(base[i+2]) / 255
-                // Only existing warm emissive pixels breathe; architecture stays fixed.
-                let warm = max(0, min(1, (r - max(b, 0.3*g) - 0.16) * 3.0))
-                let bright = max(0, min(1, (r - 0.40) * 2.0))
-                var motion = 0.055 * sin(phase + nx * 1.8)
-                    + 0.018 * sin(3*phase - nx * 4.0 + ny)
-                if nx < 0.24 && ny > 0.29 && ny < 0.67 {
-                    let angle = atan2((ny - 0.467) / 0.16, (nx - 0.127) / 0.08)
-                    // Slow chasing highlights follow bulbs already in the roulette sign.
-                    motion += 0.16 * pow(max(0, cos(angle - phase)), 8)
+                let warm = clamp((r - b - 0.08) * 5) * clamp((r - 0.22) * 4)
+                var gain = 1.0
+                // Perspective-aligned lettering, including its amber bloom.
+                let textTop = 0.465 - 0.32 * (nx - 0.38)
+                let letters = nx > 0.37 && nx < 0.895
+                    && ny > textTop - 0.015 && ny < textTop + 0.17
+                let frontSign = nx > 0.34 && nx < 0.995
+                    && ny > 0.19 && ny < 0.72
+                if frontSign {
+                    let power = signPower(frame: frame, horizontal: nx, letters: letters)
+                    gain = 1 - warm * (1 - power) * (letters ? 0.94 : 0.80)
                 }
-                let gain = 1 + warm * bright * motion
+                // Bright chasing sectors run around the existing Lucky 38 bulbs.
+                let dx = (nx - 0.128) / 0.076
+                let dy = (ny - 0.474) / 0.132
+                let radius = sqrt(dx*dx + dy*dy)
+                if radius > 0.80 && radius < 1.17 {
+                    let angle = atan2(dy, dx)
+                    let chase = pow(max(0, cos(3 * angle - phase * 3)), 4)
+                    gain = 1 - warm * (1 - chase) * 0.83
+                }
+                // Tower ring and entrance lights dim and recover at a different pace.
+                if (nx > 0.19 && nx < 0.43 && ny > 0.06 && ny < 0.205)
+                    || (nx > 0.08 && nx < 0.35 && ny > 0.635 && ny < 0.81) {
+                    let pulse = 0.55 + 0.45 * cos(phase)
+                    gain = 1 - warm * (1 - pulse) * 0.75
+                }
                 for c in 0..<3 {
                     pixels[i+c] = UInt8(max(0, min(255, (Double(base[i+c]) * gain).rounded())))
                 }
@@ -89,13 +123,8 @@ for frame in 0..<frameCount {
         }
         let image = makeImage(pixels)
         CGImageDestinationAddImage(destination, image, frameProperties)
-        if frame == 16 {
-            let previewURL = URL(fileURLWithPath: CommandLine.arguments[3])
-            let png = CGImageDestinationCreateWithURL(previewURL as CFURL,
-                UTType.png.identifier as CFString, 1, nil)!
-            CGImageDestinationAddImage(png, image, nil)
-            precondition(CGImageDestinationFinalize(png))
-        }
+        if frame == 28 { darkPreview = image }
+        if frame == 80 { litPreview = image }
     }
 }
 precondition(CGImageDestinationFinalize(destination))
@@ -106,3 +135,15 @@ let attrs = try FileManager.default.attributesOfItem(atPath: outputURL.path)
 print("GIF saved: \(count) frames, \(width)x\(height), \(Double(frameCount)*frameDelay)s, infinite loop, \(attrs[.size]!) bytes")
 precondition(count == frameCount)
 precondition((props[kCGImagePropertyPixelWidth] as? Int) == width)
+
+// One comparison sheet documents the two states without re-opening a browser.
+let sheet = CGContext(data: nil, width: width * 2, height: height,
+    bitsPerComponent: 8, bytesPerRow: width * 2 * 4, space: colorSpace,
+    bitmapInfo: bitmapInfo)!
+sheet.draw(darkPreview!, in: CGRect(x: 0, y: 0, width: width, height: height))
+sheet.draw(litPreview!, in: CGRect(x: width, y: 0, width: width, height: height))
+let preview = CGImageDestinationCreateWithURL(
+    URL(fileURLWithPath: CommandLine.arguments[3]) as CFURL,
+    UTType.png.identifier as CFString, 1, nil)!
+CGImageDestinationAddImage(preview, sheet.makeImage()!, nil)
+precondition(CGImageDestinationFinalize(preview))

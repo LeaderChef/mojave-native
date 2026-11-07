@@ -70,6 +70,22 @@ Keep a separate compatibility tracker for later TTW/Nuclear Sunset work.
 Contributors should receive independently testable tasks, not an open-ended
 request to finish an entire engine or a promise that multiplayer is ready.
 
-The working name is **Mojave Native**, with the descriptive line **New Vegas on
-Apple Silicon — built on NVForever**. It is a proposal, not a cleared trademark,
+The working name is **Mojave Native**, with the descriptive line **NVForever's Rust
+engine rebuild, native on 64-bit Mac**. It is a proposal, not a cleared trademark,
 registered domain or claim of official affiliation.
+
+## New Vegas Drivables — future vehicles and traffic
+
+The [author's public documentation](https://into-the-rough.github.io/new-vegas-drivables/)
+and [FAQ](https://into-the-rough.github.io/new-vegas-drivables/faq.html), checked
+7 November 2026, describe drivable vehicles and NPC road traffic, with a planned
+December 2026 release. Authorship: Into-The-Rough / intotherough, publishing as
+Oliver Swanick Productions. A future GPLv3 source/tool release is announced.
+The [public repository](https://github.com/Into-The-Rough/new-vegas-drivables)
+currently hosts its website and documentation, not the vehicle mod's engine source.
+
+Treat the release as a future input. After publication, review its actual licence,
+asset permissions and xNVSE-dependent behavior, then adapt shared contracts to
+NVForever. One vehicle, its persistence and a bounded nearby NPC traffic route
+come before large traffic populations or multiplayer convoys. No implementation
+has been imported and no native compatibility is claimed.

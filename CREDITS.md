@@ -16,6 +16,10 @@ Retain **GPL-3.0-or-later**, copyright and dependency notices. Provide correspon
 
 **[Tale of Two Wastelands](https://mod.pub/ttw/133-tale-of-two-wastelands)** — **TTW team and contributors**. **[Wabbajack](https://www.wabbajack.org/)** — **Wabbajack team and contributors**. All dependencies keep their own attribution and terms.
 
+## Vehicles and traffic target
+
+**[New Vegas Drivables](https://into-the-rough.github.io/new-vegas-drivables/)** — **Into-The-Rough / intotherough**, also publishing as **[Oliver Swanick Productions](https://www.youtube.com/@OliverSwanickProductions)**. Credit covers the original vehicle/traffic mod, its design, code and the contributors identified in the eventual release. The [author's FAQ](https://into-the-rough.github.io/new-vegas-drivables/faq.html) describes a planned December 2026 release and future GPLv3 source/tools. Native adaptation is a roadmap target, with original source and asset terms to be reviewed after publication; no compatibility or endorsement is claimed.
+
 ## Individual mod records
 
 [mod-credits-ledger.json](mod-credits-ledger.json) starts a record for **1,215 Nexus projects / 1,483 pinned files** in the selected profile. Cached author labels are distinguished from independently checked authorship/permissions. Not all collaborators and rights have been verified. Add full credit links and permission records before adapting or including work in a release.

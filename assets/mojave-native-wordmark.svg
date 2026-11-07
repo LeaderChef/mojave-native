@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="132" viewBox="0 0 840 132" role="img" aria-labelledby="title desc">
+  <title id="title">Mojave Native</title>
+  <desc id="desc">Amber and warm grey project lettering with a radiation symbol.</desc>
+  <g fill="#c49143" transform="translate(47 65)">
+    <circle r="6"/>
+    <path d="M-10-7-23-30A38 38 0 0 1 23-30L10-7A13 13 0 0 0-10-7Z"/>
+    <path d="M-10-7-23-30A38 38 0 0 1 23-30L10-7A13 13 0 0 0-10-7Z" transform="rotate(120)"/>
+    <path d="M-10-7-23-30A38 38 0 0 1 23-30L10-7A13 13 0 0 0-10-7Z" transform="rotate(240)"/>
+  </g>
+  <text x="110" y="90" font-family="Impact, 'Arial Narrow', sans-serif" font-weight="700" font-size="79" letter-spacing="3" fill="#c49143">MOJAVE</text>
+  <text x="470" y="90" font-family="Impact, 'Arial Narrow', sans-serif" font-weight="700" font-size="79" letter-spacing="3" fill="#a59983">NATIVE</text>
+  <path d="M112 113H816" stroke="#9d7d45" stroke-width="1"/>
+</svg>

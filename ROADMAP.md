@@ -23,6 +23,17 @@ Consistent 60 FPS is a target to measure, not an established result for every sc
 - Preserve original creator credits and permissions; link original downloads rather than mirror payloads.
 - No fake extender version, empty function or hidden warning substitutes for support.
 
+## 2a — Vehicles and NPC traffic
+
+**New Vegas Drivables**, by **Into-The-Rough / Oliver Swanick Productions**, is a future integration target for drivable vehicles and NPC road traffic. The author's [FAQ](https://into-the-rough.github.io/new-vegas-drivables/faq.html) currently targets **December 2026** and announces a future GPLv3 source release and public vehicle tools. These are the author's plans, not our delivery dates or a released dependency.
+
+- After release, pin the original version and review its actual source, licence, assets and xNVSE dependencies before native adaptation. Its public website is documentation, not the mod's engine source.
+- Preserve the original creator's credit. Native vehicle physics, controls/cameras, NPC traffic behavior and parked/ridden vehicle persistence need their own implementation and validation in NVForever.
+- Start with one drivable vehicle and one bounded traffic route. Use capped nearby traffic and cheaper distant simulation so roads feel alive without overwhelming the Mac.
+- Later connect vehicles to trade, convoy escorts, fuel/repairs and server-authoritative persistence. Multiplayer synchronization remains a separate milestone.
+
+This target is planned: no vehicle mod payload has been included and native Drivables compatibility has not been demonstrated.
+
 ## 3 — Persistent survival and strategy world
 
 Future targets, not released capabilities:
