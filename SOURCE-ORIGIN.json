@@ -390,7 +390,7 @@
     },
     {
       "path": "schemas/script/functions.json",
-      "sha256": "af59e86855530622ac6ab39cd3eb0f982473496497649f46a13d0b9223d2874f",
+      "sha256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
       "recordedBaseSha256": "eb681de0f1cfd4d2252add9842373459f02f56c5c54d5aba9c2a7d9f47cec1c4"
     }
   ],
@@ -753,7 +753,35 @@
     },
     {
       "path": "tools/smoke/scenarios.toml",
-      "sha256": "ab55d90f8de36db38b69700f6edf5b9a3eaa061afba3ab68c7f2e41813debf35"
+      "sha256": "99aaab72f965ea4e7ac6625e9821295b7ef04bd325ef023c040ac6803e645449"
+    },
+    {
+      "path": "crates/fnv-script/tests/movement_aliases.rs",
+      "sha256": "ad94bb3416512fb40c6a49e14321d7cf9a4833c446bdb3ff8d5bc8bea8955f5e"
+    },
+    {
+      "path": "docs/spec-notes/moveto-marker-alias.md",
+      "sha256": "d38618c10ad795bf76e7b5d6f42a9bb6b9a966125858ff39a3313ce8d73dc32d"
+    },
+    {
+      "path": "tools/smoke/fixtures/movement-alias-home/mods/nvse/plugins/scripts/ln_j6_movement_alias_probe.txt",
+      "sha256": "acd7228eed9646376ee1cb3efd8f2a3a466f5fe2fde742aac7743d897e15ab93"
+    },
+    {
+      "path": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+      "sha256": "c0b43cbe22c97aba7b8d63e032911f969ff91a56440b4c69cc04acd7a2ab7e6c"
+    },
+    {
+      "path": "docs/handoff/mojave-movement-alias-2026-11-07.json",
+      "sha256": "99e8ccc4432a8291bc7ef5c5651a81b194fca3f68f0faa264dab15ba60142af8"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+      "sha256": "624d95445abb054f1ddda6ec98c35e2a9dc0ae3c52a110b8f5f1dc6fa943eb26"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.json",
+      "sha256": "fd6c81108a42542f3b1823293a39cc167c06da74464a0a2bc133880bbcd74e2f"
     }
   ],
   "binaryDistributed": false,
@@ -779,9 +807,12 @@
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": false,
+    "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-animation-groups-2026-11-07.md"
+    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
+    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
   },
   "localCompatibilityChanges": [
     {
@@ -824,6 +855,17 @@
       "sourceCompilationsAfter": 3456,
       "failuresBefore": 174,
       "failuresAfter": 147,
+      "originalModFilesChanged": false,
+      "fullNuclearSunsetAccepted": false
+    },
+    {
+      "change": "MoveToMarker source spelling uses existing native MoveTo opcode and handler",
+      "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+      "selectedPlugins": 253,
+      "sourceCompilationsBefore": 3465,
+      "sourceCompilationsAfter": 3466,
+      "failuresBefore": 138,
+      "failuresAfter": 137,
       "originalModFilesChanged": false,
       "fullNuclearSunsetAccepted": false
     }

@@ -1,0 +1,8 @@
+; Authored alias fixture. No original game or mod script is copied here.
+EasyPeteRef.SetRestrained 1
+EasyPeteRef.MoveToMarker Player 0 60 0
+if EasyPeteRef.GetDistance Player >= 59
+    if EasyPeteRef.GetDistance Player <= 61
+        Print "J6 MoveToMarker: actor reached marker plus offset"
+    endif
+endif
