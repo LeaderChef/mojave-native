@@ -1440,9 +1440,10 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
         // GameHour freeze. Report that real, always-on native invariant to TTW;
         // do not introduce a switch that reinstates the rounding bug. This is not
         // a claim that the other optional patches or JIP itself are implemented.
-        // See docs/spec-notes/native-clock-compat.md. Unknown names stay unsupported.
+        // Scheduled scripts also remain eligible after VM errors; this invariant
+        // is always on (native-script-error-recovery.md). Unknown names stay unsupported.
         "getoptionalpatch" => yes(match text(args, 0).to_ascii_lowercase().as_str() {
-            "bgamedayspassedfix" => true,
+            "bgamedayspassedfix" | "bnofailedscriptlocks" => true,
             "bcreaturespreadfix" => g.gaps.creature_spread_fix,
             _ => false,
         }),
@@ -1450,6 +1451,8 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
             let patch = text(args, 0);
             if patch.eq_ignore_ascii_case("bGameDaysPassedFix") && matches!(args.get(1), Some(XVal::Num(0.0))) {
                 tracing::warn!("SetOptionalPatch: bGameDaysPassedFix is an always-on native clock invariant; a disable request cannot reintroduce the time-freeze bug");
+            } else if patch.eq_ignore_ascii_case("bNoFailedScriptLocks") && matches!(args.get(1), Some(XVal::Num(0.0))) {
+                tracing::warn!("SetOptionalPatch: bNoFailedScriptLocks is an always-on native scheduler invariant; a disable request cannot permanently lock scripts after an error");
             } else if patch.eq_ignore_ascii_case("bCreatureSpreadFix") {
                 match args.get(1) {
                     Some(XVal::Num(0.0)) => g.gaps.creature_spread_fix = false,
