@@ -818,7 +818,15 @@
     },
     {
       "path": "tools/smoke/scenarios.toml",
-      "sha256": "07e8d31930d6c3bf11e452b0244d892d72ef0dcbf96893f896dd430ddb684d4b"
+      "sha256": "d3b3bb8d23c48bcfd847f02731f1553ef3a28af02a14b46cb2f5f6ec103a1917"
+    },
+    {
+      "path": "docs/handoff/mojave-creature-spread-2026-11-07.md",
+      "sha256": "401771ef446b8200f800b2aa3617f9bc48b844cfea2e2cb1c2be959e919069d9"
+    },
+    {
+      "path": "docs/handoff/mojave-creature-spread-2026-11-07.json",
+      "sha256": "030603cd26637af4a8975686161a084d342aafc550777d313c3550a83e62b1f3"
     }
   ],
   "binaryDistributed": false,
@@ -839,17 +847,16 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
+    "sha256": "6ff3dfc9b91eacb3b17268182b72329264098412ae17191d154edea24f858c0b",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": true,
+    "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
     "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
-    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
-    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
+    "nativeCreatureShotConesVerified": true
   },
   "localCompatibilityChanges": [
     {
@@ -905,6 +912,16 @@
       "failuresAfter": 137,
       "originalModFilesChanged": false,
       "fullNuclearSunsetAccepted": false
+    },
+    {
+      "change": "Optional creature unaimed spread through actual native combat",
+      "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
+      "enabledShots": 8,
+      "disabledShots": 8,
+      "enabledConeDegrees": 1.2,
+      "disabledConeDegrees": 1.7,
+      "sameProcessLoadUnitControl": true,
+      "fullTTWAccepted": false
     }
   ],
   "nativeLoadedTypeRepair": {
@@ -917,14 +934,17 @@
     "fullModGameplayAccepted": false
   },
   "previousPrivateDevelopmentBuild": {
-    "sha256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
+    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": false,
+    "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-runtime-enums-2026-11-07.md"
+    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
+    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
   },
   "publicSourceReproduction": {
     "record": "docs/handoff/mojave-source-build-2026-11-07.md",
@@ -933,12 +953,5 @@
     "sourceInputsUnchanged": true,
     "sameHostOnly": true,
     "publicCoreRunnerVerified": true
-  },
-  "pendingNativeCandidate": {
-    "change": "Creature unaimed spread optional patch",
-    "issue": 10,
-    "record": "docs/spec-notes/creature-spread-optional-patch.md",
-    "requiredChecks": "Root tests and root/engine lint passed; client rebuild and runtime pending",
-    "fullTTWVerified": false
   }
 }
