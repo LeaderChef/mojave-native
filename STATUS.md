@@ -5,10 +5,10 @@ No public playable release yet.
 | Area | Evidence / state |
 | --- | --- |
 | Architecture | Local release build identifies as Mach-O 64-bit ARM64 |
-| Latest local candidate | SHA256 `118995d82827ef2af95e0ffedbae44a8dbf1a877ad6190ea9070e7b60f95fa87` |
+| Latest local candidate | SHA256 `058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75` |
 | Latest candidate gameplay | Focused player acceptance incomplete for this exact build |
 | Mouse and sound updates | Adapted merged maintainer PRs [1699](https://github.com/LootJunkieAzza/NVForever/pull/1699) and [1724](https://github.com/LootJunkieAzza/NVForever/pull/1724): unused sound data can be released; finer sensitivity down to 5% |
-| Latest validation | Two Eval assignment regressions failed before the fix and pass after it; 2285 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
+| Latest validation | Four inline argument regressions (three red before) now pass; 2289 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
 | Bounded runtime | Owned base game + nine add-ons ran on M4 Pro/Metal; normal exit, zero GPU validation errors, no window activation |
 | Session recipe views | Actual MIC Drinks menu plus authored runtime labels/filter checked in a windowless Metal run; no mod bodies rewritten |
 | Latest sound evidence | 28.076s private silent mixer output; finite samples, peak 0.721925, no values over full scale; physical output/latency not checked |
@@ -43,3 +43,9 @@ The [Eval/TestExpr callback repair](docs/handoff/mojave-eval-assignments-2026-11
 in the selected 253-plugin profile (179 → 174). The actual JAM callback now
 executes; unrelated quest/dependency errors remain. The latest client has not
 yet repeated earlier save/reload or menu presentation checks.
+
+The [inline-only argument repair](docs/handoff/mojave-inline-arguments-2026-11-07.md) restores 27 additional source units
+(174 → 147 failures). Actual dialogue-result inventory amounts and two perk
+healing results match their getters in a disposable native Game state. A silent
+Metal run separately verifies the authored getter/arithmetic inventory fixture.
+Current-binary save/reload and human gameplay remain unaccepted.

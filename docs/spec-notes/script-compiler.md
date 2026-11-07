@@ -220,7 +220,9 @@ expression parser), `vm.rs` (`xeval`).
 
 - **Extended units.** A unit that uses any of the extender's statements, declares a
   `string_var`/`array_var` or an initialised variable, calls a function that has no
-  opcode, or has a compiler-override block is compiled with the extender's rules. In it,
+  opcode, has a compiler-override block, or uses a grouped function/operation as an
+  inline argument is compiled with the extender's rules. A separate Let/declaration
+  is not required for inline arguments (inline-only-call-arguments.md). In it,
   a call line holding parentheses or calling such a function is one extended expression
   run for what it does (`SetAV Health (GetAV Health + 50)` [documented: Inline
   Expression], `Ar_Append a 5`). Any other unit is vanilla and its parentheses are dropped

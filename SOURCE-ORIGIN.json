@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "95f960df19366aeb23835e33f8ca7e315f9c201a86d839ff8838065c37218454",
+      "sha256": "dce251f1653c069fd09ce06f2c171adba45569b64ccf5a6c48144ced1d52aa88",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -115,7 +115,7 @@
     },
     {
       "path": "crates/fnv-script/src/compile/gen.rs",
-      "sha256": "60e1739859d81ca9aabd3673aeb334c23a5d7138796a9756050c25e4a9636bff",
+      "sha256": "4b75b2f36d89f6e249441137911c21cc2fadde0b2c817cda9d6467289f458157",
       "recordedBaseSha256": "54857b8324e3ef89e721d1b4e361e00e058d0494a7947ae30a7ac743863f647a"
     },
     {
@@ -185,7 +185,7 @@
     },
     {
       "path": "docs/spec-notes/script-compiler.md",
-      "sha256": "01682e20323a1a137718bd73944fda25866cf2789be811f4973c98260036cf7d",
+      "sha256": "f06181547de2d0b47b70d05f591fa90c90e977022cd2ba28c17a31762288aef3",
       "recordedBaseSha256": "77a2201f005790842b470ef1d702c4ca2f1f599fc77ec1493a7ad0c454f43317"
     },
     {
@@ -421,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "33c71d679318b07ce6e2cd8a20c25bbde460ba0f1466fcc68eef674059b40b70"
+      "sha256": "3c8affdbf1db244aeeccc69d5c019da8b5c0883914fb3e29f270f038fdd397d9"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -484,6 +484,10 @@
       "sha256": "61d1e02c966e7394500e9d00960ec6ddb46fca34fa89e6d063d3d1fed5b429cd"
     },
     {
+      "path": "crates/fnv-script/tests/inline_only.rs",
+      "sha256": "7d0811eae85069d27066a3478c4361bf46e50e68d60f0f6bcd66febbec5728aa"
+    },
+    {
       "path": "crates/fnv-sim/src/world/accepted_time.rs",
       "sha256": "e9dcb4d80ca79e58d8df9c03cbce3c1ddfb78293e77637dd33debec8458497a4"
     },
@@ -524,6 +528,10 @@
       "sha256": "b36fda22ef3bdd70fe3adc9a68e1f0baaa73057dc5aa52f02d12eee643533737"
     },
     {
+      "path": "docs/handoff/mojave-inline-arguments-2026-11-07.md",
+      "sha256": "c044a3a4c7c17ddd3a914037bf50de2845377e20e4e8a2f91c0f87ffef812715"
+    },
+    {
       "path": "docs/handoff/mojave-mac-input-audio-2026-11-07.md",
       "sha256": "bda14bcf3ab658166cdefc5bfac28ef7a552f275843a0d0018313acf036ec763"
     },
@@ -542,6 +550,10 @@
     {
       "path": "docs/spec-notes/ini-data-relative-paths.md",
       "sha256": "abe71ffca5214fcf19adc672be4c24465ea4997efde7940032093b1019583aa7"
+    },
+    {
+      "path": "docs/spec-notes/inline-only-call-arguments.md",
+      "sha256": "fb3d2de27260966c0613b396116705ae10111c6ba1b3d1532a6a6123bb89ebe2"
     },
     {
       "path": "docs/spec-notes/mac-render-diagnostics.md",
@@ -678,13 +690,13 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "118995d82827ef2af95e0ffedbae44a8dbf1a877ad6190ea9070e7b60f95fa87",
+    "sha256": "058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75",
     "architecture": "Mach-O 64-bit ARM64",
-    "targetedNativeCallbackPassed": true,
+    "targetedInlineArgumentsPassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
     "freshExportBuildVerified": false,
-    "record": "docs/handoff/mojave-eval-assignments-2026-11-07.md"
+    "record": "docs/handoff/mojave-inline-arguments-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -716,6 +728,17 @@
       "sourceCompilationsAfter": 3429,
       "failuresBefore": 179,
       "failuresAfter": 174,
+      "originalModFilesChanged": false,
+      "fullNuclearSunsetAccepted": false
+    },
+    {
+      "change": "Grouped calls/expressions select inline argument grammar without an unrelated extender statement",
+      "record": "docs/handoff/mojave-inline-arguments-2026-11-07.md",
+      "selectedPlugins": 253,
+      "sourceCompilationsBefore": 3429,
+      "sourceCompilationsAfter": 3456,
+      "failuresBefore": 174,
+      "failuresAfter": 147,
       "originalModFilesChanged": false,
       "fullNuclearSunsetAccepted": false
     }

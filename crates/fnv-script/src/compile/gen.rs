@@ -133,8 +133,8 @@ pub(super) struct Gen<'a> {
     block: Option<(usize, usize)>,
     /// Open `while`/`foreach` loops.
     loops: usize,
-    /// The unit uses the extender's grammar somewhere: call lines may then hold inline
-    /// expressions (script-compiler.md §8).
+    /// The unit uses the extender's grammar somewhere, including an inline argument
+    /// without a separate Let or declaration (inline-only-call-arguments.md).
     extended: bool,
     /// The text of the statement being compiled.
     text: String,
@@ -260,6 +260,7 @@ impl<'a> Gen<'a> {
             s.kw.extended()
                 || !s.decls.is_empty()
                 || matches!(&s.kw, Kw::Call(t) if self.function(&t[0]).is_none() && self.xfunction_name(&t[0].text))
+                || matches!(&s.kw, Kw::Call(t) if self.has_inline_argument(t))
         });
         self.declare_all(&stmts);
         for s in &stmts {
@@ -268,6 +269,34 @@ impl<'a> Gen<'a> {
             self.statement(&s.kw);
         }
         Compiled { bytes: self.out, variables: self.vars, refs: self.refs, diags: self.diags }
+    }
+
+    /// Grouped calls/operations are extender syntax by themselves [documented: Inline
+    /// Expression; inline-only-call-arguments.md]. Plain `(form)` and `(-3)` remain
+    /// vanilla grouping. This only selects the grammar; xwhole/xcall_line still reject
+    /// malformed groups, unknown receivers and missing operands.
+    fn has_inline_argument(&mut self, toks: &[Tok]) -> bool {
+        let mut depth = 0usize;
+        for (i, t) in toks.iter().enumerate() {
+            match t.kind {
+                Kind::Open => depth += 1,
+                Kind::Close => depth = depth.saturating_sub(1),
+                _ if depth == 0 => {}
+                Kind::Word if self.function(t).is_some() || self.xfunction_name(&t.text) => return true,
+                Kind::Op => {
+                    let signed_literal = matches!(t.text.as_str(), "+" | "-")
+                        && i > 0 && toks[i - 1].kind == Kind::Open
+                        && toks.get(i + 1).is_some_and(|n| n.kind == Kind::Word && lex::is_number(&n.text))
+                        && toks.get(i + 2).is_some_and(|n| n.kind == Kind::Close);
+                    if !signed_literal {
+                        return true;
+                    }
+                }
+                Kind::Punct if matches!(t.text.as_str(), "[" | "]" | "$" | "#" | "!" | "&" | "|" | "^" | ":" | "=" | "?") => return true,
+                _ => {}
+            }
+        }
+        false
     }
 
     /// Take the block-form lambdas (`(begin function {…}` … `end)`, which span lines
