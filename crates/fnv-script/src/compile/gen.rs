@@ -31,6 +31,31 @@ const PLAYER_NAMES: [&str; 2] = ["player", "playerref"];
 /// [observed: scripts.md §3.4].
 const BLOCK_ALIASES: [(&str, &str); 1] = [("onpackageend", "onpackagedone")];
 
+/// Accept grouping around the whole foreach header before splitting its binding.
+/// [hypothesis: compatibility extension for grouped headers seen in mod data]
+/// Only complete enclosing pairs are removed; entry and collection expressions
+/// keep their own grouping. Unmatched pairs and trailing tokens still fail.
+fn foreach_header(mut toks: &[lex::XTok]) -> &[lex::XTok] {
+    while toks.first().is_some_and(|t| t.kind == lex::XKind::Open)
+        && toks.last().is_some_and(|t| t.kind == lex::XKind::Close)
+    {
+        let mut depth = 0_i32;
+        let enclosed = toks.iter().enumerate().all(|(i, t)| {
+            match t.kind {
+                lex::XKind::Open => depth += 1,
+                lex::XKind::Close => depth -= 1,
+                _ => {}
+            }
+            depth > 0 || i + 1 == toks.len()
+        });
+        if !enclosed || depth != 0 {
+            break;
+        }
+        toks = &toks[1..toks.len() - 1];
+    }
+    toks
+}
+
 /// A resolved operand or parameter.
 #[derive(Debug, Clone, PartialEq)]
 enum Val {
@@ -1047,6 +1072,7 @@ impl<'a> Gen<'a> {
                 self.loops += 1;
             }
             Kw::ForEach(toks) => {
+                let toks = foreach_header(toks);
                 let arrow = toks.iter().position(|t| t.is(lex::XKind::Op, "<-"));
                 let head = arrow.and_then(|k| {
                     let var = self.xwhole(&toks[..k])?;

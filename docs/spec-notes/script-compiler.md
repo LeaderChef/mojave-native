@@ -250,6 +250,21 @@ expression parser), `vm.rs` (`xeval`).
   [documented: Let Macro lists these four]; `if eval …` / `elseif eval …`; `while …`,
   `foreach <var> <- <source>`, `loop`, `break`, `continue` [documented: While; ForEach]. Every
   other line is read as vanilla, so the shipped units compile as before (§5, unchanged).
+- **Whole foreach-header grouping (Mac compatibility extension, 2026-11-07).**
+  [observed: private selected Nuclear Sunset ScriptRunner census; two MIC inputs]
+  Some mod sources surround the entire iterator binding with parentheses. Splitting at
+  the binding arrow first leaves an unmatched opening parenthesis on the variable and
+  an unmatched closing one on the collection, so both previously failed to compile.
+  [hypothesis: compatibility extension, not measured original-compiler parity] Remove
+  only balanced pairs that enclose the complete header before resolving its two sides;
+  nested grouping and inline iterator declarations retain their existing semantics.
+  Reject unmatched pairs, trailing expressions and non-variable iterator targets.
+  [documented: [ForEach](https://geckwiki.com/index.php?title=Foreach),
+  [NVSE Expressions](https://geckwiki.com/index.php/NVSE_Expressions)] The documentation
+  covers collection grouping, iteration and expression precedence; it does not itself
+  establish original-engine acceptance of whole-header grouping. [observed: synthetic
+  compiler/VM regressions] Array and string loops, nested grouping, break/continue,
+  inline declarations and malformed boundaries are checked in tests/compile.rs.
 - **Tokens.** The operators of NVSE Expressions (`:=` and the compound assignments,
   `::` `->` `<<` `>>` `^` `|` `&` `!` `$` `#`), brackets, braces and commas, besides the
   vanilla ones.

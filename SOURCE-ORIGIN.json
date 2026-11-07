@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "snapshotDate": "2026-11-07",
   "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
-  "unchangedComparedWithRecordedBase": 1393,
+  "unchangedComparedWithRecordedBase": 1391,
   "modifiedComparedWithRecordedBase": [
     {
       "path": ".gitignore",
@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "a4dcdc8d403650ce38151a3bc6a76eaaccbe7677acd37b5a65412a11ebf68c81",
+      "sha256": "03f30a3bd5d26bef444caf42639992eea007cf0c372f91c36dc841d4ec74bb11",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -70,7 +70,7 @@
     },
     {
       "path": "crates/fnv-game/src/mod_files.rs",
-      "sha256": "45c30eafc33ac8ae6226b4bd820f175ded677bb5aaa748c222e153cc31764fd8",
+      "sha256": "3e5a31a13a1f213e2e650d0c1fed4fa1999c0a23a64ddd1382448552b5fbf54b",
       "recordedBaseSha256": "f7d4d16b9cfd35a0b458244c1771cefcbb3b109980386f2ead34005c82cd0776"
     },
     {
@@ -125,7 +125,7 @@
     },
     {
       "path": "crates/fnv-script/tests/compile.rs",
-      "sha256": "e0a1cd1a88350f92d56ee70eb02668e458a4c39a95b60a6fce495583be4c8855",
+      "sha256": "0b938f3b32f6a164a2cc276b34d11d19b4eb4e3d403aa7210a47745e678ff2ff",
       "recordedBaseSha256": "9b40fc1f1598f707c1e57ee04de7f8ce3d2e8739ca2cb15545c1fe1735abe01d"
     },
     {
@@ -377,6 +377,16 @@
       "path": "schemas/script/functions.json",
       "sha256": "af59e86855530622ac6ab39cd3eb0f982473496497649f46a13d0b9223d2874f",
       "recordedBaseSha256": "eb681de0f1cfd4d2252add9842373459f02f56c5c54d5aba9c2a7d9f47cec1c4"
+    },
+    {
+      "path": "crates/fnv-script/src/compile/gen.rs",
+      "sha256": "60e1739859d81ca9aabd3673aeb334c23a5d7138796a9756050c25e4a9636bff",
+      "recordedBaseSha256": "54857b8324e3ef89e721d1b4e361e00e058d0494a7947ae30a7ac743863f647a"
+    },
+    {
+      "path": "docs/spec-notes/script-compiler.md",
+      "sha256": "01682e20323a1a137718bd73944fda25866cf2789be811f4973c98260036cf7d",
+      "recordedBaseSha256": "77a2201f005790842b470ef1d702c4ca2f1f599fc77ec1493a7ad0c454f43317"
     }
   ],
   "addedComparedWithRecordedBase": [
@@ -406,7 +416,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "271f25e7ec0ff4c40f4ab475d877e85829a192ed2eeae98f4833b080ca29dbf5"
+      "sha256": "8e3a90da819ba2adf4b557d5b783fed9c920b527af598b4f5295c209587f068f"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -623,6 +633,10 @@
     {
       "path": "mod-credits-ledger.json",
       "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
+    },
+    {
+      "path": "docs/handoff/mojave-foreach-grouping-2026-11-07.md",
+      "sha256": "b36fda22ef3bdd70fe3adc9a68e1f0baaa73057dc5aa52f02d12eee643533737"
     }
   ],
   "binaryDistributed": false,
@@ -648,5 +662,17 @@
     "boundedSilentRuntimeAndSaveReloadPassed": true,
     "fullGameplayAccepted": false,
     "freshExportBuildVerified": false
-  }
+  },
+  "localCompatibilityChanges": [
+    {
+      "change": "Balanced whole-header foreach grouping",
+      "record": "docs/handoff/mojave-foreach-grouping-2026-11-07.md",
+      "eligibleInputs": 337,
+      "compiledBefore": 319,
+      "compiledAfter": 321,
+      "regressions": 0,
+      "realModBodiesExecuted": false,
+      "candidateAppReplaced": false
+    }
+  ]
 }

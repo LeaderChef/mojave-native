@@ -671,6 +671,64 @@ fn foreach_walks_an_array_and_a_string() {
 }
 
 #[test]
+fn foreach_grouped_headers_run_array_and_string_loops() {
+    let h = run(r#"
+array_var values
+array_var entry
+float total
+string_var joined
+string_var letter
+begin GameMode
+let values := Ar_List 10, 20, 30, 40
+foreach ((entry <- (values)))
+    if eval *entry == 20
+        continue
+    endif
+    if eval *entry == 40
+        break
+    endif
+    let total += *entry
+loop
+foreach (letter <- "abc")
+    let joined += letter
+loop
+end
+"#);
+    assert_eq!(h.0[&3], Value::Num(40.0));
+    assert_eq!(h.text(4), "abc");
+}
+
+#[test]
+fn foreach_grouped_headers_keep_inline_declarations_and_collection_groups() {
+    let h = run(r#"
+float total
+begin GameMode
+foreach (array_var entry <- (Ar_List 2, 4, 6))
+    let total += *entry
+loop
+end
+"#);
+    assert_eq!(h.0[&1], Value::Num(12.0));
+}
+
+#[test]
+fn foreach_grouped_headers_still_reject_bad_boundaries_and_targets() {
+    let t = table();
+    for head in [
+        "(entry <- values",
+        "entry <- values)",
+        "(entry <- values) + 1",
+        "(entry <- values) (entry <- values)",
+        "((entry <- values)",
+        "(entry[0] <- values)",
+    ] {
+        let src = format!("array_var entry\narray_var values\nbegin GameMode\nforeach {head}\nloop\nend");
+        let c = compile(&src, &t, &World, None);
+        assert!(c.errors().next().is_some(), "invalid foreach must fail: {head}");
+    }
+}
+
+#[test]
 fn array_functions() {
     let h = run(
         "array_var a\narray_var b\nfloat f\nfloat g\nfloat k\nstring_var t\nbegin GameMode\nlet a := Ar_List 3, 1, 2\nlet b := Ar_Sort a\nlet f := b[0] * 100 + b[2]\nAr_Append a, 7\nAr_Insert a, 0, 9\nlet g := Ar_Erase a, 1:2\nlet k := Ar_Find 7, a\nlet t := TypeOf (Ar_Construct \"stringmap\")\nAr_Dump a\nend",

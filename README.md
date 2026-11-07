@@ -47,7 +47,7 @@ Mojave Native's Mac adaptations are separate from these creators' work. Suitable
 <details>
 <summary><b>Build evidence, ownership and licences</b></summary>
 
-A local **Mach-O 64-bit ARM64 release executable** built successfully. Two shared compiler fixes improved a fixed **337-input** ScriptRunner corpus from **316 to 319** successful compilations without new failures. Compilation is not a mod-compatibility percentage. This source export still needs fresh build reproduction. Full playthrough, TTW/Nuclear Sunset compatibility, Long 15 gameplay, Drivables integration and Mac/Windows shared sessions have not been demonstrated here.
+A local **Mach-O 64-bit ARM64 release executable** built successfully. Shared compiler fixes improved a fixed **337-input** ScriptRunner corpus from **316 to 321** successful compilations without new failures. The latest grouped-header fix removes two MIC item/recipe script compile blockers; their full menus still need runtime validation. Compilation is not a mod-compatibility percentage. This source export still needs fresh build reproduction. Full playthrough, TTW/Nuclear Sunset compatibility, Long 15 gameplay, Drivables integration and Mac/Windows shared sessions have not been demonstrated here.
 
 Bring your own lawfully acquired New Vegas and DLC data. TTW/Nuclear Sunset also require the appropriate owned Fallout 3 data. Game files, mod archives, converted assets, credentials and private saves are not bundled. Credit does not grant permission to redistribute another creator's work.
 

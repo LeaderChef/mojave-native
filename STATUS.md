@@ -13,7 +13,7 @@ No public playable release yet.
 | Sound evidence | 53.075s private silent mixer output; radio/effects present, finite samples, peak 0.755001, no clipping values; physical output/latency not checked |
 | Save/load evidence | Manual save restored in a fresh process and saved again; checked player fields and position roundtripped; nonblank 512x288 thumbnails |
 | Earlier world work | Some rendering/movement exercised; not a complete playthrough |
-| Shared compiler changes | 72 compiler checks + 3 event-filter checks pass; fixed 337-input corpus: 319 pass, 18 errors, no new failures |
+| Shared compiler changes | Fixed 337-input corpus: 321 pass, 16 errors, no new failures; grouped foreach headers now compile and execute in focused VM checks |
 | Full mod experience | TTW/Nuclear Sunset dependency warnings and missing native extension behavior remain |
 | Long 15 | Planned; no accepted native gameplay claim |
 | New Vegas Drivables | Future vehicles/NPC-traffic integration after the author's release; no native implementation accepted |
@@ -26,3 +26,8 @@ The new bounded runs establish decoding/mixing and checked save fields, **not** 
 human-controlled playthrough, presented FPS or long-session RAM improvement.
 The silent capture skipped 257819 frames during startup stalls; it is not evidence
 of uninterrupted hardware audio. See the [integration record](docs/handoff/mojave-mac-input-audio-2026-11-07.md).
+
+The latest [grouped foreach change](docs/handoff/mojave-foreach-grouping-2026-11-07.md)
+removes compile errors in two MIC item/recipe scripts without rewriting the mods.
+The corpus comparison does not execute those real mod bodies. This source change
+has not yet replaced the local candidate application listed above.

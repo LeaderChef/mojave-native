@@ -885,15 +885,21 @@ mod path_tests {
     use super::{ini_get, ini_path_for, on_disk, on_disk_any_case, roots, set_roots, ModFiles, Roots};
     use std::path::Path;
 
+    // Each fixture temporarily replaces process-wide roots. Keep its previous
+    // roots alive until restoration, rather than borrowing another test's paths.
+    static INI_FIXTURE_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
     struct IniFixture {
         base: std::path::PathBuf,
         data: std::path::PathBuf,
         overlay: std::path::PathBuf,
         previous: Roots,
+        _guard: std::sync::MutexGuard<'static, ()>,
     }
 
     impl IniFixture {
         fn new() -> Self {
+            let guard = INI_FIXTURE_LOCK.lock().unwrap_or_else(|e| e.into_inner());
             let nonce = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos();
             let base = std::env::temp_dir().join(format!("nvf-ini-scope-{}-{nonce}", std::process::id()));
             let data = base.join("Game").join("Data");
@@ -905,7 +911,7 @@ mod path_tests {
             std::fs::write(file, "[Tweaks]\nbNoPipBoyInCombat = 1\n").unwrap();
             let previous = roots();
             set_roots(Roots { read: vec![overlay.clone(), data.clone()], write: Some(overlay.clone()), ..Roots::default() });
-            Self { base, data, overlay, previous }
+            Self { base, data, overlay, previous, _guard: guard }
         }
     }
 
