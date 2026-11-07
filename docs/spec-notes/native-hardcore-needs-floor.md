@@ -1,0 +1,18 @@
+# Native Hardcore need floor
+
+[documented] The JIP author's high-level description of `bHardcoreNeedsFix` requires negative needs not to stop or distort their accumulation: https://www.nexusmods.com/newvegas/mods/58277 . No extender implementation is used.
+
+[observed, before this change] Native needs already stop ordinary food/restoration changes at zero. `shift_need`, however, floored the sum of an invalid negative baseline and elapsed accumulation, losing that first interval. `Game::restore` retained such a baseline until the next update. Authored consumer regressions reproduced both failures before the repair.
+
+[design] While Hardcore is active, repair each player's current Dehydration, Hunger and SleepDeprivation to zero before adding a frame, wait or sleep increment. Normalize invalid restored needs before returning the restored game. Enabling Hardcore also repairs a pre-existing invalid baseline. Keep the actor value's modifier and damage pools: repair by moving its base by the current deficit, rather than erasing unrelated modifiers. Valid positive values remain unchanged.
+
+[design] This floor is an always-on native correctness policy. `GetOptionalPatch "bHardcoreNeedsFix"` may report one only when the consumer regressions pass; an explicit zero request warns and cannot reintroduce invalid accumulation. Unknown capabilities remain unsupported; no external extender version is claimed.
+
+[observed, authored regressions] Three tests pass through actual script dispatch and Game consumers in normal and strict modes: compare frame/wait/sleep progress against zero-baseline controls; restore real World/Game JSON snapshots containing invalid needs; retain food/restoration floors, modifier pools, valid positive values, unrelated actor values and Hardcore-off/enable behavior. Radiation shares the shift helper and explicitly retains its existing policy. The changed-source workspace reports 2,306 passing tests, zero failures and eight unchanged ignored tests; both required Clippy runs and the ARM64 release build passed.
+
+[design, smoke stimulus] `gn_j6_native_needs_probe.txt` introduces all three invalid values and prints them in one invocation, before a game frame can repair them. Separate timed console mutations were an invalid stimulus because frames run between those commands. The new-game-only prefix also prevents this probe from resetting needs during a later save load. Existing numeric expectations remain strict. This source snapshot includes authored scenarios; the complete upstream smoke runner is outside the limited public snapshot.
+
+[observed, bounded native integration] The authored probe ran on ARM64/Metal without a native window or sound: invalid values were logged before a frame, then all three needs were positive and increasing across three later samples, including after an attempted disable. All eight new scenario expectations passed when evaluated against the companion run's actual log with the existing smoke expectation engine; this was not a separate smoke CLI launch. The owned-data run's engine save attempt was refused by the script-menu/message-box guard, including QuickSave after closing the console. Consequently no engine save/reload claim is made; invalid-need restoration is established by the authored World/Game JSON regressions above. The save guard remains separate follow-up work, not a reason to loosen its checks.
+
+[scope] These checks establish the bounded need-floor contract. They do not establish full TTW or Nuclear Sunset playthrough compatibility, original-game timing parity, rendered gameplay performance, or multiplayer readiness.
+
