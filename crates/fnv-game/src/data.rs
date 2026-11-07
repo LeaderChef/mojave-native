@@ -1816,7 +1816,7 @@ impl GameData {
                 (id, Compiled::new(unit, dec.program, raw))
             })
             .collect();
-        crate::source_compile::apply(lo, &d.table, &mut compiled, &mut d.issues);
+        crate::source_compile::apply(lo, schema, &d.table, &mut compiled, &mut d.issues);
         let mut unit_of: HashMap<String, UnitId> = HashMap::new();
         for (_, c) in compiled {
             unit_of.insert(c.unit.owner.label(), d.units.len());

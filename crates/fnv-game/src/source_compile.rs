@@ -19,7 +19,7 @@
 //! `NVF_COMPILE_SOURCE` overrides it.
 
 use crate::data::Compiled;
-use fnv_esm::LoadOrder;
+use fnv_esm::{LoadOrder, Schema};
 use fnv_script::compile::{compile, env::LoadOrderIndex, Seed};
 use fnv_script::ir::{Arg, Expr, Stmt, Token};
 use fnv_script::table::CONSOLE_OPCODE_BASE;
@@ -117,7 +117,7 @@ pub fn declares_extender_vars(src: &str) -> bool {
 
 /// Compile from source the units the mode picks, in place. Units whose source does not
 /// compile keep their bytes (noted in `issues`).
-pub(crate) fn apply(lo: &LoadOrder<'_>, table: &FunctionTable, units: &mut [(fnv_sim::FormId, Compiled)], issues: &mut Issues) {
+pub(crate) fn apply(lo: &LoadOrder<'_>, schema: &Schema, table: &FunctionTable, units: &mut [(fnv_sim::FormId, Compiled)], issues: &mut Issues) {
     let m = mode();
     if m == Mode::Never {
         return;
@@ -133,8 +133,17 @@ pub(crate) fn apply(lo: &LoadOrder<'_>, table: &FunctionTable, units: &mut [(fnv
     if picked.is_empty() {
         return;
     }
-    // Indexing the load order reads every record: done only when a unit needs it.
-    let all: Vec<fnv_script::ScriptUnit> = units.iter().map(|(_, c)| c.unit.clone()).collect();
+    // Name resolution needs each plugin's own SCPT declarations, including superseded
+    // definitions. These are metadata only: the executable `units` remain winners.
+    // Read only SCPT records, and only when a unit actually needs source fallback.
+    let all: Vec<fnv_script::ScriptUnit> = (0..lo.plugins.len())
+        .into_par_iter()
+        .flat_map_iter(|pi| {
+            lo.records[pi].iter().filter(|r| &r.header.sig == b"SCPT").flat_map(move |r| {
+                fnv_script::unit::read_record(r, &lo.plugins[pi].name, &|local| lo.to_global(pi, local), schema, &mut fnv_script::unit::ReadIssues::default())
+            })
+        })
+        .collect();
     let ix = LoadOrderIndex::build(lo, &all);
     type Done = (Vec<u8>, Program, usize, Vec<fnv_script::unit::RefSlot>, Vec<fnv_script::VarDecl>);
     let results: Vec<(usize, Result<Done, String>)> = picked
