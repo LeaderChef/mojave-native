@@ -421,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "989a75a42944e5487885d8cea59a97c387231bc391c0a1c0cbd23e5b04532d17"
+      "sha256": "9589852eb99b8a0cc9068d098f28b8d114a3ff7d2efc7ba683a59eaa4a789844"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -472,8 +472,24 @@
       "sha256": "fb31d2ad24b267370a5b959ef593740b9020572fce2eb8a492ff773b40835367"
     },
     {
+      "path": "crates/fnv-game/tests/synthetic.rs",
+      "sha256": "72f07f3582c30f2e7975236a1132c62592ca9af19436dea5653a4ed5e1c55aab"
+    },
+    {
       "path": "crates/fnv-game/tests/ttw_plugin_metadata.rs",
       "sha256": "ae47067b1c387be7eba7ef817929bef2d8ca9eccb830c67e3c2d05dc4e181cff"
+    },
+    {
+      "path": "crates/fnv-script/data/encodings.json",
+      "sha256": "821cf3cc434f1e03b4b8b8cd70839812c39110ca8e04f594062499af51dca872"
+    },
+    {
+      "path": "crates/fnv-script/src/table.rs",
+      "sha256": "41028a5c347240a5be84166a5250e8d23e55f4cfcca92cbd95a4592e64a345e2"
+    },
+    {
+      "path": "crates/fnv-script/tests/animation_groups.rs",
+      "sha256": "091cd917f876b33493f046250a68458d6ca16a5cabe6c54c236b47922bf2b726"
     },
     {
       "path": "crates/fnv-script/tests/dynamic_enum.rs",
@@ -524,6 +540,14 @@
       "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
     },
     {
+      "path": "docs/handoff/mojave-animation-groups-2026-11-07.json",
+      "sha256": "1aa5cb39e0b1b16bf66dcd3672277a96721845fed037343a411a71561f02c120"
+    },
+    {
+      "path": "docs/handoff/mojave-animation-groups-2026-11-07.md",
+      "sha256": "d259f987d0a25508f12a868b74e38c4f7754c1ff439912a3a61245859d2a32d3"
+    },
+    {
       "path": "docs/handoff/mojave-eval-assignments-2026-11-07.md",
       "sha256": "9fd67027ef9dfadac9bf78cc4cc0eb9545e9224775e2f36da4cf2abfc59b4a8b"
     },
@@ -562,6 +586,10 @@
     {
       "path": "docs/spec-notes/accepted-work-time.md",
       "sha256": "1188ce654b5938e25d0c0a0c44e2698def7d153298b3944b3b9be031aa4db663"
+    },
+    {
+      "path": "docs/spec-notes/animation-group-catalogue.md",
+      "sha256": "878bc88b207dc40afecd67be789e7c00b570a6cdea61ba7405fd2112fddb6265"
     },
     {
       "path": "docs/spec-notes/eval-assignment-arguments.md",
@@ -712,12 +740,20 @@
       "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
     },
     {
+      "path": "tools/smoke/fixtures/animation-groups-home/mods/nvse/plugins/scripts/ln_j6_animation_groups_probe.txt",
+      "sha256": "370802623fb9b4b50e6e862664116398e9d1c7f780748dfcde2ccd51fed537b1"
+    },
+    {
       "path": "tools/smoke/fixtures/runtime-enum-home/mods/nvse/plugins/scripts/ln_j6_runtime_enum_probe.txt",
       "sha256": "33a51b42619e50b563abe819696dbfda62eeea2269a6e25d3284054bce933203"
     },
     {
       "path": "tools/smoke/fixtures/runtime-enum-home/mods/nvse/user_defined_functions/j6/runtime-enum.txt",
       "sha256": "6fc82e9a3d62e429e752b2826ec9f807d3bfcc70eaa143790b74e29cb27e8501"
+    },
+    {
+      "path": "tools/smoke/scenarios.toml",
+      "sha256": "ab55d90f8de36db38b69700f6edf5b9a3eaa061afba3ab68c7f2e41813debf35"
     }
   ],
   "binaryDistributed": false,
@@ -738,14 +774,14 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
+    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-runtime-enums-2026-11-07.md"
+    "record": "docs/handoff/mojave-animation-groups-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -802,14 +838,14 @@
     "fullModGameplayAccepted": false
   },
   "previousPrivateDevelopmentBuild": {
-    "sha256": "dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe",
+    "sha256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
     "architecture": "Mach-O 64-bit ARM64",
-    "freshExportBuildVerified": true,
+    "freshExportBuildVerified": false,
     "secondMachineVerified": false,
-    "relocatedBundledCatalogueRuntimePassed": true,
+    "bundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-source-build-2026-11-07.md"
+    "record": "docs/handoff/mojave-runtime-enums-2026-11-07.md"
   },
   "publicSourceReproduction": {
     "record": "docs/handoff/mojave-source-build-2026-11-07.md",
