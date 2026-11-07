@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "snapshotDate": "2026-11-07",
   "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
-  "unchangedComparedWithRecordedBase": 1384,
+  "unchangedComparedWithRecordedBase": 1383,
   "modifiedComparedWithRecordedBase": [
     {
       "path": ".gitignore",
@@ -422,6 +422,11 @@
       "path": "crates/fnv-game/tests/game_clock.rs",
       "sha256": "edd508c00041a599cd5edeff76322684065b2a8ef0ce8771f8ad32f752b7ba57",
       "recordedBaseSha256": "1018471c35cb330af393926c6b781df301f3db128d3ac9da0ee4d9eb68fa8b01"
+    },
+    {
+      "path": "engine/nvforever/src/residents.rs",
+      "sha256": "0d7bcc7fa4abc21e73c1168ba5b278e255390cd874a1b7ff1bbf8e6afbb381d9",
+      "recordedBaseSha256": "fc39b403fb7b9f41e983913f693e45fc97430489a2447cae9a391dc3f56b74dc"
     }
   ],
   "addedComparedWithRecordedBase": [
@@ -451,7 +456,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "8b556a62fcc3d8611dd0e037af511a9f1afe60463c286163300517631f928e77"
+      "sha256": "d5fe1271006f277cb943ac5f84f56250b482edffd38d2779c785b666ef628d26"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -852,6 +857,18 @@
     {
       "path": "docs/handoff/mojave-native-clock-2026-11-07.json",
       "sha256": "dac5dd15e7752d0fb7f222334e0da4562674eb60a4db917feb21f628debfe41c"
+    },
+    {
+      "path": "docs/handoff/mojave-resident-clock-restore-2026-11-07.md",
+      "sha256": "4a01cdfee0701283192d1217af49c7f2221af0230c25da39b5ce838532b545ba"
+    },
+    {
+      "path": "docs/handoff/mojave-resident-clock-restore-2026-11-07.json",
+      "sha256": "5dbada077962b7e90125ae382d4894075f0d4d725a451e78d3bf049e5478adfc"
+    },
+    {
+      "path": "docs/spec-notes/resident-clock-ownership.md",
+      "sha256": "a13653833b3cdfbd2a33591962a228e05918321536408b36276a2c506720e4d9"
     }
   ],
   "binaryDistributed": false,
@@ -872,18 +889,18 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "6ff3dfc9b91eacb3b17268182b72329264098412ae17191d154edea24f858c0b",
+    "sha256": "31a2da9f76fc4e8c8d6cc79079e92cbc9fddddcdd1f1747784c8294c3b92c861",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
+    "record": "docs/handoff/mojave-resident-clock-restore-2026-11-07.md",
     "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
-    "nativeCreatureShotConesVerified": true,
-    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-11-2026-11-07.md",
-    "saveReloadScope": "Two native processes; base plus nine add-ons; inventory delta, actor value and disabled reference persisted. No visible UI/audio/FPS or full-mod acceptance."
+    "saveReloadRecord": "docs/handoff/mojave-resident-clock-restore-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base plus nine add-ons; clock/Hardcore needs, inventory, actor value and disabled reference persist. No visible/UI/audio/FPS/full mod acceptance.",
+    "nativeClockRuntimeVerified": true
   },
   "localCompatibilityChanges": [
     {
@@ -949,6 +966,14 @@
       "disabledConeDegrees": 1.7,
       "sameProcessLoadUnitControl": true,
       "fullTTWAccepted": false
+    },
+    {
+      "change": "Report native non-freezing clock and preserve restored shared clock during resident initialization",
+      "record": "docs/handoff/mojave-resident-clock-restore-2026-11-07.md",
+      "realClockAndHardcoreNeedsAdvance": true,
+      "freshProcessSaveReloadPassed": true,
+      "standaloneNpcClockPreserved": true,
+      "fullTTWAccepted": false
     }
   ],
   "nativeLoadedTypeRepair": {
@@ -961,17 +986,18 @@
     "fullModGameplayAccepted": false
   },
   "previousPrivateDevelopmentBuild": {
-    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
+    "sha256": "6ff3dfc9b91eacb3b17268182b72329264098412ae17191d154edea24f858c0b",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
     "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
-    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
-    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
+    "nativeCreatureShotConesVerified": true,
+    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-11-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base plus nine add-ons; inventory delta, actor value and disabled reference persisted. No visible UI/audio/FPS or full-mod acceptance."
   },
   "publicSourceReproduction": {
     "record": "docs/handoff/mojave-source-build-2026-11-07.md",
@@ -989,6 +1015,7 @@
     "failedContract": "GameDaysPassed survives fresh-process save/load",
     "packaged": false,
     "selectedForUser": false,
-    "fullTTWAccepted": false
+    "fullTTWAccepted": false,
+    "resolvedByRecord": "docs/handoff/mojave-resident-clock-restore-2026-11-07.md"
   }
 }

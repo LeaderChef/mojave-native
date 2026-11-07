@@ -1925,9 +1925,14 @@ impl Core {
         if !self.prepared {
             self.prepared = true;
             game.cfg.package_interval = Some(PACKAGE_INTERVAL);
-            for (edid, v) in [(clock::GAME_HOUR, self.clock.hour.rem_euclid(24.0)), (clock::GAME_DAYS_PASSED, self.clock.days_passed)] {
-                if let Err(e) = set_global(game, edid, v) {
-                    warn!("ai: {e}");
+            // In --play the simulation already owns the clock, including saved
+            // globals and FineClock carry. A resident's startup sky is not a load.
+            // Only the standalone NPC viewer seeds its own private simulation.
+            if own {
+                for (edid, v) in [(clock::GAME_HOUR, self.clock.hour.rem_euclid(24.0)), (clock::GAME_DAYS_PASSED, self.clock.days_passed)] {
+                    if let Err(e) = set_global(game, edid, v) {
+                        warn!("ai: {e}");
+                    }
                 }
             }
         }
@@ -3181,6 +3186,68 @@ mod tests {
     use fnv_ai::ProcessLevel;
     use fnv_sim::FormId;
     use std::collections::HashMap;
+
+    fn resident_clock_game() -> fnv_game::Game<'static> {
+        let mut forms = fnv_sim::FormStore::default();
+        for (i, (edid, value)) in [("GameYear", 2281.0), ("GameMonth", 9.0), ("GameDay", 18.0),
+                                  ("GameHour", 12.0), ("GameDaysPassed", 5.0), ("TimeScale", 1.0)].into_iter().enumerate() {
+            let id = FormId(0x900 + i as u32);
+            forms.edids.insert(edid.to_ascii_lowercase(), id);
+            forms.globals.insert(id, value);
+        }
+        let forms = Box::leak(Box::new(forms));
+        let refs = Box::leak(Box::new(fnv_sim::RefTable::default()));
+        let mut world = fnv_sim::World::new(forms, refs, Default::default());
+        let (id, _) = forms.global_by_edid(fnv_sim::clock::GAME_DAYS_PASSED).unwrap();
+        world.set_global(id, 1000.0).unwrap();
+        world.advance_real_seconds(1.0 / 60.0).unwrap();
+        let saved = serde_json::from_slice(&serde_json::to_vec(&world.snapshot()).unwrap()).unwrap();
+        let restored = fnv_sim::World::restore(forms, refs, &saved).unwrap();
+        crate::outfits::tests::game(restored)
+    }
+
+    #[test]
+    fn resident_clock_shared_preparation_preserves_restored_globals_and_fine_carry() {
+        let world = crate::outfits::tests::empty_world_data();
+        let mut residents = super::Residents::build(&world, &[],
+            super::Clock { hour: 6.0, days_passed: 5.0, rate: 0.0 }, 100.0, true).unwrap();
+        let nav = crate::nav::NavState::build(&world, &[], 100.0, false, false, false).unwrap();
+        let mut doors = nvf_play::doors::Doors::default();
+        let mut game = resident_clock_game();
+        game.menu = Some(1000);
+        let before = game.world.snapshot();
+        let calendar = game.world.calendar().unwrap();
+        residents.core.think(&mut game, false, &nav, &world, &mut doors, None, None, 0.0, 0.0, 0);
+        assert_eq!(game.world.calendar().unwrap(), calendar, "NPC preparation must consume the restored playable clock");
+        let after = game.world.snapshot();
+        assert_eq!(after.globals, before.globals);
+        assert_eq!(after.clock_hour, before.clock_hour);
+        assert_eq!(after.clock_days_passed, before.clock_days_passed, "the fractional frame carry must not be discarded");
+        assert_eq!(game.cfg.package_interval, Some(super::PACKAGE_INTERVAL));
+    }
+
+    #[test]
+    fn resident_clock_standalone_seeds_its_private_world_once() {
+        let world = crate::outfits::tests::empty_world_data();
+        let mut residents = super::Residents::build(&world, &[],
+            super::Clock { hour: 25.5, days_passed: 22.0, rate: 0.0 }, 100.0, false).unwrap();
+        let nav = crate::nav::NavState::build(&world, &[], 100.0, false, false, false).unwrap();
+        let mut doors = nvf_play::doors::Doors::default();
+        let mut game = resident_clock_game();
+        game.menu = Some(1000);
+        residents.core.think(&mut game, true, &nav, &world, &mut doors, None, None, 0.0, 0.0, 0);
+        let calendar = game.world.calendar().unwrap();
+        assert_eq!((calendar.hour, calendar.days_passed), (1.5, 22.0));
+        let (day, _) = game.world.forms.global_by_edid(fnv_sim::clock::GAME_DAYS_PASSED).unwrap();
+        game.world.set_global(day, 1234.0).unwrap();
+        game.world.advance_real_seconds(1.0).unwrap();
+        let after_script = game.world.snapshot();
+        residents.core.think(&mut game, true, &nav, &world, &mut doors, None, None, 0.0, 0.0, 0);
+        let after = game.world.snapshot();
+        assert_eq!(after.globals, after_script.globals);
+        assert_eq!(after.clock_hour, after_script.clock_hour);
+        assert_eq!(after.clock_days_passed, after_script.clock_days_passed);
+    }
 
     #[test]
     fn refused_skips_add_up_over_one_blocked_episode_only() {

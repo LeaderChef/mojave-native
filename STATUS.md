@@ -4,18 +4,18 @@
 
 | Area | Evidence / state |
 | --- | --- |
-| Foundation | NVForever Rust engine by LootJunkieAzza and contributors; local 64-bit ARM64/Metal adaptation |
-| User preview | Candidate 11, launcher 0.2.13; added to the user's Dock; base-game data and nine official add-ons found |
-| Candidate 11 save/load | Two native processes retain inventory delta, Luck and a disabled reference. This did not test high-day clock persistence |
-| New candidate 12 | Release build passes; kept in draft after an integrated clock/save test failed |
-| Failure | GameDaysPassed is 1000.00018311 before save and 5.00005770 after fresh load; hours/needs and other checked state persist |
-| Source checks | 2300 workspace tests pass, 8 unchanged ignored; root/engine Clippy and native build pass |
-| Mod acquisition | Selected Nuclear Sunset downloads/staging complete; this is not native gameplay acceptance |
-| Source census | 3466 of 3603 selected source units compile; 137 errors remain; compilation is not working gameplay |
+| Foundation | NVForever Rust engine by LootJunkieAzza and contributors; native 64-bit ARM64/Metal adaptation |
+| Latest validated binary | Candidate 12 rebuilt after the resident clock fix; owned base-game data and nine official add-ons |
+| Clock/save repair | Shared resident NPC initialization preserves the saved clock; unchanged two-process native probe now passes |
+| Current-binary save scope | Days, hours, Hardcore dehydration, inventory delta, Luck and a disabled reference persist; normal Metal exit with no app activation |
+| Checks | Real resident-entry regression red before/green after; standalone clock control passes; engine release Clippy/build pass. Unchanged root source retains its prior 2300-test/8-ignored result |
+| Earlier candidate 11 | Application and isolated profile preserved; earlier bounded inventory/actor/reference save check belongs to its recorded binary |
+| Mod acquisition | Selected Nuclear Sunset downloads/staging complete; acquisition is not native execution |
+| Source census | 3466 of 3603 selected units compile; 137 errors remain. This is not a gameplay-completion percentage |
 | TTW/Nuclear Sunset | Missing native extension behavior and dependency warnings remain; no gates forged or bypassed |
-| Long 15 / vehicles / NPC traffic | Roadmap; no accepted implementation |
-| Multiplayer / living world | Roadmap; no completed shared-session test |
+| Long 15 / vehicles / NPC traffic | Roadmap; no accepted native implementation |
+| Multiplayer / shared living world | Roadmap; no completed shared-session test |
 
-The [failed candidate 12 observation](docs/handoff/mojave-native-clock-2026-11-07.md) and [measurements](docs/handoff/mojave-native-clock-2026-11-07.json) are retained. The limited [candidate 11 save/reload record](docs/handoff/mojave-mac-save-roundtrip-11-2026-11-07.md) belongs to its exact binary.
+[Observed] The [clock/save repair record](docs/handoff/mojave-resident-clock-restore-2026-11-07.md) and [measurements](docs/handoff/mojave-resident-clock-restore-2026-11-07.json) define the latest native evidence. The original failed probe is retained separately. Root and launcher source checks were not repeated for unchanged source.
 
-Human-controlled play, visible UI/input, physical audio, presented FPS, long sessions and a full playthrough still need acceptance. The local Dock entry is a preview, not the requested completed modded game. Original user saves and prior applications are preserved.
+[Observed] Human-controlled play, visible UI/input, physical audio, presented FPS, long sessions and a full playthrough still need acceptance. The local preview is not the requested completed modded game. Original game/user save paths are untouched.

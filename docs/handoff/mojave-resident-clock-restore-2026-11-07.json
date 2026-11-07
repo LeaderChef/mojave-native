@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "accepted": true,
+  "binarySHA256": "31a2da9f76fc4e8c8d6cc79079e92cbc9fddddcdd1f1747784c8294c3b92c861",
+  "samples": {
+    "A": {
+      "days": 1000.0,
+      "hour": 12.00041771,
+      "dehydration": 10.15987011
+    },
+    "B": {
+      "days": 1000.00012207,
+      "hour": 12.00233555,
+      "dehydration": 10.85710718
+    },
+    "C": {
+      "days": 1000.00018311,
+      "hour": 12.00475216,
+      "dehydration": 11.75743901
+    },
+    "L": {
+      "days": 1000.00024414,
+      "hour": 12.00625229,
+      "dehydration": 12.46692609
+    }
+  },
+  "checks": {
+    "savedOwnedNewGameState": true,
+    "freshProcess": true,
+    "saveFileUnchangedByLoad": true,
+    "inventoryDeltaPersisted": true,
+    "disabledReferencePersisted": true,
+    "actorValuePersisted": true,
+    "gameBodyRestored": true,
+    "engineStateRestored": true,
+    "sourceStartupRecognizesNativeClock": true,
+    "disableAttemptExplicitlyDiagnosed": true,
+    "realGetterStillReportsEnabled": true,
+    "getterStillEnabledAfterLoad": true,
+    "allFourSamplesPresent": true,
+    "clockAndNeedsAdvanceBeforeAndAfterDisableAttempt": true,
+    "clockAndNeedsNotResetAfterLoad": true,
+    "binaryUnchanged": true
+  },
+  "saveSHA256": "657ce0ee7106b513024cd8b49dd9a4fcec1da82c910ad705fe133a601e215a90",
+  "saveBytes": 342757,
+  "currentBinarySaveReloadVerified": true,
+  "visibleGameplayAccepted": false,
+  "hardwareAudioVerified": false,
+  "presentedFPSVerified": false,
+  "longSessionVerified": false,
+  "fullTTWVerified": false,
+  "fullNuclearSunsetVerified": false,
+  "multiplayerVerified": false,
+  "runs": [
+    {
+      "name": "write",
+      "exitCode": 0,
+      "seconds": 33.9,
+      "noForegroundActivation": true,
+      "timedOut": false,
+      "windowlessRunner": true,
+      "metalAdapter": true,
+      "gpuValidationErrors": 0
+    },
+    {
+      "name": "load",
+      "exitCode": 0,
+      "seconds": 16.96,
+      "noForegroundActivation": true,
+      "timedOut": false,
+      "windowlessRunner": true,
+      "metalAdapter": true,
+      "gpuValidationErrors": 0
+    }
+  ],
+  "originalProbeExpectationsChanged": false,
+  "regressionBefore": {
+    "passed": 1,
+    "failed": 1
+  },
+  "regressionAfter": {
+    "passed": 2,
+    "failed": 0
+  }
+}
