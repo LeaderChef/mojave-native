@@ -1,0 +1,27 @@
+[package]
+name = "fnv-game"
+description = "Layer 5 game rules: script instances, quests, conditions, event dispatch and script functions over the Layer 4 world"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+fnv-esm = { path = "../fnv-esm" }
+fnv-sim = { path = "../fnv-sim" }
+fnv-world = { path = "../fnv-world" }
+fnv-script = { path = "../fnv-script" }
+fnv-util = { path = "../fnv-util" }
+fnv-ui = { path = "../fnv-ui" }
+fnv-vfs = { path = "../fnv-vfs" }
+# guard_write: no write into the game install or its user folder (mod_files).
+fnv-install = { path = "../fnv-install" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+rand_core = "0.9"
+rand_chacha = "0.9"
+rayon = "1"
+tracing = "0.1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+# The runner's save_load op writes and reads the save container.
+fnv-save = { path = "../fnv-save" }

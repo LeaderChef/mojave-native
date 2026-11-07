@@ -1,0 +1,34 @@
+# cargo-deny policy (docs/design/dependencies.md, "Licence check"). Run: cargo deny check
+
+[licenses]
+# NVForever is GPL-3.0-or-later (owner decision 2026-10-15): dependencies may be
+# permissive or GPL-3.0-compatible copyleft.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-3-Clause",
+    "0BSD",
+    "Zlib",
+    "Unlicense",
+    "Unicode-3.0",
+    # option-ext (via directories): file-level copyleft; fine for an unmodified
+    # dependency under either project licence.
+    "MPL-2.0",
+    # NVForever's own crates, and GPL dependencies (infinitier_bik_decoder for the intro
+    # film; owner decision 2026-10-15).
+    "GPL-3.0-or-later",
+]
+confidence-threshold = 0.9
+
+[advisories]
+# RustSec vulnerabilities, unsoundness and yanked crates fail the check.
+yanked = "deny"
+
+[bans]
+multiple-versions = "warn"
+# Workspace path dependencies carry no version.
+wildcards = "allow"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

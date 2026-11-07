@@ -1,0 +1,28 @@
+# Build output and local state
+/target/
+/engine/target/
+.DS_Store
+.env
+.env.*
+*.log
+*.bak
+*.orig
+runtime.json
+*.local.json
+# User-owned game/mod/save content must remain outside the repository
+*.esm
+*.esp
+*.bsa
+*.nif
+*.dds
+*.bik
+*.fos
+*.exe
+*.dll
+*.rar
+*.7z
+*.zip
+*.tar.gz
+/private-data/
+/captures/
+/saves/

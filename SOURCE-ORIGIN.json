@@ -1,0 +1,598 @@
+{
+  "project": "Mojave Native",
+  "upstream": "https://github.com/LootJunkieAzza/NVForever",
+  "upstreamAuthors": "LootJunkieAzza and NVForever contributors",
+  "recordedBaseCommit": "b310430b82216258b85402bd0aeac48677e33bc2",
+  "license": "GPL-3.0-or-later",
+  "snapshotDate": "2026-11-07",
+  "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
+  "unchangedComparedWithRecordedBase": 1398,
+  "modifiedComparedWithRecordedBase": [
+    {
+      "path": ".gitignore",
+      "sha256": "399d910c832cc53eea32bc15b9684a5338979673bad166fff4ea1afdbbc94995",
+      "recordedBaseSha256": "0b25b0c9bcdd067410bb4efae6e8ee179cfed876ee7b5fffa75b0257850dea15"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "36edd53d2e9c936e41014cc07578ad18c8ab28162f1a61e4e97dba4a5994545d",
+      "recordedBaseSha256": "7d7a7d21f7c9609f208b21c9abde1462cf54b6bdd5cd498fa6e5437f291b1b77"
+    },
+    {
+      "path": "README.md",
+      "sha256": "d54cbd127cf1b0d4dcf6b1f79a542d10d959f093e14d97246d9535d7bca9c06b",
+      "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
+    },
+    {
+      "path": "crates/fnv-actor/src/resolve.rs",
+      "sha256": "2cf830a6d2748a04ce955a669df3b6bd9fbf6f73edb374a493a5ed3ddf5a5351",
+      "recordedBaseSha256": "4e65f653c0f9505205c133c135be89f8bb682a4ede8b8b9f36a8b6d1e7b4075f"
+    },
+    {
+      "path": "crates/fnv-actor/tests/synthetic.rs",
+      "sha256": "e2d7a8d7b37cd9441638e3c591813d3cbfa4e8992ce35fd9a9bc42b9900fb28a",
+      "recordedBaseSha256": "01ae74798b0ed4b4dbec23495fe63718f047e47cc7dfac69b17a54854f987797"
+    },
+    {
+      "path": "crates/fnv-combat/src/tuning.rs",
+      "sha256": "11af26f3cdf7beeb316c1c1677b079488f25be848ff7f7975ac2a980d53b9cc0",
+      "recordedBaseSha256": "582422737c7bbed87df7e6e800485ff5ffd2351ea9a370ce769cee152a9a212c"
+    },
+    {
+      "path": "crates/fnv-game/src/crafting.rs",
+      "sha256": "38143a9ce7cdf9495417282dae88099ce8b63aa09cf998b139bcae8604c47a1d",
+      "recordedBaseSha256": "cbf5a3fa6a4ecf2d8dd3a1684ca3e46c56275568e3fd40941e53c18f1643417e"
+    },
+    {
+      "path": "crates/fnv-game/src/crime.rs",
+      "sha256": "dfe0825f21a6b3307858ce362e32366d24756db6d1e13692ba9d8abf05a19dcd",
+      "recordedBaseSha256": "9784e9434b95abc626ec2535c9d6ea26c5ab9cd34ae95741053bbfd70f75b9a3"
+    },
+    {
+      "path": "crates/fnv-game/src/difficulty.rs",
+      "sha256": "dd2fc3ecc67677c277222e38c49c8d15ea36f52f26c0febbd10869424224394d",
+      "recordedBaseSha256": "44e007ac2a78a7bb80b7f66989c637207599a8862aa1606d10046c07172777de"
+    },
+    {
+      "path": "crates/fnv-game/src/game.rs",
+      "sha256": "6b1870f975fbfb42e6ef3a75051834fac8fef37d48df0459ec6964a39f4ca4e8",
+      "recordedBaseSha256": "0042d45ca379b78396c0784f32e55873159364237f309a1660811ee2f242ea37"
+    },
+    {
+      "path": "crates/fnv-game/src/levelup.rs",
+      "sha256": "c033576b47c76992716bf8674cbc80dd9931e42a8ed7fdcd8993916c9829be6a",
+      "recordedBaseSha256": "78379bc2c3416d0ccff31511adfa28f333ea235864d33cd0159c9b8d3e2f9112"
+    },
+    {
+      "path": "crates/fnv-game/src/lib.rs",
+      "sha256": "53097dc575a6df600e94d8747e6514d527a729db89b25fd1d3ffeea181782338",
+      "recordedBaseSha256": "d8e0e320fed1278514bd484308264f1190d47b2d533800c6fcf0376ff601bfda"
+    },
+    {
+      "path": "crates/fnv-game/src/mod_files.rs",
+      "sha256": "45c30eafc33ac8ae6226b4bd820f175ded677bb5aaa748c222e153cc31764fd8",
+      "recordedBaseSha256": "f7d4d16b9cfd35a0b458244c1771cefcbb3b109980386f2ead34005c82cd0776"
+    },
+    {
+      "path": "crates/fnv-game/src/nvse_gaps.rs",
+      "sha256": "398f1f73628578da152f2c798e1e0a37a4904f275e346bc2c46b8b893df98030",
+      "recordedBaseSha256": "7a4406050fa63aa61baa67b2f8de5a60c55748ba9b684f3474dad1aeb84e5f42"
+    },
+    {
+      "path": "crates/fnv-game/src/nvse_small.rs",
+      "sha256": "5da24e16d5ea14d9f71ca2a47529d59b8217d44cce315b1a5056fe6dad413b5e",
+      "recordedBaseSha256": "ada68b40e0cec9f8bbd851cdbaff47a9af1ae54f5b6f11ac7b7559472dc5680e"
+    },
+    {
+      "path": "crates/fnv-game/src/radio.rs",
+      "sha256": "c31ae46dea8f956f38cbe8f6d90c1612c3439609ec45c6d5cf153a8eeb5e1b7c",
+      "recordedBaseSha256": "af1c045b15ca46935061676ea9f344e120892f3b2bf773a1ba91cd1871b52f94"
+    },
+    {
+      "path": "crates/fnv-game/tests/crime.rs",
+      "sha256": "6abdc4df0e31e7c6a5ac74174f6943aeea7ba322711b057eed0a30b39db71526",
+      "recordedBaseSha256": "65491f1300c5fdb87445656a70a417c9770a5914ef2e330b11081e372d88af9b"
+    },
+    {
+      "path": "crates/fnv-game/tests/difficulty.rs",
+      "sha256": "991e528e98f5bfbb17f38a6435bbeb91b6c0100cee7a3f32ebc4d044ac52e509",
+      "recordedBaseSha256": "035cd8fc9228c4666716a173accc831f85c31b286a834bec61195af05124f8d2"
+    },
+    {
+      "path": "crates/fnv-game/tests/experience.rs",
+      "sha256": "dbfec88c996179d284aca9f885602009825914f31c47cb128e03f0cd041ed33a",
+      "recordedBaseSha256": "629d1d3f7eafc8c9d21626e7343b8c0a3636549effc5980bab7a7966d98edf41"
+    },
+    {
+      "path": "crates/fnv-game/tests/pp.rs",
+      "sha256": "78287be84dba2a414f1321923c038d18697bde038ecc2ba49fc412910b808444",
+      "recordedBaseSha256": "3c3ae5600f023736ec6b3dd9d72b18a21d2856630bc700c8106d2e3a2053e00d"
+    },
+    {
+      "path": "crates/fnv-script/src/compile/gen/x.rs",
+      "sha256": "8b3f69d05d3d99315b041bef9cba4ccf49c5c06edd12a18a8684da9567899139",
+      "recordedBaseSha256": "6d86888dc1cb0e1e13d653adf2e6d1283c625ea47d506bd7b39d12c5f8ab2a41"
+    },
+    {
+      "path": "crates/fnv-script/src/compile/parse.rs",
+      "sha256": "2746a0d339ccec35d77b09bf53aaa61bc1c013dc43dfbf71f8c8b20e28e5f5f2",
+      "recordedBaseSha256": "743b1ea15dbe25d8ab4e37dd7110a17e8a66617779270f5a8894e0cb00df93b0"
+    },
+    {
+      "path": "crates/fnv-script/src/vm.rs",
+      "sha256": "4eb01d9c5235b2fffb96deb32d0643df79251a9521fa3629c10b15ffeb172d57",
+      "recordedBaseSha256": "ae3a9c63a98f8a071d3a4deb3fa8fe6e82dcebca20efb19e9f03bfc241d5fbd5"
+    },
+    {
+      "path": "crates/fnv-script/tests/compile.rs",
+      "sha256": "e0a1cd1a88350f92d56ee70eb02668e458a4c39a95b60a6fce495583be4c8855",
+      "recordedBaseSha256": "9b40fc1f1598f707c1e57ee04de7f8ce3d2e8739ca2cb15545c1fe1735abe01d"
+    },
+    {
+      "path": "crates/fnv-sim/src/leveled.rs",
+      "sha256": "8e90dfa11cc42ad2c74af2180a21d6484b1ee2d49f6bc5a592d8f7ccb040c2f4",
+      "recordedBaseSha256": "a56294c2fc166261bc66e0d6c5431728b6a1260e98cf3d498a16a2d8e1ce1605"
+    },
+    {
+      "path": "crates/fnv-sim/src/settings.rs",
+      "sha256": "8b5814d3454f51400f38641552f06c9e0f2772dda1741ba5c50c4bc82b26ecb9",
+      "recordedBaseSha256": "8d557f26b89a01fc963a964ff86fab50b7c8346eb8438c7c26e6d0c3c7fa6464"
+    },
+    {
+      "path": "crates/fnv-sim/src/world.rs",
+      "sha256": "f1e77929e335280e6eacdb37c3d548711de02d1c82d328a36d16d483daf28fb1",
+      "recordedBaseSha256": "ea17c22cc8c52a5fd57aec2949785f21c52aa422c44adbfd6d58410f9d47d291"
+    },
+    {
+      "path": "crates/fnvtool/src/combat_sim.rs",
+      "sha256": "11d118dd08592e71f080ba035578727b4d1078448f9f550c771ebd49c1a5c0df",
+      "recordedBaseSha256": "3db6c60915ad6c53df0c0aec265af6d39dfaedef4fe8372573f9cb9ca322eebd"
+    },
+    {
+      "path": "docs/spec-notes/actor-values.md",
+      "sha256": "b5f4f7ba87f6ad99651ec05bd6748d45e4dadf0d1a73a33daadedf8289ceec2d",
+      "recordedBaseSha256": "6de34c795591ea836e811e44140535a02339a24305710a6a6df09964cb14cdf7"
+    },
+    {
+      "path": "docs/spec-notes/appearance-changes.md",
+      "sha256": "bf43b19a97232c41024cd96e34b4c2c9d781454b3ed6f6ed4c7772f9160f8c9d",
+      "recordedBaseSha256": "60c9b12230197d0e1b66f5e902d3a072ca693c4f92880eb6a6faa156168d4dcb"
+    },
+    {
+      "path": "docs/spec-notes/crafting.md",
+      "sha256": "412221ec51aa076059a77e6d830671d5f60b887baaeb052263ba20e8fb3957e5",
+      "recordedBaseSha256": "cedfdf6947d7e9daef3b40b3d732ec9e37762d2bff6f0a1304fbd9119d8d319d"
+    },
+    {
+      "path": "docs/spec-notes/display-sync.md",
+      "sha256": "81b2e3c823f4f7be02ce5e9bbf66729dd7970136bc8c75eec195f0a9fe3cac9e",
+      "recordedBaseSha256": "11017b24b94dbb19f4e439cd06b2c9b4fe4ea9e68f8c6923623b11a0c1635d73"
+    },
+    {
+      "path": "docs/spec-notes/physics.md",
+      "sha256": "a7ae62e0ebd1c0f8df3f91d8f9c98c6e4fdb57b6419571c45819a8b055a8153b",
+      "recordedBaseSha256": "81bf8819518a6530e4cbc99ccc8e2f8ccf745a902eae20a13ac004d4cf53deea"
+    },
+    {
+      "path": "docs/spec-notes/scripts.md",
+      "sha256": "22d6e9348c75b0e8e1a26c867e8175d527002b8035534c3ab04a5135e4ca55b7",
+      "recordedBaseSha256": "604f646203a5d12db229647e12d90ce71e718a5aab92a609b7a7d269e32ab495"
+    },
+    {
+      "path": "engine/Cargo.lock",
+      "sha256": "7f3b2bdca0636ad1c030861b7b64f1c6d9014cab663851acc226c6b51c42c08b",
+      "recordedBaseSha256": "39104bce06c9fdb713e59eaa21e82a7a43b6fbe65c87811e0df8aa1d8c47774c"
+    },
+    {
+      "path": "engine/nvf-assets/src/nif_material.rs",
+      "sha256": "ef2a0f013eb3c4d60727be0187970f534943f81031ad5a625338cc5e011631e0",
+      "recordedBaseSha256": "4c8f9be913a5ca2e3c34aeb3f20c70982666dcc1a1f04e4b083dd3eba9179df0"
+    },
+    {
+      "path": "engine/nvf-play/src/audio_out.rs",
+      "sha256": "2235809edc613d166d18e1dae5f73c60f86241b06ff67e3c9567e5e088e76f6c",
+      "recordedBaseSha256": "9f64bb709426eb74dd0d4b582e5468e0fcfdb0ed5cf75ad80d5d8ad70e62ef8c"
+    },
+    {
+      "path": "engine/nvf-play/src/combat.rs",
+      "sha256": "e53cd6a6b569a00d4cacc86c9db397b3bfd15596507f2cac7e119b087768270d",
+      "recordedBaseSha256": "5c2a4eb28958ebf0b2be10aa511a9e496ac5dd72a4e12b0db31f73f2820a9bc6"
+    },
+    {
+      "path": "engine/nvf-play/src/control.rs",
+      "sha256": "ebce338cbb15653f945181649b29d302aad1c284687a9b3247caa889debc20db",
+      "recordedBaseSha256": "9f943eea571636cc0d3b835dff196314973138d30b84602b16ec691816de4271"
+    },
+    {
+      "path": "engine/nvf-play/src/crafting.rs",
+      "sha256": "f0f1531f8765760491c3acb0e38976fd3da542a92d4a15b7c420b8ac623a1666",
+      "recordedBaseSha256": "617fd66df9677f3530c4fa5068cea6a00beb55c5d5bb45b804d3faee2a0b60c4"
+    },
+    {
+      "path": "engine/nvf-play/src/dropped/tests.rs",
+      "sha256": "601f2a1b998464a1c1372a06d57d5c31d67d886a3dd103ebef308e6b102ef389",
+      "recordedBaseSha256": "d76f1882a4f9e6dc8865413929ff42340a75c7b8254b09417e6cd038829a4453"
+    },
+    {
+      "path": "engine/nvf-play/src/dropped.rs",
+      "sha256": "fbed0d3f8516575afbf5a06e582b111f8e768084fe5a71c730192663759a3093",
+      "recordedBaseSha256": "bf09d34573d3fd66b4b2a4b23ea1996aa783eaa7f20ed9bbf00ece4c3e39c1bb"
+    },
+    {
+      "path": "engine/nvf-play/src/flashlight.rs",
+      "sha256": "76a224de0b007727dde83d4500b58e55c77f52f9e9bb2b100d8bd5c3d840cb57",
+      "recordedBaseSha256": "7769ba4a0b9cfaf25be4e0cb8729c6d09d31c52a5b5470b39f1854cce3d4864e"
+    },
+    {
+      "path": "engine/nvf-play/src/hud.rs",
+      "sha256": "b9d3b2f3ae4c2e08879efd4a1bdc67860d37df4c9899c5a21ea077e66bd24886",
+      "recordedBaseSha256": "d7b0ac8805c52ad688fdd4c3e1f05433cffde6bdf9e0aa6c7b29ca64c2499e6d"
+    },
+    {
+      "path": "engine/nvf-play/src/hud_needs.rs",
+      "sha256": "d590c9ba3f558328a6b740cabf2da30abe22b0c49cd4e9cef301444297e6bf7b",
+      "recordedBaseSha256": "0eeb16ec13eb2da2f05d99af7588f35df03519e9fc37f13abbca1f8e85c571e0"
+    },
+    {
+      "path": "engine/nvf-play/src/lib.rs",
+      "sha256": "9888ffb12c1f72afda6921b7667a19d6261073558ab6d65e6dd3df93cf7d0ab7",
+      "recordedBaseSha256": "c589b00dd0e0206ff4209982e9977fe77afb60e1c2c0cad5878e443807c9e57b"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/look.rs",
+      "sha256": "e2ef61ba7aad15801decab96d2a91684d54752c10230f5b4d4ab90ce43d48e56",
+      "recordedBaseSha256": "cbce782d3f9f46e7b9da51900f8851b2447759b7879e3c906e9ae3eb6666c694"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/model/tests.rs",
+      "sha256": "eaf1ee5b32b6f9d6481f06676f0abb7402f253a30d1256149d788c7cf873d586",
+      "recordedBaseSha256": "19357c90bb040c5d6e124ffbcef16ab6627519dd50a303af4e5ed00f2b524edb"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/model.rs",
+      "sha256": "217372fca22386d111f203833cff8d3ffc90c89800434eab4dee5d29b99c054a",
+      "recordedBaseSha256": "c2d21cb1e67444e9d345a13bd3e9ee1d5c597f4aac5d2f0fdc3f50889dfd5e92"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/test_aid.rs",
+      "sha256": "1c6b9910e0ee0f401481453110d744a3cda4f9d0e63312efc4e5180fd2490e63",
+      "recordedBaseSha256": "0728def90d84030a624265bd3d42cdfc03e72ada704f6a09be38b0020a8d852c"
+    },
+    {
+      "path": "engine/nvf-play/src/menu.rs",
+      "sha256": "2d49a2baa74fa65a44e889dbb5c7ae027bdb7c914158dba3fed0079a4003e0eb",
+      "recordedBaseSha256": "563303b496a8bebca57999041a30764ec6ffd68cccffc3c96314cccd57e95846"
+    },
+    {
+      "path": "engine/nvf-play/src/phys/tests.rs",
+      "sha256": "c75d460ac15735465c5a09874a811a9f06d505a7e13a6950a7653b3f10377d8c",
+      "recordedBaseSha256": "3688eea450172794add97284aaf6e9abe351254e961c12de538f1c34cfd889ea"
+    },
+    {
+      "path": "engine/nvf-play/src/phys.rs",
+      "sha256": "46ab62bbe7016cbeb590897faaf4aa91b601b37b4b63688a2cf3834fa949303c",
+      "recordedBaseSha256": "5fc2ab9c98afdc076e8916fefcead156a0a22db72bfd38051cdfc055d3bf04cf"
+    },
+    {
+      "path": "engine/nvf-play/src/pipboy/data.rs",
+      "sha256": "433523417f8b097d5bc5dbfe87c4adb9556cba45e46390a1741f1c22c3917f20",
+      "recordedBaseSha256": "1ba3466d75370181cbb5ef0b20419cc26f2d29cb07626634b7270c3f0a174290"
+    },
+    {
+      "path": "engine/nvf-play/src/radio.rs",
+      "sha256": "920e857899f48b8090533b38538ef3f3b24cfa3eb26f4ceca4cf5269ecc7216b",
+      "recordedBaseSha256": "f5c443a6d3eb11e5005578f4398c730deece5b63f202b3951bb0e7409be9e2fb"
+    },
+    {
+      "path": "engine/nvf-play/src/save.rs",
+      "sha256": "4a3a59f786518fb13c2608b6438f5048263a3872f9ef5c0156655fccaeeebf86",
+      "recordedBaseSha256": "71dcd7d60ea591a782babcf2189f4a336b8b129e3037cd26fdb39d9b967bb5af"
+    },
+    {
+      "path": "engine/nvf-play/src/script.rs",
+      "sha256": "cd7c72378a1adcab11e5654f8e1ec2e4c3e60c434b8437d690472f54cf35a74b",
+      "recordedBaseSha256": "414ccb95616d844c94ef87fca138f6d863125678a0cf66146b5f3567df98e69f"
+    },
+    {
+      "path": "engine/nvf-play/src/sim.rs",
+      "sha256": "533689ee93cf087b689ba5e4f28ad3a3c459028dbf54a75e3446bf343b750d80",
+      "recordedBaseSha256": "b595c129ed100f286e27093d65221207add99c5ec6f426d154b0461f97f21fd3"
+    },
+    {
+      "path": "engine/nvf-play/src/test_aid.rs",
+      "sha256": "45f63ce5015a2238484bc442c60de05c655d9d10499c3d67264b849ead4074eb",
+      "recordedBaseSha256": "6b45904f54c8c67d164287e2ed224aaa167a1f4a3a3180b334916385505decb1"
+    },
+    {
+      "path": "engine/nvforever/Cargo.toml",
+      "sha256": "df75304da9a17097c5b89a2aafbaba3db40c75008f90a7a5db5f777a7cd6906f",
+      "recordedBaseSha256": "0c2c7beddc39d2d54a6d1189c04d1003d47a233540e606d436141fbc401d25e3"
+    },
+    {
+      "path": "engine/nvforever/src/actors.rs",
+      "sha256": "891f293a1c9a51fec1f990310ae1ae52947903f73c28c40e7268f5bc0955a842",
+      "recordedBaseSha256": "0ac813cf4450315990ec58cb8162ba42443b35fde6ca838dcbc1d32c3b0872da"
+    },
+    {
+      "path": "engine/nvforever/src/frame_pace.rs",
+      "sha256": "89ac0eb576a47ee0e5876122182975bf305ba33d88348a5bd1b2ec4670ca28fd",
+      "recordedBaseSha256": "a41da46007a52fcf199d2d0e6162f93617d37526ca63dee64221b6c6a4ef5106"
+    },
+    {
+      "path": "engine/nvforever/src/graphics.rs",
+      "sha256": "93ef5b772163aee2206170636a6b3d9f5f765ae58fa49a6852678a1f5828aa53",
+      "recordedBaseSha256": "0f22c29b914bcad7c42510b9c8441944db65b306bc9a024463513fd9914f321a"
+    },
+    {
+      "path": "engine/nvforever/src/handoff.rs",
+      "sha256": "e0674d7463a29a554c4f5ee895c3058b014dea8972292259ab5856686f6df37d",
+      "recordedBaseSha256": "10d5ff0ec50d569b5d5481050242ddf99895c9351528abe2aa9b00bbfe0dee99"
+    },
+    {
+      "path": "engine/nvforever/src/main.rs",
+      "sha256": "f9d2ac8df6caa833d80686574dd326343ed95f8dd967e3ff98668850d4c120e8",
+      "recordedBaseSha256": "e2afab16a3c5550097fd635f3e615e5a2980dcfde69eac61412656bf76bc5b3c"
+    },
+    {
+      "path": "engine/nvforever/src/memory_budget.rs",
+      "sha256": "5d23545ba283e1809bb321d712d298a9655f3f0ab80a607b28fd3638b9ebd432",
+      "recordedBaseSha256": "cd2fd47f87c89024dd0acd5b40f5f6fa4eb5b2786314e615fdfc516ea5d126fa"
+    },
+    {
+      "path": "engine/nvforever/src/player_body.rs",
+      "sha256": "b9744dbbc62e5ab99f2d0f07ecf6075eabc965dc0593c0bf527ec2f79874e5ee",
+      "recordedBaseSha256": "782ad1183d7da6196eb82f8aec7d1ae5e0f54034da794c536f193a14a7e53a36"
+    },
+    {
+      "path": "engine/nvforever/src/settings.rs",
+      "sha256": "eb3d582b7db1e9f3c1d5a79ff3b241a772d4dd6197269eb65057ceb6e478024d",
+      "recordedBaseSha256": "b00a50a7b4a4ed8cc94e16bce4be745576a7ec0dacb4b63d7f508b50aca9a2eb"
+    },
+    {
+      "path": "schemas/script/functions.json",
+      "sha256": "af59e86855530622ac6ab39cd3eb0f982473496497649f46a13d0b9223d2874f",
+      "recordedBaseSha256": "eb681de0f1cfd4d2252add9842373459f02f56c5c54d5aba9c2a7d9f47cec1c4"
+    }
+  ],
+  "addedComparedWithRecordedBase": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/mac-report.md",
+      "sha256": "8c0e2243bf426d43f8cecac9d4936d3e0683b01dd427b15c121f930e2a4bf294"
+    },
+    {
+      "path": "BUILD-MAC.md",
+      "sha256": "3e70637712a8f42df45ce79229123769ac89f28e54cd01639eaae61db698ab82"
+    },
+    {
+      "path": "CREDITS.md",
+      "sha256": "2d4d34b57a4a3972983557fb67c06952472ef7dcb16aa706fafe10b3269dfa3e"
+    },
+    {
+      "path": "MOJAVE-NATIVE-SOURCE-NOTICE.md",
+      "sha256": "6593b61d219eb1167b6d46c8e21f7243c74827c6a3975ce1d592202dba867bb7"
+    },
+    {
+      "path": "RESEARCH.md",
+      "sha256": "c6dd859d898c3839cab1c0cf1edfdea51f99653f8de7a422d42ac18e92f68e04"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "c9d6d23fe11bc9c4661545636c54130cfdb02af54a16c3a5df7716ad770fa7a8"
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "f99f0e716d71219882dcbdf158c8bd16d21bcfb8ccddc9ac99dcbbc3b32e2f7c"
+    },
+    {
+      "path": "UPSTREAM-CONTRIBUTING.md",
+      "sha256": "7d7a7d21f7c9609f208b21c9abde1462cf54b6bdd5cd498fa6e5437f291b1b77"
+    },
+    {
+      "path": "UPSTREAM-LEGAL.md",
+      "sha256": "9d79431f16d79dd035b5ea278611dde4c4c4516c6c3286cc73e1e740a53df789"
+    },
+    {
+      "path": "UPSTREAM-README.md",
+      "sha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
+    },
+    {
+      "path": "assets/README.md",
+      "sha256": "d501d8df36e881f107fe9ef9039b1ddb972538ae672454e6a07cf5910844c5b0"
+    },
+    {
+      "path": "assets/mojave-native-landscape.png",
+      "sha256": "24aacb6673edaefbc69a5a6916b59d0f3d682f2020bc2930ce6c353061ebc0f4"
+    },
+    {
+      "path": "assets/mojave-native-neon-key-art.png",
+      "sha256": "24c79218bd38a0a7ea9aad2738464b962323b9d1d55aac64e65bbd354a0bf74b"
+    },
+    {
+      "path": "assets/mojave-native-neon.gif",
+      "sha256": "a88d87e1d70c746255083a4f30b900136fbd3c08185d956720f5672bf545b14e"
+    },
+    {
+      "path": "assets/mojave-native-roadmap.png",
+      "sha256": "5619baf0984bb45702e3352fc9e2ec6f1778948962160ee24ffa5762062c3831"
+    },
+    {
+      "path": "assets/prompts.json",
+      "sha256": "1cdb174c6b2a2dfd806cf957d90446c2895622ff06d02ff6c661e100b41e950c"
+    },
+    {
+      "path": "crates/fnv-combat/tests/gmst_consumer.rs",
+      "sha256": "84a530037735646971054ed1b1cfde466990788c99c143ed14b2c6c6a36e2aac"
+    },
+    {
+      "path": "crates/fnv-game/src/production/tests.rs",
+      "sha256": "fb31d2ad24b267370a5b959ef593740b9020572fce2eb8a492ff773b40835367"
+    },
+    {
+      "path": "crates/fnv-game/src/production.rs",
+      "sha256": "ed00c59eb314aaba8416c29d0b97dedc0cd55fcbf4ef89232907504fac6f4e53"
+    },
+    {
+      "path": "crates/fnv-game/tests/ttw_plugin_metadata.rs",
+      "sha256": "ae47067b1c387be7eba7ef817929bef2d8ca9eccb830c67e3c2d05dc4e181cff"
+    },
+    {
+      "path": "crates/fnv-script/tests/event_filter_arity.rs",
+      "sha256": "61d1e02c966e7394500e9d00960ec6ddb46fca34fa89e6d063d3d1fed5b429cd"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/accepted_time/tests.rs",
+      "sha256": "e2dfa09685ce30409337f2c67bd92f416ea65f1a2c6f886e1f1503adc230e482"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/accepted_time.rs",
+      "sha256": "e9dcb4d80ca79e58d8df9c03cbce3c1ddfb78293e77637dd33debec8458497a4"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/escrow/tests.rs",
+      "sha256": "38af81a09589f4af1cc43fbad07e15f206541b006b216145d2de1d6a2c7ded2d"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/escrow.rs",
+      "sha256": "bdfe63d8ab0a93d494c0361e0c8ffd6ac154cbcc443a1149066b46d0f70b028c"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/production/tests.rs",
+      "sha256": "06f0404ba69e80629b37b90c96cbbd1d501fda4c656c3c139338536cc6e26fc4"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/production.rs",
+      "sha256": "8a89e126437d94a9aeb87d753fd7798224d29303856464b3cc85c23b042ecec4"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/transfer_exact/tests.rs",
+      "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/transfer_exact.rs",
+      "sha256": "b183a1cd3bb0ca8839823f757244543c4ae677910d6d7d38842b3472327e072b"
+    },
+    {
+      "path": "docs/spec-notes/accepted-work-time.md",
+      "sha256": "1188ce654b5938e25d0c0a0c44e2698def7d153298b3944b3b9be031aa4db663"
+    },
+    {
+      "path": "docs/spec-notes/ini-data-relative-paths.md",
+      "sha256": "abe71ffca5214fcf19adc672be4c24465ea4997efde7940032093b1019583aa7"
+    },
+    {
+      "path": "docs/spec-notes/mac-render-diagnostics.md",
+      "sha256": "b78329093759ef799a8a0193bd835bb2fa7d92aa82c3b5e951688860ee51ae30"
+    },
+    {
+      "path": "docs/spec-notes/market-pricing.md",
+      "sha256": "8783d12d69141153a7d73f5fda78a0c014bc2dbf42cef38081ed58dfc5e82b86"
+    },
+    {
+      "path": "docs/spec-notes/native-large-address-query.md",
+      "sha256": "5f82ec1f25a8fe6ed78670513fc3a2dde8a3d1e9621771a23da9471c743c5170"
+    },
+    {
+      "path": "docs/spec-notes/ns-assignment-macros.md",
+      "sha256": "e18ffd238c44849a015cb6e20b68d66d0add741d8b624a70d1fa762262c0c626"
+    },
+    {
+      "path": "docs/spec-notes/persistent-work-orders.md",
+      "sha256": "36b67687c546e594d34b603ee8bb3b67b647878ca69b3f475d718fb8a1f84b5f"
+    },
+    {
+      "path": "docs/spec-notes/presentation-game-settings.md",
+      "sha256": "a302b10c82b170aaaf6d9de7533bd3baf0e1c936d995798f309840d9757bd7e4"
+    },
+    {
+      "path": "docs/spec-notes/production-save.md",
+      "sha256": "4d2f29a009732851aae3d76fe7396515cacc106d48d62ef8341d0c1c70b26ed0"
+    },
+    {
+      "path": "docs/spec-notes/production-transactions.md",
+      "sha256": "b76f2aa39791069f40b9ce6ed88995652c49a34b9e3a8dd200ec082d87dd315a"
+    },
+    {
+      "path": "docs/spec-notes/repeated-event-filter-arguments.md",
+      "sha256": "cc8568cb3877a25bb0ead1d92db75362c3de61d4296120ad6b91f12b0c820a94"
+    },
+    {
+      "path": "docs/spec-notes/selected-gameplay-gmst.md",
+      "sha256": "1a5bce11921a2945cc1c2a09b2cf72d036ad0eb184f746455550de0b52c67690"
+    },
+    {
+      "path": "docs/spec-notes/startup-game-settings.md",
+      "sha256": "26b1ef2c924133ee3346340eb181633b5dcce4efe098a5c987e8ae26b1a79df7"
+    },
+    {
+      "path": "docs/spec-notes/storage-transfers.md",
+      "sha256": "3ac9d064f8ccc3f41ed0a5a6c8535dd1a80d116e80375ecf163d96cf581c48f6"
+    },
+    {
+      "path": "docs/spec-notes/ttw-child-world-radio.md",
+      "sha256": "d9c240ca51993f16624f20ca3569da10f2cd98f41ef741d64279cf1b57148e0a"
+    },
+    {
+      "path": "docs/spec-notes/ttw-plugin-metadata.md",
+      "sha256": "6a0bd1c2d5878e5fe580e9e38ee9aca9c1c736c6478a8625e98576684fe65333"
+    },
+    {
+      "path": "engine/nvf-play/src/audio_out/capture.rs",
+      "sha256": "6481cf3959d21e769bc567651a6e56a44fa0f205f0e31732e3012e7f4c4a128b"
+    },
+    {
+      "path": "engine/nvf-play/src/crafting/production_aid/tests.rs",
+      "sha256": "2541d4497998e3966d964fe794b57e1d2d28fdc4a31e50409d20789f303fb5a7"
+    },
+    {
+      "path": "engine/nvf-play/src/crafting/production_aid.rs",
+      "sha256": "b88bec34f66a8a11a5376dd3bc0664a2636535b927f510fbe7fa0243b57569f6"
+    },
+    {
+      "path": "engine/nvf-play/src/crafting/transaction_tests.rs",
+      "sha256": "4098c6218da74dd9a05ca2af877bd17ca6b4887a312965cff00a055508650a25"
+    },
+    {
+      "path": "engine/nvf-play/src/game_settings.rs",
+      "sha256": "10a458ae1bedf67cdc1a25b9e33c948a8c6ffba4921ded7af74708340607eab1"
+    },
+    {
+      "path": "engine/nvf-play/src/hud_scale.rs",
+      "sha256": "3821d683bb3c63745e86762fe82d77384b4a0e592cce1b89e129c5231e9e9ca3"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/economy.rs",
+      "sha256": "40fb37ed1e7ef3ef6ddf23fc588cd671b6eb029e1303be6518ac966f40fd3af9"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/market_runtime.rs",
+      "sha256": "9136d86027ae59fb2decdbdca32992b41550b7e479ba27f6a0644ad9c72941f6"
+    },
+    {
+      "path": "engine/nvf-play/src/presentation_settings.rs",
+      "sha256": "1ecb8d247ebf44b58f8bfc7ca6504f5658e00073e3aad123d99610a0d510344e"
+    },
+    {
+      "path": "engine/nvf-play/src/radio/ttw_tests.rs",
+      "sha256": "4faf35ec5b4eed47230bac7f2d9c6dd80cd35993223bb6975f653342abbbd39c"
+    },
+    {
+      "path": "engine/nvf-play/src/save/production_tests.rs",
+      "sha256": "5725fa3a5cc8a8c86f1ac87c33d602964ccd08d6841c8b54b8e9864fd967d7c6"
+    },
+    {
+      "path": "engine/nvf-play/src/script/restore_tests.rs",
+      "sha256": "95b1c9404f9a798474bfe109bf5390a0bc8a0baa7b885a7748a3c729fabfe489"
+    },
+    {
+      "path": "engine/nvforever/src/memory_budget/mac.rs",
+      "sha256": "f23e94cfd479d153938839c76b38c9cec7b9a10c55df4e5abb8d8e1bcade7a26"
+    },
+    {
+      "path": "mod-credits-ledger.json",
+      "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
+    }
+  ],
+  "binaryDistributed": false,
+  "freshExportBuildVerified": false,
+  "fullGameplayAccepted": false
+}

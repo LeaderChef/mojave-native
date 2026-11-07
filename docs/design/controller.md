@@ -1,0 +1,165 @@
+# Controller support (design)
+
+The owner asked on 2026-10-16 for a controller layer: "both keyboard and mouse and the ability
+to use a controller depending on a setting under controls", with prompts that follow the
+device ("Press E) to open could become Press A) if on an xbox controller") and the base
+game's defaults. Facts about the original are in docs/spec-notes/controls.md §2.1. Code:
+`engine/nvf-play/src/pad.rs` (the controller), `bindings.rs` (the bindings and
+`ControlInput`), `pause.rs` (the Controls tab), `aim_assist.rs` (§5).
+
+## 1. One setting picks the device
+
+`Input Device` in `[Controls]` of `NVForever.ini`, `Keyboard and Mouse` (the default) or
+`Controller`, and the first row of the settings page's Controls tab. Every control is
+asked through `ControlInput`, which answers from the keyboard and mouse or the controller
+as the setting says, never both [design: the owner's "depending on a setting"]. Esc and
+the console's key keep working with a controller chosen, so a player is never locked
+out. Any connected controller counts (Bevy's gilrs backend, on by default); its arrival
+and departure are logged (`controller: … connected`).
+
+## 2. Defaults are the game's
+
+Each control's controller input comes from the game's own `[Controls]` byte `JJ`
+(spec-notes/controls.md §2.1, read as hypothesis until checked in the original):
+
+| Control | Button | | Control | Button |
+|---|---|---|---|---|
+| Forward / Back / Slide Left / Right | left stick | | Vats | RB |
+| Activate | A | | Toggle POV | LB |
+| Menu Mode (Pip-Boy) | B | | Rest (Wait) | Back |
+| Ready Item | X | | Crouch/Sneak | LS (press) |
+| Jump | Y | | Grab | RS (press) |
+| Block (aim) | LT | | Hotkey1, Ammo Swap, Hotkey3, Hotkey4 | D-pad up, right, down, left [design] |
+| Use (attack) | RT | | Run, Always Run, Auto Move, Hotkey5–8, saves | none |
+
+The right stick looks at `fXenonHorizLookSpeed` 1500 and `fXenonVertLookSpeed` 1200,
+read as milliradians a second at full push [hypothesis], pushed a little turning slowly
+(the push squared) [design]. The left stick moves the way it is pushed; under 0.6 of a
+full push the player walks while Always Run is on [design]. A stick pushed past half way
+counts as its direction's button (for Auto Move's stop and getting up from a seat).
+`Invert Y` serves both mouse and stick.
+
+The buttons are kept in `[Controller]` by the controls' INI names (`Activate=A`,
+`Forward=Left Stick Up`, `Hotkey5=None`) with `Look Speed Horizontal` and `Look Speed
+Vertical`; the Controls tab rebinds them (the next controller button pressed, a swap with
+the control that had it, Start cancels, Delete clears, Defaults puts back the game's).
+Start cannot be bound.
+
+## 3. Menus and prompts
+
+- Start is Esc (the pause menu) everywhere. In a menu the D-pad is the arrow keys, A
+  Enter, B Esc, LB and RB, LT and RT Page Up and Page Down: the menus read keys, and the
+  controller stands in for them (`pad::menu_keys`), pressing a key only as its button
+  goes down.
+- Each menu's own buttons follow the original's menu files (`_xbox_button` of the button
+  tiles [documented: the vanilla menu files]) and press the key NVForever's menu gives
+  that control (`pad::menu_buttons`, keyed by the open menu's MenuMode code); a menu's
+  own button wins over the shared ones above (#1393):
+
+  | Menu | Buttons |
+  |------|---------|
+  | Container | X Take All |
+  | Barter | X Accept |
+  | Pip-Boy (every page) | LT / RT the previous / next page (STATS, ITEMS, DATA, round again); D-pad left / right the tabs [design: owner 2026-11-02] |
+  | Pip-Boy ITEMS | X Drop (`pipboy::items`, not while "How many?" is up), Y Repair, LB Mod |
+  | Pip-Boy STATS | status tab: A Stimpak, Y Doctor's Bag, X Rad-X; General tab: X switch lists |
+  | Pip-Boy DATA | Y Challenges (Notes tab) |
+  | Crafting | X Accept |
+  | Repair services | X Repair All |
+  | Level up, traits | Y Reset, X Continue, B Back |
+  | Tag skills | Y Reset, X Done |
+  | Lockpicking | X Force Lock |
+  | Blackjack | A Hit, Y Double/Deal, RT Split/Raise, LT Switch/Lower, X Surrender/Max Bet, B Stay/Exit |
+  | Roulette | A Place, Y Remove, X Finish, LT Lower, RT Raise, B Exit |
+  | Slot machine | A Spin, RT Raise, LT Lower, Y Payouts, X Max Bet, B Exit |
+  | Tutorial | RT Next, LT Previous |
+
+  On the ITEMS page the triggers are the pages and LB is Mod, so of the shared paging
+  buttons only RB (Page Down) is left there; the D-pad steps the rows both ways.
+  On the STATS status tab X is Rad-X, which only acts on the RAD view; on CND and EFF it
+  does nothing.
+
+  Not followed: the ITEMS page's RB Hotkey (the hotkeys are held digit keys), RadAway's
+  A on the RAD view (not usable from the STATS page), caravan (its menu files are not
+  read yet).
+- On the Pip-Boy DATA page's maps the right stick moves the cursor (the highlight box),
+  pushed past an edge it pans the map, and the left stick's up and down zooms in and out
+  smoothly while held [observed: the original; the speeds are design], built in
+  `pipboy/data.rs` (`stick_cursor`, `scroll_map`, `stick_zoom`).
+- The prompt under the crosshair names the Activate control's own key ("E)") or, with a
+  controller, its button ("A)") (`Bindings::prompt`). The original shows the button's
+  picture there (`&xbuttona;`, `general_button_a.dds`); letters are the first step.
+
+## 4. Rumble
+
+The original rumbles the pad by its `bGamePadRumble` switch (`1` in the owner's
+`FalloutPrefs.ini` [observed 2026-10-16]); how strongly and on what is not captured, so
+everything below is [design] (combat is not a parity target). Built in
+`engine/nvf-play/src/rumble.rs`.
+
+- **When:** only while Controller works the controls and `Rumble=1` in `[Controller]` of
+  NVForever.ini (default 1, the game's switch). With Controller chosen the settings page's
+  Controls tab has a last row **Rumble** (ON/OFF). Each rumble is a Bevy
+  `GamepadRumbleRequest` sent to every connected controller (gilrs plays it); pulses of one
+  frame are joined (the strongest of each motor, the longest). The first of each kind is
+  logged: `rumble: first shot (strong …, weak …, … s) on N controller(s)`.
+- **The player fires** (each `ShotFired` of the player; melee swings fire no projectile
+  and do not rumble): by the weapon's WEAP weight `w` (pounds), `h = min(w / 20, 1)`:
+  strong `0.7 h`, weak `0.3 + 0.4 h`, `0.07 + 0.13 h` s. A 9mm pistol (2) is a short buzz,
+  the minigun (25) and Fat Man (30) the full thump.
+- **The player takes damage** (each `ActorHit` on the player that took health): by the
+  share `s` of the maximum health it took, `t = min(4 s, 1)`: strong `0.35 + 0.65 t`, weak
+  `0.5`, `0.15 + 0.30 t` s.
+- **A hard landing** (the physics step's touchdown speed; fall damage is physics.md §6.12):
+  from 600 units/s (a drop of about 260 units under gravity 687 units/s²; a jump lands at
+  about 290), `t` up to 1 at 1200 (a drop of about 1050): strong `0.45 + 0.55 t`, weak
+  `0.3`, `0.15 + 0.25 t` s.
+- **An explosion near the player** (each `ExplosionFx`): full inside the EXPL's radius,
+  fading to none 1400 units (about 20 m) beyond it, `t`: strong `t`, weak `0.6 t`,
+  `0.25 + 0.35 t` s; none under `t = 0.05`.
+
+## 5. Aim assist
+
+Built in `engine/nvf-play/src/aim_assist.rs` (#1196, #1197). Controller only: with
+Keyboard and Mouse chosen nothing changes, and the mouse never gets either part. All of it
+is [design] (combat is not a parity target): the original's auto aim (`fAutoAim*`) bends
+shots toward a target near the crosshair and leaves the view alone [documented: GECK wiki
+"Auto Aim Settings", owner's export]; NVForever takes its range and on-target area from
+those settings so a mod that changes them changes this too.
+
+- **The target**, shared by both parts: a living actor drawn now, hostile to the player
+  (fighting it, or would attack it: the rule that turns the crosshair red), within
+  `fAutoAimMaxDistance` (1800) of the crosshair, inside a cone around the crosshair whose
+  radius is `fAutoAimScreenPercentage` (10) % of the screen's width at a 75° field of view
+  (about 8.7°) [hypothesis: how the original measures the percentage], and seen: a ray from
+  the crosshair to its aim point meets it first, passing what shots pass (water, triggers,
+  NPCs' walking capsules: a capsule is not the body), so no lock through walls. The nearest to the
+  crosshair by angle wins; the aim point is the middle of its posed torso part, else 80
+  units over its feet.
+- **Slowdown** (#1196): while the crosshair is within 40 units of a target's aim point (as
+  seen from the crosshair), the right stick's turn is scaled by `1 − 0.75 × strength`
+  (45% slower at the default 0.6), eased in and out over 0.1 s. Friction only, no pull.
+- **Lock-on** (#1197): when aiming down the sights begins (LT with the weapon out) and a
+  target is picked, the view turns toward its aim point for 0.3 s, easing in with a time
+  constant of 0.08 s / strength and at most 4 × strength radians a second, following the
+  target as it moves. It lets go at the end, when the target dies or leaves sight, range or
+  1.5 times the cone, when aiming ends, or when the right stick is pushed at least 0.7 of
+  the way against the pull. A new lock needs 0.6 s since the last began.
+- **Not while** the free camera, the weapon wheel, a kill camera, VATS mode, an animation
+  driving the view, furniture holding the player, a script's look lock or a circling or
+  detached camera has the look, without the cursor grabbed, or outside play.
+- **Settings**: the settings page's Controller group, kept in `[Settings]` of
+  NVForever.ini: `aim-assist` (on/off, on), `aim-slowdown` and `aim-lock` (strengths 0 to
+  1, 0.6 each; 0 turns that part off).
+- The log says when a lock starts and how it ends (`aim assist: lock-on to 0x…`).
+
+## 6. Not built yet
+
+- The button pictures from `Interface\Shared\Button\` in place of letters.
+- The rest of the menus' own controller buttons (§3's "not followed"), and hints in menus ("E) Exit", lockpick, Pip-Boy, container)
+  following the device.
+- A pointer moved by a stick for the mouse-only parts of menus still left: the dialogue
+  list (the Pip-Boy map's stick cursor and zoom are built, §3).
+- Fast travel from the World Map on a controller: the original's A on a marker; the map
+  asks to travel only on a mouse click (`pipboy/data.rs`).
+- Several controllers told apart; the first pressed is not singled out.

@@ -1,0 +1,110 @@
+# Crafting: recipes and the recipe menu
+
+The workbench, the campfire and the reloading bench open one menu, the recipe menu
+(playtest list 5 item 72). Code: `crates/fnv-game/src/crafting.rs` (records, the check,
+`ShowRecipeMenu`), `engine/nvf-play/src/crafting.rs` (the menu).
+
+## 1. The records
+
+**RCPE, a recipe** [documented: GECK wiki "Recipe Entry" (owner's export); xEdit
+`wbDefinitionsFNV` RCPE for the layout]:
+
+| Subrecord | Meaning |
+|---|---|
+| `EDID` | Editor ID |
+| `FULL` | The name shown in the menu |
+| `CTDA` (any number) | Visibility conditions: a recipe whose conditions fail is not listed |
+| `DATA`, 16 bytes | Skill (an actor value code, i32, −1 for none), level (u32), category (FormID), subcategory (FormID) |
+| `RCIL` + `RCQY` | An ingredient (FormID) and its quantity (u32) |
+| `RCOD` + `RCQY` | An output (FormID) and its quantity (u32) |
+
+[observed: FalloutNV.esm has 105 RCPE; every DATA is 16 bytes; 263 RCIL and 144 RCOD,
+and 407 RCQY, one after each. With every add-on loaded there are 291 recipes.]
+
+**RCCT, a recipe category** [documented: GECK wiki "Recipe Entry"; xEdit RCCT]: `EDID`,
+`FULL`, `DATA` (one byte of flags, bit 0 set for a subcategory). FalloutNV.esm has 10
+[observed]: the categories Workbench, Campfire and Reloading Bench, and the subcategories
+Aid, Ammo, Breakdown, Chems, Food, Misc and Weapons.
+
+The wiki says that the skill NONE means the recipe can be crafted at any skill and the
+menu shows no skill requirement. It also says a recipe "will only become usable once the
+player has all the listed ingredients" [documented].
+
+## 2. Opening the menu
+
+`station.ShowRecipeMenu category` (alias `Craft`) takes a category or a subcategory
+[documented: GECK wiki ShowRecipeMenu, whose example is `EDE1REF.Craft AmmoSubRecipes`].
+The menu lists the recipes whose category or subcategory matches. The scripts of the
+benches' activators call it. The recipe menu is MenuMode 1077 [documented: GECK wiki
+GetMenuTargetRef, "1077 The actor whose skills are used for crafting"]. It is an engine
+menu: scripts see it as open until the player leaves it.
+
+## 3. The menu
+
+[observed: the owner's screenshots in C:\fnv-private\Crafting; documented: the layout in
+`menus\recipe_menu.xml`, see the module notes]
+
+- The list: the recipes sorted by name. The label is the name, with the output count in
+  brackets after it when more than one is made ("Antivenom (2)"). NVForever's campfire
+  list starts "Antivenom (2), Atomic Cocktail (4), Battle Brew, Bighorner Steak, Black
+  Blood Sausage, Black Coffee", the same as the original's [observed, smoke `crafting`].
+- The arrows beside "RECIPES" filter the list by subcategory [hypothesis].
+- For the chosen recipe, at the right: "Made at ..." with its category's name; "Skill
+  Requirement" as "<skill> (<player's value>/<level>)"; "Ingredients" as
+  "<name> (<have>/<need>)".
+- Under the list: the first output's WG and VAL.
+- Accept A) and Exit X).
+- **The shade** (2026-10-19) [observed: the owner's screenshot at 1920 x 1080,
+  C:\fnv-private\references\crafting_repair\recipes.jpg; documented: `RM_Background`,
+  solid black at brightness 128 and `_background_fill_alpha`, 32 of 255 (globals.xml),
+  1144 x 970 from (-40, -105)]: only the frame's lines over the blurred world (outer
+  frame x 407 to 1559, y 113 to 924), no dark box. NVForever draws the sheet at the
+  file's 32 of 255 black, which leaves no visible edge (it was the other menus' 0.75, a
+  hard box well past the frame). The blur is not built.
+- Making a recipe once removes its ingredients from the player and adds its outputs.
+  Each output gets an "added" line in the corner.
+- **The output's picture** (2026-10-19) [documented: `RM_ItemIcon`, 22 right of the list
+  box's left and 472 below its top, 256 square]: the first output's ICON.
+- **Its effects** (2026-10-19) [documented: the item stats display (`RM_ItemData`) has an
+  EffectsInfo card; hypothesis: drawn as a line "EFFECTS" with the text under the WG and
+  VAL cards, written as the Pip-Boy's ITEMS page writes effects]: an aid item's own
+  effects, or an apparel's or a weapon's enchantment's ("HP +40, RAD -10").
+- **Several at once** (2026-10-19) [documented: `menus\quantity_menu.xml`, the prompt the
+  other menus use; hypothesis: the recipe menu asks it]: when the player has the
+  ingredients (and the skill) for more than one making, Accept opens "How many?" from 1
+  to the most the scarcest ingredient allows; Left/Right, the wheel, the prompt's arrows
+  or a press on its meter set the amount, Enter or A makes that many (each output's
+  "added" line gives the total; Items Crafted counts each making), E or Esc goes back to
+  the list.
+
+Not built:
+- the "Made at" category for a recipe whose category differs from the bench's;
+- crafting experience (whether the original gives any is not known).
+
+## 4. Checked batch quantities
+
+[design, J6 2026-11-06] `RecipeDef::batch(times)` describes one positive batch
+without changing the world. It returns `None` for zero makings, checked
+multiplication overflow, or a combined input/output item quantity above the
+inventory API's positive `i32` range. Zero-count rows have no effect.
+
+Repeated ingredient rows refer to the same finite stock: two rows requiring two
+and three of an item require five, not either two or three. A `RecipeBatch`
+combines these input rows in first-appearance order. `missing` and
+`times_possible` use that same combined requirement; large `i64` stock
+observations are bounded, never truncated to the low `u32` bits. An unsupported
+batch is `Missing::InvalidBatch`, not an empty list permitting production.
+
+Output rows keep their authored order and remain separate, including repeated
+FormIDs: a leveled output must retain its independent resolution/roll. Their
+combined same-item count is still checked against `i32::MAX` before authorizing
+the batch. These are recipe quantity checks, not proof that the live destination
+has room or that resolved leveled outputs fit. The final inventory exchange must
+validate the live ingredients, resolve outputs and commit atomically; checking a
+batch alone consumes, produces and pays nothing.
+
+The public core helper returns the maximum ingredient-supported batch count
+within these per-item input/output bounds, ignoring skill and visibility. If no
+positive input or output row imposes a bound it keeps the original
+`u32::MAX` fallback. The engine menu's separate no-input policy limits its offer
+to one making; the core does not invent a new UI or NPC production policy.
