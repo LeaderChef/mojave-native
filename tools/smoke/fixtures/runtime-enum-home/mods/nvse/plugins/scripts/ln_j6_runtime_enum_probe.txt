@@ -1,0 +1,10 @@
+; Compile the actual file, then execute it through the game's normal UDF path.
+ref helper
+int result
+Player.SetAV Health 237
+Player.SetAV Survival 53
+let helper := CompileScript "j6/runtime-enum.txt"
+let result := Call helper
+if eval result == 2
+    Print "J6 runtime enums: health and skill matched through compiled UDF"
+endif

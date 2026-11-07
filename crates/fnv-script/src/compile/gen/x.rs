@@ -551,15 +551,31 @@ impl Gen<'_> {
         let single = p.peek().is_some_and(|t| matches!(t.kind, XKind::Word | XKind::Str))
             && !p.peek2().is_some_and(|n| n.kind == XKind::LBracket || n.is(XKind::Op, "->"));
         if single && *enc != ParamEnc::Value {
+            if let ParamEnc::Enum(kind) = enc {
+                let t = p.peek()?;
+                let code = t.text.parse::<u16>().ok().or_else(|| self.enums.get(kind).and_then(|m| m.get(&t.text.to_ascii_lowercase())).copied());
+                if let Some(code) = code {
+                    p.next();
+                    return Some(XExpr::Enum { code });
+                }
+                // [documented: runtime-enum-arguments.md] Override blocks may pass
+                // a runtime integer instead of a literal enumeration name. Keep
+                // the token for normal expression resolution, including its errors.
+                if self.co && t.kind == XKind::Word {
+                    let was = std::mem::replace(&mut self.in_arg_any, false);
+                    let value = self.xexpr(p, min);
+                    self.in_arg_any = was;
+                    return match value {
+                        Some(XExpr::Axis { .. }) => self.xerr("unknown_enum_name", format!("{kind}: {}", t.text)),
+                        value => value,
+                    };
+                }
+                let name = t.text.clone();
+                p.next();
+                return self.xerr("unknown_enum_name", format!("{kind}: {name}"));
+            }
             let t = p.next()?;
             return match enc {
-                ParamEnc::Enum(kind) => {
-                    let code = t.text.parse::<u16>().ok().or_else(|| self.enums.get(kind).and_then(|m| m.get(&t.text.to_ascii_lowercase())).copied());
-                    match code {
-                        Some(code) => Some(XExpr::Enum { code }),
-                        None => self.xerr("unknown_enum_name", format!("{kind}: {}", t.text)),
-                    }
-                }
                 ParamEnc::Axis => match t.text.to_ascii_uppercase().as_str() {
                     a @ ("X" | "Y" | "Z") => Some(XExpr::Axis { c: a.chars().next().unwrap_or('X') }),
                     _ => self.xerr("bad_axis", t.text.clone()),

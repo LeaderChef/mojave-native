@@ -5,10 +5,10 @@ No public playable release yet.
 | Area | Evidence / state |
 | --- | --- |
 | Architecture | Local release build identifies as Mach-O 64-bit ARM64 |
-| Latest local candidate | SHA256 `dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe` |
+| Latest local candidate | SHA256 `3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9` |
 | Latest candidate gameplay | Focused player acceptance incomplete for this exact build |
 | Mouse and sound updates | Adapted merged maintainer PRs [1699](https://github.com/LootJunkieAzza/NVForever/pull/1699) and [1724](https://github.com/LootJunkieAzza/NVForever/pull/1724): unused sound data can be released; finer sensitivity down to 5% |
-| Integrated-source checks | Four inline argument regressions (three red before) now pass; 2289 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
+| Integrated-source checks | Four inline argument regressions (three red before) now pass; 2292 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
 | Bounded runtime | Owned base game + nine add-ons ran on M4 Pro/Metal; normal exit, zero GPU validation errors, no window activation |
 | Session recipe views | Actual MIC Drinks menu plus authored runtime labels/filter checked in a windowless Metal run; no mod bodies rewritten |
 | Latest sound evidence | 28.076s private silent mixer output; finite samples, peak 0.721925, no values over full scale; physical output/latency not checked |
@@ -55,3 +55,9 @@ The new engine runs scripts with the catalogue in the relocated application,
 without using the earlier private development schema paths. All 38 launcher-core
 checks pass. This does not extend earlier mod/save/audio results to this exact
 new executable, and is not a public playable release or second-machine proof.
+
+The [runtime-enum argument repair](docs/handoff/mojave-runtime-enums-2026-11-07.md) reduces failures in the unchanged
+253-plugin source selection from 147 to 144, with no new failing unit. Original
+UI Plus and Nuclear Sunset helpers return/store the expected actor values in six
+private native calls. The new ARM64 build passes its silent windowless UDF fixture;
+this is not complete mod/UI, human gameplay or current-binary save/reload acceptance.

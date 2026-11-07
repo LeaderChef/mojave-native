@@ -1,0 +1,50 @@
+{
+  "format": "mojave-native.runtime-enum-arguments/1",
+  "date": "2026-11-07",
+  "issue": "https://github.com/LeaderChef/mojave-native/issues/4",
+  "architecture": "Mach-O 64-bit ARM64",
+  "binarySHA256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
+  "beforeRedTests": {
+    "passed": 2,
+    "failed": 1
+  },
+  "targetedTestsPassed": 3,
+  "workspaceTests": {
+    "passed": 2292,
+    "failed": 0,
+    "ignored": 8,
+    "testBinariesOrDocSuites": 140
+  },
+  "rootAllTargetReleaseClippy": true,
+  "engineAllTargetReleaseClippy": true,
+  "selectedPlugins": 253,
+  "winningUnits": 200463,
+  "selectedSourceUnits": 3603,
+  "compiledBefore": 3456,
+  "compiledAfter": 3459,
+  "failedBefore": 147,
+  "failedAfter": 144,
+  "newCompilerFailures": 0,
+  "originalHelperCallsExecuted": 6,
+  "originalUIPlusAndNuclearSunsetHelperResultsMatched": true,
+  "originalModFilesUnchanged": true,
+  "smokePythonTests": {
+    "run": 74,
+    "skipped": 4,
+    "failed": 0
+  },
+  "windowlessMetalFixturePassed": true,
+  "runtimeSeconds": 23.46,
+  "noForegroundActivation": true,
+  "gpuValidationErrors": 0,
+  "initialRestrictedGPUAccessFailed": true,
+  "fixtureSetupAttemptsPreserved": true,
+  "fullUIAccepted": false,
+  "fullNuclearSunsetAccepted": false,
+  "hardwareAudioVerified": false,
+  "presentedFPSVerified": false,
+  "currentBinarySaveReloadVerified": false,
+  "secondMachineVerified": false,
+  "multiplayerVerified": false,
+  "gameDataIncluded": false
+}
