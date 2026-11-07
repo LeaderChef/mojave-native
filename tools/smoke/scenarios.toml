@@ -14,3 +14,17 @@ expect = [
   "script runner: ln_j6_animation_groups_probe.txt ran (new game)",
   "J6 animation groups: documented names compiled and dispatched",
 ]
+
+[[scenario]]
+name = "movement-alias-source"
+source = "[documented] GECK Function Alias and MoveTo; docs/spec-notes/moveto-marker-alias.md. Own ScriptRunner source exercises the alias and checks the native actor-to-marker distance. Does not assert quest completion or visible gameplay."
+areas = ["scripts", "native-mac"]
+paths = ["schemas/script/functions.json", "crates/fnv-script/tests/movement_aliases.rs", "tools/smoke/fixtures/movement-alias-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/movement-alias-home" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music", "--no-messages"]
+run_seconds = 20
+expect = [
+  "script runner: ln_j6_movement_alias_probe.txt compiled",
+  "script runner: ln_j6_movement_alias_probe.txt ran (new game)",
+  "J6 MoveToMarker: actor reached marker plus offset",
+]
