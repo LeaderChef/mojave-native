@@ -1,0 +1,15 @@
+# Native ignore-armor capability
+
+[documented] The GECK Weapons page describes WEAP's `Ignores Normal Weapon Resistance` flag as bypassing the target's armor, and identifies JIP's `bIgnoreDTDRFix` as its New Vegas fix: https://geckwiki.com/index.php/Weapons . The JIP author's public description additionally says DT is subtracted before DR is applied: https://www.nexusmods.com/newvegas/mods/58277?tab=description . This is behavioral documentation, not extender implementation material.
+
+[observed] `fnv_combat::damage::hit` already sets DT and DR to zero for that WEAP flag. For ordinary weapons it applies weapon/ammo/perk damage modifiers before subtracting DT (with the native damage floor), then scales the remainder by DR. The playable player's melee, NPC melee and projectile consumers call this function. Native optional-patch dispatch nevertheless reports this named behavior as absent.
+
+[observed, private owned data] A read-only 18-plugin TTW consumer found 18 flagged winning weapons, including automatic melee and unarmed records. Their damage was identical against unarmored and DT/DR-protected targets. Ordinary melee/unarmed controls retained armor reduction. The actual script query returned zero. No owned records, extracted stats or private probe payloads are distributed.
+
+[hypothesis/design] Expose this already-implemented native behavior as an always-on `bIgnoreDTDRFix` capability, case-insensitively. An explicit zero request warns and leaves it active, as with the native clock and need-floor invariants. Do not add an unused mutable switch, alter damage formulas merely to support the query, claim an external plugin/version, or change any dependency warning. Unsupported patch names continue to return zero.
+
+[observed validation, 2026-11-07] The three focused authored tests first exposed the reporting mismatch (two damage tests passed, one script-dispatch test failed), then passed after the dispatch repair. Required release workspace checks passed: 2,314 tests, zero failures, eight ignored; root and engine Clippy passed with warnings denied; the native ARM64 engine built. The smoke runner Python suite passed 74 tests with four skips.
+
+[observed validation, private owned data] The affected consumer was repeated once: all 18 flagged winning weapons bypassed DT/DR as before, ordinary melee/unarmed controls still reduced damage, and the real compiled script query now returned one. An isolated silent four-second M4 Pro/Metal GN smoke confirmed the query and explicit-disable warning with a normal exit and no GPU validation errors. No original game/mod records were changed or published.
+
+[limits] This exposes the documented armor-bypass and DT-before-DR contract already implemented natively. It does not establish parity with every JIP release (including armor-condition wear), suppress dependency warnings, or claim full TTW, rendered combat, long-session or multiplayer acceptance. External Stewie/ROOG versions remain absent. The installed app and Dock target were not replaced by this source change.

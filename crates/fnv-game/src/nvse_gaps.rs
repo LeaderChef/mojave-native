@@ -1441,9 +1441,11 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
         // do not introduce a switch that reinstates the rounding bug. This is not
         // a claim that the other optional patches or JIP itself are implemented.
         // Scheduled scripts also remain eligible after VM errors; this invariant
-        // is always on (native-script-error-recovery.md). Unknown names stay unsupported.
+        // is always on (native-script-error-recovery.md). Native combat already honors
+        // WEAP armor bypass and DT-before-DR (native-ignore-armour-capability.md).
+        // Unknown names stay unsupported; none of these report an external plugin.
         "getoptionalpatch" => yes(match text(args, 0).to_ascii_lowercase().as_str() {
-            "bgamedayspassedfix" | "bnofailedscriptlocks" | "bhardcoreneedsfix" => true,
+            "bgamedayspassedfix" | "bnofailedscriptlocks" | "bhardcoreneedsfix" | "bignoredtdrfix" => true,
             "bcreaturespreadfix" => g.gaps.creature_spread_fix,
             _ => false,
         }),
@@ -1455,6 +1457,8 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
                 tracing::warn!("SetOptionalPatch: bNoFailedScriptLocks is an always-on native scheduler invariant; a disable request cannot permanently lock scripts after an error");
             } else if patch.eq_ignore_ascii_case("bHardcoreNeedsFix") && matches!(args.get(1), Some(XVal::Num(0.0))) {
                 tracing::warn!("SetOptionalPatch: bHardcoreNeedsFix is an always-on native need-floor invariant; a disable request cannot restore invalid need accumulation");
+            } else if patch.eq_ignore_ascii_case("bIgnoreDTDRFix") && matches!(args.get(1), Some(XVal::Num(0.0))) {
+                tracing::warn!("SetOptionalPatch: bIgnoreDTDRFix is an always-on native armor invariant; a disable request cannot restore broken armor bypass or DR-before-DT ordering");
             } else if patch.eq_ignore_ascii_case("bCreatureSpreadFix") {
                 match args.get(1) {
                     Some(XVal::Num(0.0)) => g.gaps.creature_spread_fix = false,

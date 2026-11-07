@@ -106,3 +106,14 @@ expect = [
   "J6 prefixed Set caller and local target matched",
 ]
 forbid = ["J6 prefixed Set probe failed"]
+
+[[scenario]]
+name = "native-ignore-armour-capability"
+source = "[documented] JIP optional patch armor-bypass and DT-before-DR behavior; docs/spec-notes/native-ignore-armour-capability.md. Authored combat consumers verify damage separately; this native GN probe checks actual script dispatch and always-on reporting."
+areas = ["combat", "scripts", "native-mac"]
+paths = ["crates/fnv-game/src/nvse_gaps.rs", "crates/fnv-game/tests/native_ignore_armour_capability.rs", "crates/fnv-combat/tests/native_ignore_armour.rs", "tools/smoke/fixtures/ignore-armour-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/ignore-armour-home", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music"]
+run_seconds = 4
+expect = ["J6 native ignore armor: verified capability stays active", "bIgnoreDTDRFix is an always-on native armor invariant"]
+forbid = ["J6 native ignore armor probe failed"]

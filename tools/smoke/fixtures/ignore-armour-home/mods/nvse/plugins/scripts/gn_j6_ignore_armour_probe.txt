@@ -1,0 +1,11 @@
+; Authored capability probe; does not change weapons, armor or actor values.
+float before
+float after
+Set before to GetOptionalPatch "bIgnoreDTDRFix"
+SetOptionalPatch "bIgnoreDTDRFix" 0
+Set after to GetOptionalPatch "bIgnoreDTDRFix"
+If before == 1 && after == 1
+    PrintC "J6 native ignore armor: verified capability stays active"
+Else
+    PrintC "J6 native ignore armor probe failed"
+EndIf
