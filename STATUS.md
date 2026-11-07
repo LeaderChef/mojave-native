@@ -5,10 +5,10 @@ No public playable release yet.
 | Area | Evidence / state |
 | --- | --- |
 | Architecture | Local release build identifies as Mach-O 64-bit ARM64 |
-| Latest local candidate | SHA256 `ef20596a936b1fcbe3808f170f86b0e1d14ef715036cd0d50a5f2450bdd06a98` |
+| Latest local candidate | SHA256 `118995d82827ef2af95e0ffedbae44a8dbf1a877ad6190ea9070e7b60f95fa87` |
 | Latest candidate gameplay | Focused player acceptance incomplete for this exact build |
 | Mouse and sound updates | Adapted merged maintainer PRs [1699](https://github.com/LootJunkieAzza/NVForever/pull/1699) and [1724](https://github.com/LootJunkieAzza/NVForever/pull/1724): unused sound data can be released; finer sensitivity down to 5% |
-| Latest validation | Loaded-form parser/VM regression failed before the fix and passed after it; 2283 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
+| Latest validation | Two Eval assignment regressions failed before the fix and pass after it; 2285 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
 | Bounded runtime | Owned base game + nine add-ons ran on M4 Pro/Metal; normal exit, zero GPU validation errors, no window activation |
 | Session recipe views | Actual MIC Drinks menu plus authored runtime labels/filter checked in a windowless Metal run; no mod bodies rewritten |
 | Latest sound evidence | 28.076s private silent mixer output; finite samples, peak 0.721925, no values over full scale; physical output/latency not checked |
@@ -34,7 +34,12 @@ The latest [grouped foreach change](docs/handoff/mojave-foreach-grouping-2026-11
 removes compile errors in two MIC item/recipe scripts without rewriting the mods.
 The corpus comparison alone does not execute those real mod bodies. A subsequent
 bounded native probe now executes both unchanged MIC files and verifies all
-59 name changes and 122 category changes. The latest client also consumes them
+59 name changes and 122 category changes. The recorded recipe-menu candidate also consumes them
 in its recipe menu; see the [menu handoff](docs/handoff/mojave-recipe-menu-2026-11-07.md).
 Old applications and profiles are preserved. Complete MIC/Nuclear Sunset gameplay
 and runtime-name persistence remain unaccepted.
+
+The [Eval/TestExpr callback repair](docs/handoff/mojave-eval-assignments-2026-11-07.md) removes five source-compile failures
+in the selected 253-plugin profile (179 → 174). The actual JAM callback now
+executes; unrelated quest/dependency errors remain. The latest client has not
+yet repeated earlier save/reload or menu presentation checks.

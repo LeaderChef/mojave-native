@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "b8eb6d4e9c9202bd606bc89dd89351f9811a22aca21c3259613bb64c0b5127e8",
+      "sha256": "95f960df19366aeb23835e33f8ca7e315f9c201a86d839ff8838065c37218454",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -120,7 +120,7 @@
     },
     {
       "path": "crates/fnv-script/src/compile/gen/x.rs",
-      "sha256": "8b3f69d05d3d99315b041bef9cba4ccf49c5c06edd12a18a8684da9567899139",
+      "sha256": "f827ce28b600c53c190bc9b47d1f2607d09f20aae0f850a8ad1687864b77b4ab",
       "recordedBaseSha256": "6d86888dc1cb0e1e13d653adf2e6d1283c625ea47d506bd7b39d12c5f8ab2a41"
     },
     {
@@ -421,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "0b373ec1c58248cefcabbeb8bc3ef5dc9d2e216a3fbfa39e22e938739a1bd4c2"
+      "sha256": "33c71d679318b07ce6e2cd8a20c25bbde460ba0f1466fcc68eef674059b40b70"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -476,6 +476,10 @@
       "sha256": "ae47067b1c387be7eba7ef817929bef2d8ca9eccb830c67e3c2d05dc4e181cff"
     },
     {
+      "path": "crates/fnv-script/tests/eval_assignment.rs",
+      "sha256": "4137c5a869d83870c87b5d4aa5ada5e2c9af38ce6678d647b9d7e03c033eae27"
+    },
+    {
       "path": "crates/fnv-script/tests/event_filter_arity.rs",
       "sha256": "61d1e02c966e7394500e9d00960ec6ddb46fca34fa89e6d063d3d1fed5b429cd"
     },
@@ -512,6 +516,10 @@
       "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
     },
     {
+      "path": "docs/handoff/mojave-eval-assignments-2026-11-07.md",
+      "sha256": "9fd67027ef9dfadac9bf78cc4cc0eb9545e9224775e2f36da4cf2abfc59b4a8b"
+    },
+    {
       "path": "docs/handoff/mojave-foreach-grouping-2026-11-07.md",
       "sha256": "b36fda22ef3bdd70fe3adc9a68e1f0baaa73057dc5aa52f02d12eee643533737"
     },
@@ -526,6 +534,10 @@
     {
       "path": "docs/spec-notes/accepted-work-time.md",
       "sha256": "1188ce654b5938e25d0c0a0c44e2698def7d153298b3944b3b9be031aa4db663"
+    },
+    {
+      "path": "docs/spec-notes/eval-assignment-arguments.md",
+      "sha256": "5e50ceb681db2cb57a92376e979645f35c754e1d6392739cde4dfcb5bfd23ce1"
     },
     {
       "path": "docs/spec-notes/ini-data-relative-paths.md",
@@ -666,14 +678,13 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "ef20596a936b1fcbe3808f170f86b0e1d14ef715036cd0d50a5f2450bdd06a98",
+    "sha256": "118995d82827ef2af95e0ffedbae44a8dbf1a877ad6190ea9070e7b60f95fa87",
     "architecture": "Mach-O 64-bit ARM64",
-    "targetedNativeRecipeMenuPassed": true,
+    "targetedNativeCallbackPassed": true,
     "saveReloadVerifiedForThisBinary": false,
-    "priorSaveReloadRecord": "docs/handoff/mojave-loaded-types-2026-11-07.md",
     "fullGameplayAccepted": false,
     "freshExportBuildVerified": false,
-    "record": "docs/handoff/mojave-recipe-menu-2026-11-07.md"
+    "record": "docs/handoff/mojave-eval-assignments-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -695,6 +706,17 @@
       "subcategoryChangesMatched": 122,
       "targetedNativeMenuPassed": true,
       "sessionStatePersistenceAdded": false,
+      "fullNuclearSunsetAccepted": false
+    },
+    {
+      "change": "Eval/TestExpr own assignments in their single expression argument",
+      "record": "docs/handoff/mojave-eval-assignments-2026-11-07.md",
+      "selectedPlugins": 253,
+      "sourceCompilationsBefore": 3424,
+      "sourceCompilationsAfter": 3429,
+      "failuresBefore": 179,
+      "failuresAfter": 174,
+      "originalModFilesChanged": false,
       "fullNuclearSunsetAccepted": false
     }
   ],

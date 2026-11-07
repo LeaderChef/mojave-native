@@ -495,7 +495,15 @@ impl Gen<'_> {
                 }
             }
             let enc = f.opcode.map(|o| self.table.param_enc(o, args.len())).unwrap_or(ParamEnc::Value);
-            let min = if f.aware {
+            // Eval/TestExpr own one complete expression, including assignments
+            // [documented: TestExpr; eval-assignment-arguments.md]. Stopping at
+            // assignment precedence instead parses `(Eval target) = value` and
+            // refuses an otherwise valid standalone callback statement.
+            let reducer = matches!(&f.func, FuncId::Name(name)
+                if name.eq_ignore_ascii_case("eval") || name.eq_ignore_ascii_case("testexpr"));
+            let min = if reducer {
+                0
+            } else if f.aware {
                 ARG_OVERRIDE
             } else if self.co {
                 ARG_IN_OVERRIDE
