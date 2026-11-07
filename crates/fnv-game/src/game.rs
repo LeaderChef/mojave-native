@@ -1944,6 +1944,8 @@ pub struct Session {
     sr_registered: Vec<String>,
     /// TTW radio initialization is once per session, like GetGameRestarted.
     ttw_child_world_radius_fix: bool,
+    /// Optional combat patches outlast same-process loads, like TTW startup.
+    creature_spread_fix: bool,
 }
 
 /// An event handler: the event (lower case), the function or lambda, the filters by
@@ -2065,7 +2067,7 @@ impl<'a> Game<'a> {
             udf_value_set: false,
             package_overrides: std::collections::HashMap::new(),
             jip2: Default::default(),
-            gaps: Default::default(),
+            gaps: crate::nvse_gaps::GapsState::with_optional_patches(),
             hud: Default::default(),
             showoff: Default::default(),
             mod_files: Default::default(),
@@ -3024,7 +3026,7 @@ impl<'a> Game<'a> {
             .collect();
         let pp = self.pp_take_session();
         let sr_registered = self.sr.take_registered();
-        Session { handlers, main_loop, restarted_seen: std::mem::take(&mut self.restarted_seen), handler_seq: self.handler_seq, pp, itr_kept: std::mem::take(&mut self.other.itr.kept), sr_registered, ttw_child_world_radius_fix: self.radio.ttw_child_world_radius_fix }
+        Session { handlers, main_loop, restarted_seen: std::mem::take(&mut self.restarted_seen), handler_seq: self.handler_seq, pp, itr_kept: std::mem::take(&mut self.other.itr.kept), sr_registered, ttw_child_world_radius_fix: self.radio.ttw_child_world_radius_fix, creature_spread_fix: self.gaps.creature_spread_fix }
     }
 
     /// Take over what lasts for the session ([`Game::take_session`]).
@@ -3037,6 +3039,7 @@ impl<'a> Game<'a> {
         self.other.itr.kept = s.itr_kept;
         self.sr.put_registered(s.sr_registered);
         self.radio.ttw_child_world_radius_fix = s.ttw_child_world_radius_fix;
+        self.gaps.creature_spread_fix = s.creature_spread_fix;
     }
 
     /// Run every handler registered for `event` whose filters match, highest priority

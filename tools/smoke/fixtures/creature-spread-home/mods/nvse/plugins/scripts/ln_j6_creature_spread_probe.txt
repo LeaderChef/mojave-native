@@ -1,0 +1,5 @@
+; Authored fixture; only the supported patch is enabled.
+SetOptionalPatch "bCreatureSpreadFix" 1
+if GetOptionalPatch "bCreatureSpreadFix" == 1
+    Print "J6 creature spread: native patch enabled through source script"
+endif

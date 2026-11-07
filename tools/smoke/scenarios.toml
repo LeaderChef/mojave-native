@@ -28,3 +28,17 @@ expect = [
   "script runner: ln_j6_movement_alias_probe.txt ran (new game)",
   "J6 MoveToMarker: actor reached marker plus offset",
 ]
+
+[[scenario]]
+name = "creature-spread-optional-patch"
+source = "[documented] JIP SetOptionalPatch; docs/spec-notes/creature-spread-optional-patch.md. Own startup script enables the native patch; a created creature fires harmless finite volleys before and after disable. Compare real projectile-consumer cones; no original game/mod script is copied."
+areas = ["combat", "scripts", "native-mac"]
+paths = ["crates/fnv-combat/src/spread.rs", "crates/fnv-game/src/nvse_gaps.rs", "crates/fnv-game/src/nvse_one111.rs", "engine/nvforever/src/npc_combat.rs", "engine/nvforever/src/use_weapon.rs", "tools/smoke/fixtures/creature-spread-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/creature-spread-home", NVF_PLAY_TEST_UNSEEN = "1", NVF_PLAY_TEST_GOD = "1", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3", NVF_PLAY_TEST_SCRIPT = "2:call:VERGSCoyote1REF:Disable,2.1:call:VERGSCoyote2REF:Disable,2.2:call:VERGSCoyote3REF:Disable,2.3:call:VERGSCoyote4REF:Disable,2.4:call:VERGSCoyote5REF:Disable,2.5:call:VERGSCoyote6REF:Disable,3:call:0x00122CCA:PlaceAtMe:CrSentryBotMGHard:1,6:call:0xFF000000:UseWeapon:SentryBotMinigun2HR:0xFF000000:player:8:0:0:0:1,18:call:0xFF000000:UseWeapon:SentryBotMinigun2HR:0xFF000000:player:8:0:0:0:1", NVF_PLAY_TEST_CONSOLE = "16:SetOptionalPatch \"bCreatureSpreadFix\" 0;16.1:GetOptionalPatch \"bCreatureSpreadFix\";16.2:close" }
+args = ["--cell", "Goodsprings", "--pos=-61000,4500,8500", "--play", "--background-test", "--hour", "12", "--no-sound", "--no-voice", "--no-music", "--no-messages"]
+run_seconds = 32
+expect = [
+  "J6 creature spread: native patch enabled through source script",
+  'console: SetOptionalPatch "bCreatureSpreadFix" 0 >> ran',
+  { re = 'use weapon: .* 0xFF000000 has fired its 8 shots at the player', label = "finite creature volley finished" },
+]

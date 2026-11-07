@@ -19,6 +19,9 @@ use crate::tuning::{CombatTuning, Rules};
 pub struct Stance {
     /// Aiming down the sights / scope.
     pub aiming: bool,
+    /// The optional creature fix removes this term without inventing aim animations.
+    /// The game resolves actor kind and the active patch (creature-spread-optional-patch.md).
+    pub ignore_unaimed_penalty: bool,
     pub moving: bool,
     pub running: bool,
     pub sneaking: bool,
@@ -48,7 +51,7 @@ pub(crate) fn one_handed(w: &WeaponStats) -> bool {
 /// The actor's spread in spread units [documented], before "Calculate Gun Spread" perks.
 /// The airborne penalty is ours [design].
 pub fn actor_spread(r: &Rules, t: &CombatTuning, w: &WeaponStats, s: &Stance) -> f32 {
-    let unaimed = if s.aiming { 0.0 } else { r.spread_unaimed };
+    let unaimed = if s.aiming || s.ignore_unaimed_penalty { 0.0 } else { r.spread_unaimed };
     let moving = if !s.moving {
         0.0
     } else if s.running {

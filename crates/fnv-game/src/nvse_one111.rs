@@ -302,7 +302,7 @@ impl Game<'_> {
         let setting = |g: &Game, name: &str, d: f64| g.world.setting_f32(name).map_or(d, f64::from);
         let m = self.motion(actor);
         let aiming = actor == FormId::PLAYER_REF && self.jip2.told.aiming;
-        let unaimed = if aiming { 0.0 } else { setting(self, "fUnaimedSpreadPenalty", 0.2) };
+        let unaimed = if aiming || self.creature_spread_exempt(actor) { 0.0 } else { setting(self, "fUnaimedSpreadPenalty", 0.2) };
         let moving = if !m.moving {
             0.0
         } else if m.running {

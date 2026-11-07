@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "snapshotDate": "2026-11-07",
   "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
-  "unchangedComparedWithRecordedBase": 1390,
+  "unchangedComparedWithRecordedBase": 1385,
   "modifiedComparedWithRecordedBase": [
     {
       "path": ".gitignore",
@@ -34,9 +34,19 @@
       "recordedBaseSha256": "01ae74798b0ed4b4dbec23495fe63718f047e47cc7dfac69b17a54854f987797"
     },
     {
+      "path": "crates/fnv-combat/src/spread.rs",
+      "sha256": "bf465db36b2eea41101b59f5d2206aecbfdf1b14c8403e40eb926f1af3aae2c1",
+      "recordedBaseSha256": "cba9f606ca1252069ef2a8d37fcb4bb7250e7c01c19b868e2032c93ccb2f6e78"
+    },
+    {
       "path": "crates/fnv-combat/src/tuning.rs",
       "sha256": "11af26f3cdf7beeb316c1c1677b079488f25be848ff7f7975ac2a980d53b9cc0",
       "recordedBaseSha256": "582422737c7bbed87df7e6e800485ff5ffd2351ea9a370ce769cee152a9a212c"
+    },
+    {
+      "path": "crates/fnv-combat/tests/rules.rs",
+      "sha256": "84c4e10c3d368a1eefe4f17e6e249b82c256fb342804cbc42b61aea47038bf8f",
+      "recordedBaseSha256": "b21d33494222db466b1343177bebff62507a9cd4225b34cc60fb98a1d59541df"
     },
     {
       "path": "crates/fnv-game/src/crafting.rs",
@@ -60,7 +70,7 @@
     },
     {
       "path": "crates/fnv-game/src/game.rs",
-      "sha256": "91f86ee14d815c5ae6b1cffa5456c7489f666f0ca596138b8e9c096e185d2834",
+      "sha256": "7f1d672e7eb05a3b25c07b232188fce47721d8c0e0eb5ba23fa28f6370ae3a03",
       "recordedBaseSha256": "0042d45ca379b78396c0784f32e55873159364237f309a1660811ee2f242ea37"
     },
     {
@@ -80,8 +90,13 @@
     },
     {
       "path": "crates/fnv-game/src/nvse_gaps.rs",
-      "sha256": "398f1f73628578da152f2c798e1e0a37a4904f275e346bc2c46b8b893df98030",
+      "sha256": "bfc5eb8eb7bb03724af4050f37f21422f5d2970aac014db1e6d8dbf0792aa261",
       "recordedBaseSha256": "7a4406050fa63aa61baa67b2f8de5a60c55748ba9b684f3474dad1aeb84e5f42"
+    },
+    {
+      "path": "crates/fnv-game/src/nvse_one111.rs",
+      "sha256": "835a7600e0cc79bcc6ec1e70671e632d60466caafe0589027a3ba215eff2b1eb",
+      "recordedBaseSha256": "81ad19c7eb0f1c707122403fc086360aeb00a00b09dbb91602af66bfeb958c71"
     },
     {
       "path": "crates/fnv-game/src/nvse_small.rs",
@@ -220,7 +235,7 @@
     },
     {
       "path": "engine/nvf-play/src/combat.rs",
-      "sha256": "e53cd6a6b569a00d4cacc86c9db397b3bfd15596507f2cac7e119b087768270d",
+      "sha256": "c9354f5ec07726fcd234c345cafefdb037bbd46a33e83a72f8c22ad1745a95b9",
       "recordedBaseSha256": "5c2a4eb28958ebf0b2be10aa511a9e496ac5dd72a4e12b0db31f73f2820a9bc6"
     },
     {
@@ -379,6 +394,11 @@
       "recordedBaseSha256": "cd2fd47f87c89024dd0acd5b40f5f6fa4eb5b2786314e615fdfc516ea5d126fa"
     },
     {
+      "path": "engine/nvforever/src/npc_combat.rs",
+      "sha256": "92262ba82dcc4a83e78b44753e7a07ef19cbad33210a320b9728d4798201a2bd",
+      "recordedBaseSha256": "d0fc2e4722c243ce095563f3818cecaf39d05f13727c8ca5c0fc2cc468c85820"
+    },
+    {
       "path": "engine/nvforever/src/player_body.rs",
       "sha256": "df79bb4a822407415614859c719b7a2cfa45be70d5e599a14c0d8f7ac4606f59",
       "recordedBaseSha256": "782ad1183d7da6196eb82f8aec7d1ae5e0f54034da794c536f193a14a7e53a36"
@@ -387,6 +407,11 @@
       "path": "engine/nvforever/src/settings.rs",
       "sha256": "0a189691ea875f29dfd7a738eb613837de675660da24e36f17658792d9f6959f",
       "recordedBaseSha256": "b00a50a7b4a4ed8cc94e16bce4be745576a7ec0dacb4b63d7f508b50aca9a2eb"
+    },
+    {
+      "path": "engine/nvforever/src/use_weapon.rs",
+      "sha256": "629477ce7076d28468b892e05f08d412b8038388681ef694f501b677da4cbb1c",
+      "recordedBaseSha256": "5dc298697c547f906beb65c2305c0b24d4a636b85f15c09616a2bcec12d701c7"
     },
     {
       "path": "schemas/script/functions.json",
@@ -472,6 +497,10 @@
       "sha256": "fb31d2ad24b267370a5b959ef593740b9020572fce2eb8a492ff773b40835367"
     },
     {
+      "path": "crates/fnv-game/tests/creature_spread.rs",
+      "sha256": "78ef89754a1da238f508273f3d565ed4343ce098c0dd658a658120cdbc174544"
+    },
+    {
       "path": "crates/fnv-game/tests/synthetic.rs",
       "sha256": "72f07f3582c30f2e7975236a1132c62592ca9af19436dea5653a4ed5e1c55aab"
     },
@@ -506,6 +535,10 @@
     {
       "path": "crates/fnv-script/tests/inline_only.rs",
       "sha256": "7d0811eae85069d27066a3478c4361bf46e50e68d60f0f6bcd66febbec5728aa"
+    },
+    {
+      "path": "crates/fnv-script/tests/movement_aliases.rs",
+      "sha256": "ad94bb3416512fb40c6a49e14321d7cf9a4833c446bdb3ff8d5bc8bea8955f5e"
     },
     {
       "path": "crates/fnv-sim/src/world/accepted_time.rs",
@@ -564,6 +597,22 @@
       "sha256": "bda14bcf3ab658166cdefc5bfac28ef7a552f275843a0d0018313acf036ec763"
     },
     {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.json",
+      "sha256": "fd6c81108a42542f3b1823293a39cc167c06da74464a0a2bc133880bbcd74e2f"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+      "sha256": "624d95445abb054f1ddda6ec98c35e2a9dc0ae3c52a110b8f5f1dc6fa943eb26"
+    },
+    {
+      "path": "docs/handoff/mojave-movement-alias-2026-11-07.json",
+      "sha256": "99e8ccc4432a8291bc7ef5c5651a81b194fca3f68f0faa264dab15ba60142af8"
+    },
+    {
+      "path": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+      "sha256": "c0b43cbe22c97aba7b8d63e032911f969ff91a56440b4c69cc04acd7a2ab7e6c"
+    },
+    {
       "path": "docs/handoff/mojave-recipe-menu-2026-11-07.md",
       "sha256": "ee562cc22e847f59ae5c618ad409f506c8066155c7ada99f534609277bab3ee1"
     },
@@ -592,6 +641,10 @@
       "sha256": "878bc88b207dc40afecd67be789e7c00b570a6cdea61ba7405fd2112fddb6265"
     },
     {
+      "path": "docs/spec-notes/creature-spread-optional-patch.md",
+      "sha256": "811bc6e56c3d7cc1b9a5b0cfa3a981fd48de883920b1d510b56a830aa3e3053f"
+    },
+    {
       "path": "docs/spec-notes/eval-assignment-arguments.md",
       "sha256": "5e50ceb681db2cb57a92376e979645f35c754e1d6392739cde4dfcb5bfd23ce1"
     },
@@ -610,6 +663,10 @@
     {
       "path": "docs/spec-notes/market-pricing.md",
       "sha256": "8783d12d69141153a7d73f5fda78a0c014bc2dbf42cef38081ed58dfc5e82b86"
+    },
+    {
+      "path": "docs/spec-notes/moveto-marker-alias.md",
+      "sha256": "d38618c10ad795bf76e7b5d6f42a9bb6b9a966125858ff39a3313ce8d73dc32d"
     },
     {
       "path": "docs/spec-notes/native-large-address-query.md",
@@ -744,6 +801,14 @@
       "sha256": "370802623fb9b4b50e6e862664116398e9d1c7f780748dfcde2ccd51fed537b1"
     },
     {
+      "path": "tools/smoke/fixtures/creature-spread-home/mods/nvse/plugins/scripts/ln_j6_creature_spread_probe.txt",
+      "sha256": "df0696d6eab293ea67907785a2143651712406619e1c0c32fcd8977ddffdb7da"
+    },
+    {
+      "path": "tools/smoke/fixtures/movement-alias-home/mods/nvse/plugins/scripts/ln_j6_movement_alias_probe.txt",
+      "sha256": "acd7228eed9646376ee1cb3efd8f2a3a466f5fe2fde742aac7743d897e15ab93"
+    },
+    {
       "path": "tools/smoke/fixtures/runtime-enum-home/mods/nvse/plugins/scripts/ln_j6_runtime_enum_probe.txt",
       "sha256": "33a51b42619e50b563abe819696dbfda62eeea2269a6e25d3284054bce933203"
     },
@@ -753,35 +818,15 @@
     },
     {
       "path": "tools/smoke/scenarios.toml",
-      "sha256": "99aaab72f965ea4e7ac6625e9821295b7ef04bd325ef023c040ac6803e645449"
+      "sha256": "d3b3bb8d23c48bcfd847f02731f1553ef3a28af02a14b46cb2f5f6ec103a1917"
     },
     {
-      "path": "crates/fnv-script/tests/movement_aliases.rs",
-      "sha256": "ad94bb3416512fb40c6a49e14321d7cf9a4833c446bdb3ff8d5bc8bea8955f5e"
+      "path": "docs/handoff/mojave-creature-spread-2026-11-07.md",
+      "sha256": "401771ef446b8200f800b2aa3617f9bc48b844cfea2e2cb1c2be959e919069d9"
     },
     {
-      "path": "docs/spec-notes/moveto-marker-alias.md",
-      "sha256": "d38618c10ad795bf76e7b5d6f42a9bb6b9a966125858ff39a3313ce8d73dc32d"
-    },
-    {
-      "path": "tools/smoke/fixtures/movement-alias-home/mods/nvse/plugins/scripts/ln_j6_movement_alias_probe.txt",
-      "sha256": "acd7228eed9646376ee1cb3efd8f2a3a466f5fe2fde742aac7743d897e15ab93"
-    },
-    {
-      "path": "docs/handoff/mojave-movement-alias-2026-11-07.md",
-      "sha256": "c0b43cbe22c97aba7b8d63e032911f969ff91a56440b4c69cc04acd7a2ab7e6c"
-    },
-    {
-      "path": "docs/handoff/mojave-movement-alias-2026-11-07.json",
-      "sha256": "99e8ccc4432a8291bc7ef5c5651a81b194fca3f68f0faa264dab15ba60142af8"
-    },
-    {
-      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
-      "sha256": "624d95445abb054f1ddda6ec98c35e2a9dc0ae3c52a110b8f5f1dc6fa943eb26"
-    },
-    {
-      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.json",
-      "sha256": "fd6c81108a42542f3b1823293a39cc167c06da74464a0a2bc133880bbcd74e2f"
+      "path": "docs/handoff/mojave-creature-spread-2026-11-07.json",
+      "sha256": "030603cd26637af4a8975686161a084d342aafc550777d313c3550a83e62b1f3"
     }
   ],
   "binaryDistributed": false,
@@ -802,17 +847,16 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
+    "sha256": "6ff3dfc9b91eacb3b17268182b72329264098412ae17191d154edea24f858c0b",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": true,
+    "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
     "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
-    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
-    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
+    "nativeCreatureShotConesVerified": true
   },
   "localCompatibilityChanges": [
     {
@@ -868,6 +912,16 @@
       "failuresAfter": 137,
       "originalModFilesChanged": false,
       "fullNuclearSunsetAccepted": false
+    },
+    {
+      "change": "Optional creature unaimed spread through actual native combat",
+      "record": "docs/handoff/mojave-creature-spread-2026-11-07.md",
+      "enabledShots": 8,
+      "disabledShots": 8,
+      "enabledConeDegrees": 1.2,
+      "disabledConeDegrees": 1.7,
+      "sameProcessLoadUnitControl": true,
+      "fullTTWAccepted": false
     }
   ],
   "nativeLoadedTypeRepair": {
@@ -880,14 +934,17 @@
     "fullModGameplayAccepted": false
   },
   "previousPrivateDevelopmentBuild": {
-    "sha256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
+    "sha256": "a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085",
     "architecture": "Mach-O 64-bit ARM64",
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": false,
+    "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-runtime-enums-2026-11-07.md"
+    "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
+    "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
+    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
   },
   "publicSourceReproduction": {
     "record": "docs/handoff/mojave-source-build-2026-11-07.md",

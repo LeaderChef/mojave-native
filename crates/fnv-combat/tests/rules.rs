@@ -301,6 +301,27 @@ fn spread_perks_cut_the_strength_and_moving_penalties() {
 }
 
 #[test]
+fn creature_spread_exemption_removes_only_unaimed_term_and_never_changes_vats() {
+    let (r, t) = (Rules::defaults(), CombatTuning::default());
+    let w = WeaponStats { strength_req: 8, skill_req: 70, anim_type: Some("2 Hand Rifle".into()), ..gun(20) };
+    let penalized = Stance { moving: true, running: true, airborne: true,
+        left_arm_crippled: true, head_crippled: true, skill: 30.0, strength: 4.0,
+        aiming_move_divisor: 1.0, ..Stance::default() };
+    let fixed = Stance { ignore_unaimed_penalty: true, ..penalized.clone() };
+    let (before, after) = (spread::actor_spread(&r, &t, &w, &penalized), spread::actor_spread(&r, &t, &w, &fixed));
+    assert!(close(before - after, r.spread_unaimed * (1.0 - r.wobble_to_skill * 0.3)));
+    let mut just_term_zero = r.clone();
+    just_term_zero.spread_unaimed = 0.0;
+    assert!(close(after, spread::actor_spread(&just_term_zero, &t, &w, &penalized)));
+    assert_eq!(spread::vats_actor_spread(&r, &t, &w, &fixed), spread::vats_actor_spread(&r, &t, &w, &penalized));
+    let aimed = Stance { aiming: true, ..penalized.clone() };
+    assert_eq!(spread::actor_spread(&r, &t, &w, &aimed), spread::actor_spread(&r, &t, &w, &Stance { ignore_unaimed_penalty: true, ..aimed.clone() }));
+    let ammo = effect("Spread Mod", "Multiply", 1.75);
+    assert!(close(spread::cone_deg(after, 0.12, &w, &[&ammo]), spread::cone_deg(after, 0.12, &w, &[]) * 1.75));
+    assert!(spread::cone_deg(before, 0.12, &w, &[&ammo]) > spread::cone_deg(after, 0.12, &w, &[&ammo]));
+}
+
+#[test]
 fn spread_formula_cone_bloom_recoil() {
     let r = Rules::defaults();
     let t = CombatTuning::default();

@@ -2010,6 +2010,7 @@ impl Default for SpreadPerks {
 fn player_stance(control: &PlayerControl, phys: &PhysState, limbs: &PlayerLimbs, skill: f32, strength: f32, perks: SpreadPerks) -> Stance {
     Stance {
         aiming: control.aiming,
+        ignore_unaimed_penalty: false,
         moving: phys.player.as_ref().is_some_and(|ch| ch.velocity[0].hypot(ch.velocity[1]) > 1.0),
         running: control.always_run,
         sneaking: control.sneak,

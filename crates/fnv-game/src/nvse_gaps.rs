@@ -50,6 +50,8 @@ pub struct RadioSite {
 /// This file's session state.
 #[derive(Debug, Default)]
 pub struct GapsState {
+    /// The implemented creature unaimed-spread patch; session-wide, not save data.
+    pub(crate) creature_spread_fix: bool,
     /// SetCombatDisabled's actors.
     pub combat_disabled: HashSet<FormId>,
     /// The Pip-Boy light, and when a script turned it off: the light reads off from the
@@ -126,6 +128,27 @@ pub struct GapsState {
     pub always_run_request: Option<bool>,
     /// RunScriptSnippet's snippets waiting: (frames left, source, reference).
     pub snippets: Vec<(u32, String, FormId)>,
+}
+
+impl GapsState {
+    pub(crate) fn with_optional_patches() -> Self {
+        let enabled = crate::mod_files::read_data_file("NVSE/Plugins/jip_nvse.ini")
+            .and_then(|bytes| String::from_utf8(bytes).ok())
+            .and_then(|body| crate::mod_files::ini_get(&body, "gamepatches", "bCreatureSpreadFix"))
+            .is_some_and(|value| value == "1");
+        Self { creature_spread_fix: enabled, ..Self::default() }
+    }
+}
+
+impl Game<'_> {
+    /// Exempt only the unaimed term, not animations or the other spread terms.
+    /// [design: creature-spread-optional-patch.md] CREA references include robots;
+    /// humanoid NPC_ races and the player keep their existing behavior.
+    pub fn creature_spread_exempt(&self, actor: FormId) -> bool {
+        self.gaps.creature_spread_fix
+            && actor != FormId::PLAYER_REF
+            && crate::functions::base_of(self, actor).is_some_and(|base| self.data.sig(self.unclone(base)) == Some(*b"CREA"))
+    }
 }
 
 fn form(args: &[XVal], k: usize) -> Option<FormId> {
@@ -1413,8 +1436,19 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
         "getcrosshairwater" => XVal::Ref(0),
         // Return 0 [observed: gaps4].
         "setsoundflag" | "stopsoundalt" => zero,
-        // An unknown patch [observed: gaps2 and gaps4, 0 for both].
-        "getoptionalpatch" | "setoptionalpatch" => zero,
+        // Only advertise the patch backed by the native spread consumer. Unknown
+        // names retain the observed zero result; the setter has no documented return.
+        "getoptionalpatch" => yes(text(args, 0).eq_ignore_ascii_case("bCreatureSpreadFix") && g.gaps.creature_spread_fix),
+        "setoptionalpatch" => {
+            if text(args, 0).eq_ignore_ascii_case("bCreatureSpreadFix") {
+                match args.get(1) {
+                    Some(XVal::Num(0.0)) => g.gaps.creature_spread_fix = false,
+                    Some(XVal::Num(1.0)) => g.gaps.creature_spread_fix = true,
+                    _ => {}
+                }
+            }
+            zero
+        }
         _ => return None,
     };
     Some(Ok(v))
