@@ -1,0 +1,5 @@
+; Authored fixture; real native clock, no mod/version emulation.
+SetOptionalPatch "bGameDaysPassedFix" 1
+if GetOptionalPatch "bGameDaysPassedFix" == 1
+    Print "J6 native clock: non-freezing native clock active"
+endif

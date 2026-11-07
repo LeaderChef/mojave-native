@@ -1436,11 +1436,21 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
         "getcrosshairwater" => XVal::Ref(0),
         // Return 0 [observed: gaps4].
         "setsoundflag" | "stopsoundalt" => zero,
-        // Only advertise the patch backed by the native spread consumer. Unknown
-        // names retain the observed zero result; the setter has no documented return.
-        "getoptionalpatch" => yes(text(args, 0).eq_ignore_ascii_case("bCreatureSpreadFix") && g.gaps.creature_spread_fix),
+        // [design] FineClock already prevents the frame-by-frame GameDaysPassed /
+        // GameHour freeze. Report that real, always-on native invariant to TTW;
+        // do not introduce a switch that reinstates the rounding bug. This is not
+        // a claim that the other optional patches or JIP itself are implemented.
+        // See docs/spec-notes/native-clock-compat.md. Unknown names stay unsupported.
+        "getoptionalpatch" => yes(match text(args, 0).to_ascii_lowercase().as_str() {
+            "bgamedayspassedfix" => true,
+            "bcreaturespreadfix" => g.gaps.creature_spread_fix,
+            _ => false,
+        }),
         "setoptionalpatch" => {
-            if text(args, 0).eq_ignore_ascii_case("bCreatureSpreadFix") {
+            let patch = text(args, 0);
+            if patch.eq_ignore_ascii_case("bGameDaysPassedFix") && matches!(args.get(1), Some(XVal::Num(0.0))) {
+                tracing::warn!("SetOptionalPatch: bGameDaysPassedFix is an always-on native clock invariant; a disable request cannot reintroduce the time-freeze bug");
+            } else if patch.eq_ignore_ascii_case("bCreatureSpreadFix") {
                 match args.get(1) {
                     Some(XVal::Num(0.0)) => g.gaps.creature_spread_fix = false,
                     Some(XVal::Num(1.0)) => g.gaps.creature_spread_fix = true,
