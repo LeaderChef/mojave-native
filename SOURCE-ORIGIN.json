@@ -657,11 +657,12 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "9083779db3c649038ca187bcb17239e3ef514f27f8f4209d9375303dbb31fac6",
+    "sha256": "eacf11bd5ba34b5d4fc784a6bb8b766854fade60b513433afe8a1c224a3d40b7",
     "architecture": "Mach-O 64-bit ARM64",
     "boundedSilentRuntimeAndSaveReloadPassed": true,
     "fullGameplayAccepted": false,
-    "freshExportBuildVerified": false
+    "freshExportBuildVerified": false,
+    "record": "docs/handoff/mojave-loaded-types-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -672,7 +673,17 @@
       "compiledAfter": 321,
       "regressions": 0,
       "realModBodiesExecuted": false,
-      "candidateAppReplaced": false
+      "candidateAppReplaced": false,
+      "includedInCurrentLocalCandidate": true
     }
-  ]
+  ],
+  "nativeLoadedTypeRepair": {
+    "date": "2026-11-07",
+    "record": "docs/handoff/mojave-loaded-types-2026-11-07.md",
+    "nativeBinarySHA256": "eacf11bd5ba34b5d4fc784a6bb8b766854fade60b513433afe8a1c224a3d40b7",
+    "ownedRecipesEnumerated": 291,
+    "boundedRuntimeAndFreshReloadPassed": true,
+    "realModBodiesExecuted": false,
+    "fullModGameplayAccepted": false
+  }
 }

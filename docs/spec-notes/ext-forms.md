@@ -111,6 +111,27 @@ whether GetType on a placed reference ever reports 58-60 rather than its base fo
 matching rules; GetSourceModIndex for run-time forms; GetFormFromMod for an unloaded
 plugin.
 
+## 6. Loaded-type enumeration (2026-11-07)
+
+[documented] [Form Type IDs](https://geckwiki.com/index.php/Form_Type_IDs)
+assigns 106 to recipes (`RCPE`), 107 to recipe categories (`RCCT`), 71 to quests
+and 8 to factions. Loaded-form APIs use the complete form-type table, not only
+the subset of types that can be carried in an inventory.
+
+[observed: Mojave Native native-foreach-runtime-01] A local ARM64 run enumerated
+226 ingestibles but zero recipes, although the recipe parser already loaded
+`RCPE` records. Both `GetLoadedTypeArray` and `GetLoadedType` shared a lookup
+limited to inventory type codes. The lookup now uses the existing VM form-type
+table and keeps the first defining plugin/record position for non-inventory
+forms as well. Overrides retain one identity and its original position. The
+inventory-only helper and inventory mutation behavior are unchanged.
+
+[hypothesis] Non-inventory enumeration follows the ordering rule already used
+for inventory forms; original-game ordering for these types has not been
+measured. Synthetic parsed-plugin/VM checks cover recipes, categories, quests,
+factions, plugin filters, override deduplication and non-numeric file order.
+This is not acceptance of a mod's complete crafting menu.
+
 ## Appendix: form type codes
 
 [documented: Form Type IDs, pasted by the owner from geckwiki.com, 2026-10-25]. Inventory items are 24, 25, 31, 40, 41, 46, 47, 49,
