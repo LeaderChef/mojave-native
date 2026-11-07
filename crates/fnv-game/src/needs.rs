@@ -116,7 +116,9 @@ impl Game<'_> {
         self.player.hardcore = Some(on);
         self.player.hardcore_was_off |= !on;
         self.world.set_hardcore(on);
-        if !on {
+        if on {
+            self.repair_hardcore_needs();
+        } else {
             let p = FormId::PLAYER_REF;
             for (code, _, _) in NEEDS {
                 let _ = fa::set_current(self, p, code, 0.0);
@@ -131,11 +133,25 @@ impl Game<'_> {
         NEEDS.iter().find(|n| n.0 == code).map_or(f64::INFINITY, |&(_, name, default)| setting(self, name, default)).max(1e-3)
     }
 
-    /// Raise (or, negative, lower) a need of the player, never below 0.
+    /// Repair invalid current need baselines without removing modifier/damage pools.
+    /// [design: native-hardcore-needs-floor.md] Called on Hardcore enable and restore;
+    /// ordinary progression also repairs before adding its elapsed increment.
+    pub(crate) fn repair_hardcore_needs(&mut self) {
+        if self.hardcore() {
+            for (code, _, _) in NEEDS {
+                self.shift_need(code, 0.0);
+            }
+        }
+    }
+
+    /// Raise (or, negative, lower) a need of the player, never below 0. An invalid
+    /// negative baseline is repaired before `by`, so no elapsed increment is lost.
     pub(crate) fn shift_need(&mut self, code: u16, by: f64) {
         let p = FormId::PLAYER_REF;
         let now = fa::actor_value(self, p, code).unwrap_or(0.0);
-        let to = (now + by).max(0.0);
+        // Radiation shares this helper; preserve its existing accumulation policy.
+        let baseline = if matches!(code, DEHYDRATION | HUNGER | SLEEP_DEPRIVATION) { now.max(0.0) } else { now };
+        let to = (baseline + by).max(0.0);
         if to != now {
             let _ = fa::shift_base(self, p, code, to - now);
         }
@@ -173,6 +189,7 @@ impl Game<'_> {
     /// needs rise (Hardcore) hour by hour, a sleep lowers sleep deprivation, and stages
     /// follow. A sleep outside Hardcore restores Health and heals crippled limbs.
     pub fn pass_hours(&mut self, hours: f64, sleeping: bool) -> Passed {
+        self.repair_hardcore_needs();
         let seconds = hours.max(0.0) * 3600.0 / self.time_scale();
         let p = FormId::PLAYER_REF;
         let started: Vec<u32> = self.effects.iter().filter(|e| e.target == p).map(|e| e.id).collect();

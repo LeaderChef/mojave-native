@@ -59,3 +59,22 @@ expect = [
   "J6 clock B days=",
   "J6 clock C days=",
 ]
+
+[[scenario]]
+name = "native-hardcore-needs-floor"
+source = "[documented] JIP LN high-level bHardcoreNeedsFix contract; docs/spec-notes/native-hardcore-needs-floor.md. Authored script/console input creates negative needs; real game frames must repair and accumulate them. Companion runtime evidence compares A/B samples; crate regressions also cover wait, sleep and JSON restore."
+areas = ["scripts", "simulation", "native-mac"]
+paths = ["crates/fnv-game/src/needs.rs", "crates/fnv-game/src/game.rs", "crates/fnv-game/src/nvse_gaps.rs", "crates/fnv-game/tests/hardcore_need_floor.rs", "tools/smoke/fixtures/native-needs-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/native-needs-home", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3", NVF_PLAY_TEST_CONSOLE = "5:PrintC \"J6 needs A h2o=%.6f food=%.6f sleep=%.6f\" (player.GetAV Dehydration) (player.GetAV Hunger) (player.GetAV SleepDeprivation);5.1:close;8:PrintC \"J6 needs B h2o=%.6f food=%.6f sleep=%.6f\" (player.GetAV Dehydration) (player.GetAV Hunger) (player.GetAV SleepDeprivation);8.1:PrintC \"J6 needs invariant=%.0f\" (GetOptionalPatch \"bHardcoreNeedsFix\");8.2:SetOptionalPatch \"bHardcoreNeedsFix\" 0;8.3:close" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music", "--no-messages"]
+run_seconds = 11
+expect = [
+  "J6 native needs: need-floor capability active",
+  "J6 needs before h2o=-50.000000 food=-100.000000 sleep=-12.000000",
+  { re = 'J6 needs A h2o=(?P<n>[0-9.]+)', range = [0.001, 10.0], label = "dehydration recovers and accumulates" },
+  { re = 'J6 needs A h2o=[0-9.]+ food=(?P<n>[0-9.]+)', range = [0.001, 10.0], label = "hunger recovers and accumulates" },
+  { re = 'J6 needs A h2o=[0-9.]+ food=[0-9.]+ sleep=(?P<n>[0-9.]+)', range = [0.001, 10.0], label = "sleep deprivation recovers and accumulates" },
+  "J6 needs B h2o=",
+  "J6 needs invariant=1",
+  "bHardcoreNeedsFix is an always-on native need-floor invariant",
+]

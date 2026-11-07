@@ -5233,6 +5233,9 @@ impl<'a> Game<'a> {
         }
         let pos: u128 = s.rng_word_pos.parse().map_err(|_| format!("bad rng_word_pos {:?}", s.rng_word_pos))?;
         g.rng.set_word_pos(pos);
+        // [design: native-hardcore-needs-floor.md] Legacy/script-written negative
+        // needs must not survive load or consume the next frame's accumulation.
+        g.repair_hardcore_needs();
         Ok(g)
     }
 }

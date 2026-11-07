@@ -1443,7 +1443,7 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
         // Scheduled scripts also remain eligible after VM errors; this invariant
         // is always on (native-script-error-recovery.md). Unknown names stay unsupported.
         "getoptionalpatch" => yes(match text(args, 0).to_ascii_lowercase().as_str() {
-            "bgamedayspassedfix" | "bnofailedscriptlocks" => true,
+            "bgamedayspassedfix" | "bnofailedscriptlocks" | "bhardcoreneedsfix" => true,
             "bcreaturespreadfix" => g.gaps.creature_spread_fix,
             _ => false,
         }),
@@ -1453,6 +1453,8 @@ pub(crate) fn call(g: &mut Game, ctx: &RunCtx, name: &str, subject: Option<FormI
                 tracing::warn!("SetOptionalPatch: bGameDaysPassedFix is an always-on native clock invariant; a disable request cannot reintroduce the time-freeze bug");
             } else if patch.eq_ignore_ascii_case("bNoFailedScriptLocks") && matches!(args.get(1), Some(XVal::Num(0.0))) {
                 tracing::warn!("SetOptionalPatch: bNoFailedScriptLocks is an always-on native scheduler invariant; a disable request cannot permanently lock scripts after an error");
+            } else if patch.eq_ignore_ascii_case("bHardcoreNeedsFix") && matches!(args.get(1), Some(XVal::Num(0.0))) {
+                tracing::warn!("SetOptionalPatch: bHardcoreNeedsFix is an always-on native need-floor invariant; a disable request cannot restore invalid need accumulation");
             } else if patch.eq_ignore_ascii_case("bCreatureSpreadFix") {
                 match args.get(1) {
                     Some(XVal::Num(0.0)) => g.gaps.creature_spread_fix = false,

@@ -1,0 +1,12 @@
+; Authored fixture: native need-floor capability, no external version emulation.
+; Introduce and read invalid input in one script invocation, before the next frame
+; repairs it. Separate console commands allow game frames between mutations.
+SetHardcore 1
+player.SetAV Dehydration -50
+player.ForceAV Hunger 0
+player.ModAV Hunger -100
+player.ForceAV SleepDeprivation -12
+PrintC "J6 needs before h2o=%.6f food=%.6f sleep=%.6f" (player.GetAV Dehydration) (player.GetAV Hunger) (player.GetAV SleepDeprivation)
+if GetOptionalPatch "bHardcoreNeedsFix" == 1
+    Print "J6 native needs: need-floor capability active"
+endif
