@@ -32,19 +32,10 @@ No game payload is committed. Full TTW and other gameplay remain separate work.
   instead. After the repair, the earlier helper writes its original slot through
   native `Game`, the later runtime definition remains the winner, and the
   future-only helper is refused. The other slot stays unchanged.
-- [observed, private selected-profile probe] The unchanged 253-plugin profile
-  selects 3,603 fallback units. Successful compilations increase from 3,466 to
-  3,467; failures fall from 137 to 136, with no new failed unit and no changed
-  diagnostics on the remaining failed units. Production `GameData` reports the
-  same counts. Original plugin files are unchanged.
-- [observed, private owned compiled bytes and record metadata] The recovered TTW
-  helper's remote write keeps its original slot 7. In the selected runtime
-  override, that slot is named `rWeapon`, whereas the earlier declaration calls
-  it `IsFollowingShort`. This is a separate record-level compatibility conflict:
-  source compilation matching the original bytes does not make those two
-  meanings interchangeable. No automatic name alias or slot remapping is made.
-- [required follow-up] Resolve that selected-profile conflict using the mods'
-  documented intended behavior and a separate compatibility patch, then exercise
-  follower dismissal and persistence. Compilation, numeric-slot fidelity and the
-  authored native runtime regression do not establish TTW follower gameplay or
-  complete Nuclear Sunset compatibility.
+- [required follow-up] A later mod can deliberately change the meaning of an
+  original numeric slot. Source fidelity alone cannot repair such a semantic
+  conflict. Resolve the documented intent in a separate compatibility patch and
+  exercise follower behavior and persistence before claiming gameplay acceptance.
+- [scope] Only authored fixtures are included. No extracted game scripts, private
+  record contents or game/mod payload are distributed in this change. Native
+  compilation does not establish full TTW or Nuclear Sunset compatibility.
