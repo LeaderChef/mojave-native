@@ -120,7 +120,7 @@
     },
     {
       "path": "crates/fnv-script/src/compile/gen/x.rs",
-      "sha256": "f827ce28b600c53c190bc9b47d1f2607d09f20aae0f850a8ad1687864b77b4ab",
+      "sha256": "d11317583915e31a3a313f929ce25c8b92f87918f0aba006533f27371af29774",
       "recordedBaseSha256": "6d86888dc1cb0e1e13d653adf2e6d1283c625ea47d506bd7b39d12c5f8ab2a41"
     },
     {
@@ -421,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "4bc4771f53671d2b5773b505a021a8ec23c5eb4de42a8554542262bc217b3547"
+      "sha256": "989a75a42944e5487885d8cea59a97c387231bc391c0a1c0cbd23e5b04532d17"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -474,6 +474,10 @@
     {
       "path": "crates/fnv-game/tests/ttw_plugin_metadata.rs",
       "sha256": "ae47067b1c387be7eba7ef817929bef2d8ca9eccb830c67e3c2d05dc4e181cff"
+    },
+    {
+      "path": "crates/fnv-script/tests/dynamic_enum.rs",
+      "sha256": "ce74b7db242a75c53896c6f8d5c710f5b294e28dd43d1a2cbd53668622724689"
     },
     {
       "path": "crates/fnv-script/tests/eval_assignment.rs",
@@ -540,6 +544,14 @@
       "sha256": "ee562cc22e847f59ae5c618ad409f506c8066155c7ada99f534609277bab3ee1"
     },
     {
+      "path": "docs/handoff/mojave-runtime-enums-2026-11-07.json",
+      "sha256": "4e8aa3929256c41101486eca55fce4ec8f5fc62b5c7d784891589af9c580a76a"
+    },
+    {
+      "path": "docs/handoff/mojave-runtime-enums-2026-11-07.md",
+      "sha256": "655b33e94b50e219ba02a58601e1fd402826a71a1fa496d2e2fd52ac7e4ba81b"
+    },
+    {
       "path": "docs/handoff/mojave-source-build-2026-11-07.json",
       "sha256": "41086b8193e8612c768af69154e213c9200ab560ea207a8d17ba9032e0e76349"
     },
@@ -598,6 +610,10 @@
     {
       "path": "docs/spec-notes/repeated-event-filter-arguments.md",
       "sha256": "cc8568cb3877a25bb0ead1d92db75362c3de61d4296120ad6b91f12b0c820a94"
+    },
+    {
+      "path": "docs/spec-notes/runtime-enum-arguments.md",
+      "sha256": "6802dfa7dc583cc6b19f4cfd094e83011aaca4fc5427ee358027dd6434146af8"
     },
     {
       "path": "docs/spec-notes/selected-gameplay-gmst.md",
@@ -694,6 +710,14 @@
     {
       "path": "mod-credits-ledger.json",
       "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
+    },
+    {
+      "path": "tools/smoke/fixtures/runtime-enum-home/mods/nvse/plugins/scripts/ln_j6_runtime_enum_probe.txt",
+      "sha256": "33a51b42619e50b563abe819696dbfda62eeea2269a6e25d3284054bce933203"
+    },
+    {
+      "path": "tools/smoke/fixtures/runtime-enum-home/mods/nvse/user_defined_functions/j6/runtime-enum.txt",
+      "sha256": "6fc82e9a3d62e429e752b2826ec9f807d3bfcc70eaa143790b74e29cb27e8501"
     }
   ],
   "binaryDistributed": false,
@@ -714,14 +738,14 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe",
+    "sha256": "3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9",
     "architecture": "Mach-O 64-bit ARM64",
-    "freshExportBuildVerified": true,
+    "freshExportBuildVerified": false,
     "secondMachineVerified": false,
-    "relocatedBundledCatalogueRuntimePassed": true,
+    "bundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "record": "docs/handoff/mojave-source-build-2026-11-07.md"
+    "record": "docs/handoff/mojave-runtime-enums-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -778,13 +802,14 @@
     "fullModGameplayAccepted": false
   },
   "previousPrivateDevelopmentBuild": {
-    "sha256": "058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75",
+    "sha256": "dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe",
     "architecture": "Mach-O 64-bit ARM64",
-    "targetedInlineArgumentsPassed": true,
+    "freshExportBuildVerified": true,
+    "secondMachineVerified": false,
+    "relocatedBundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "freshExportBuildVerified": false,
-    "record": "docs/handoff/mojave-inline-arguments-2026-11-07.md"
+    "record": "docs/handoff/mojave-source-build-2026-11-07.md"
   },
   "publicSourceReproduction": {
     "record": "docs/handoff/mojave-source-build-2026-11-07.md",

@@ -1,0 +1,17 @@
+; Authored compiler-override regression; no game/mod payload.
+int code
+float observed
+int score
+Begin _Function {}
+    let code := 16
+    let observed := Player.GetAV code
+    if eval observed == (Player.GetAV Health) && observed > 0
+        let score += 1
+    endif
+    let code := 44
+    let observed := Player.GetAV code
+    if eval observed == (Player.GetAV Survival) && observed > 0
+        let score += 1
+    endif
+    SetFunctionValue score
+End
