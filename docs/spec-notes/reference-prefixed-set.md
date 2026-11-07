@@ -1,0 +1,11 @@
+# Reference-prefixed vanilla Set statements
+
+[observed, owned script data] A TTW source unit spells a vanilla assignment `reference.Set localVariable to expression`. Its compiled statement has the existing reference prefix before the Set opcode, followed by an ordinary local-variable target. The native reader currently rejects a prefix on non-call statements and the source compiler treats this spelling as an unknown function. Original source and byte payloads remain private.
+
+[documented] The GECK Calling reference page describes an explicit reference as a function caller, distinct from script-variable ownership: https://geckwiki.com/index.php/Calling_reference . The Ref Variable page spells a remote assignment `Set Reference.variable to value`: https://geckwiki.com/index.php/Ref_Variable . Neither page documents the prefixed Set edge case itself.
+
+[design/inference] Preserve the prefix as optional statement metadata, separate from the existing target's `VarRef::on`. It supplies the default caller only while evaluating the assignment's expression; an explicitly qualified call still wins. It must not turn a local target into another object's variable or replace an explicit remote target. Restore the previous expression-caller scope on success and failure. Unprefixed Set keeps its current behavior and JSON shape.
+
+[limits] This is an inference from the stored statement shape and documented calling-reference model, not an original-game runtime observation of prefixed Set. In particular, a null prefix with a constant-only expression needs a future original-game observation; retain existing host rules when a function is called on a null reference. Support the observed vanilla Set expression grammar first; extended/compiler-override variants must not silently erase a prefix.
+
+[validation plan] Add authored source/decode/runtime tests for caller/target separation, explicit caller precedence, scope restoration, legacy JSON, and the unsupported-prefix guard for other statement types. Run required root and engine checks and an isolated owned-data consumer probe before marking the change ready. Do not edit original data, invent dependency versions or claim full TTW compatibility.
