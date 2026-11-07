@@ -42,3 +42,20 @@ expect = [
   'console: SetOptionalPatch "bCreatureSpreadFix" 0 >> ran',
   { re = 'use weapon: .* 0xFF000000 has fired its 8 shots at the player', label = "finite creature volley finished" },
 ]
+
+[[scenario]]
+name = "native-clock-compat"
+source = "[documented] JIP LN changelog 51.60; docs/spec-notes/native-clock-compat.md. The native clock is always correct, so GetOptionalPatch reports its invariant and an attempted disable warns instead of restoring the rounding bug. Companion runtime evidence checks actual clock/needs samples, not only these markers."
+areas = ["scripts", "simulation", "native-mac"]
+paths = ["crates/fnv-game/src/nvse_gaps.rs", "crates/fnv-game/tests/game_clock.rs", "tools/smoke/fixtures/native-clock-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/native-clock-home", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3", NVF_PLAY_TEST_CONSOLE = "3:Set GameDaysPassed to 1000;3.1:Set GameHour to 12;3.2:Set TimeScale to 1;3.3:SetHardcore 1;3.4:player.SetAV Dehydration 10;3.5:close;5:PrintC \"J6 clock A days=%.8f hour=%.8f thirst=%.8f\" GameDaysPassed GameHour (player.GetAV Dehydration);5.1:close;12:PrintC \"J6 clock B days=%.8f hour=%.8f thirst=%.8f\" GameDaysPassed GameHour (player.GetAV Dehydration);12.1:SetOptionalPatch \"bGameDaysPassedFix\" 0;12.2:PrintC \"J6 clock invariant after disable=%.0f\" (GetOptionalPatch \"bGameDaysPassedFix\");12.3:close;21:PrintC \"J6 clock C days=%.8f hour=%.8f thirst=%.8f\" GameDaysPassed GameHour (player.GetAV Dehydration);21.1:close" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music", "--no-messages"]
+run_seconds = 24
+expect = [
+  "J6 native clock: non-freezing native clock active",
+  "J6 clock invariant after disable=1",
+  "bGameDaysPassedFix is an always-on native clock invariant",
+  "J6 clock A days=",
+  "J6 clock B days=",
+  "J6 clock C days=",
+]
