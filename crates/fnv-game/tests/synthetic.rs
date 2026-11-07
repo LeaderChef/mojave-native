@@ -460,6 +460,32 @@ fn game(f: &Fixture) -> Game<'_> {
     Game::new(&f.data, world, GameConfig { strict: true, ..GameConfig::default() })
 }
 
+#[test]
+fn documented_animation_groups_reach_the_existing_playback_interface() {
+    let f = fixture();
+    let mut g = game(&f);
+    let groups = [("DynamicIdle", 1), ("TurnRight", 16), ("AimIS", 20), ("AttackLeft", 26),
+        ("Attack3", 38), ("Attack4", 44), ("BlockHit", 171), ("JumpStart", 227), ("JumpLoop", 228)];
+    for (name, code) in groups {
+        for flag in 0..=2 {
+            g.anims.requests.clear();
+            g.run_source(&format!("Player.PlayGroup {name} {flag}"), fnv_game::game::RunCtx::default()).unwrap();
+            assert_eq!(g.anims.requests.len(), 1);
+            let request = &g.anims.requests[0];
+            assert_eq!(request.on, FormId::PLAYER_REF);
+            assert_eq!((request.group, request.name.as_deref(), request.start.flag()), (code, Some(name), flag));
+            let query = format!("Begin Function {{}}\nSetFunctionValue Player.IsAnimPlaying {name}\nEnd");
+            // Queuing is not rendering: only a report through the existing playback
+            // interface makes the query true. No animation clips or renderer run here.
+            g.anims.set_playing(FormId::PLAYER_REF, None);
+            assert_eq!(g.run_query(&query, fnv_game::game::RunCtx::default()).unwrap().num().unwrap(), 0.0);
+            g.anims.set_playing(FormId::PLAYER_REF, Some(code));
+            assert_eq!(g.run_query(&query, fnv_game::game::RunCtx::default()).unwrap().num().unwrap(), 1.0);
+            g.anims.set_playing(FormId::PLAYER_REF, None);
+        }
+    }
+}
+
 fn q() -> FormId {
     FormId(QUEST)
 }
