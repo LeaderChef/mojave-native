@@ -393,33 +393,6 @@ fn register_weapon_view(app: &mut App) {
     ));
 }
 
-#[cfg(test)]
-mod compact_view_tests {
-    use super::*;
-
-    #[test]
-    fn weapon_view_setting_reduces_hands_without_changing_world_camera_or_pipboy() {
-        use nvf_play::free_cam::FirstPersonFov;
-        let mut app = App::new();
-        register_weapon_view(&mut app);
-        let camera = app.world_mut().spawn((FlyCam { yaw: 0.0, pitch: 0.0, speed: 0.0 }, Projection::Perspective(PerspectiveProjection::default()))).id();
-        let before = match app.world().get::<Projection>(camera).unwrap() {
-            Projection::Perspective(p) => p.fov, _ => unreachable!(),
-        };
-        assert!(app.world().resource::<FirstPersonFov>().0.is_none());
-        let settings = app.world().resource::<nvf_play::settings::Settings>();
-        let row = settings.list()[settings.index("weapon-field-of-view").unwrap()];
-        row.put(app.world_mut(), 0.5);
-        assert_eq!(app.world().resource::<FirstPersonFov>().0, Some(70.0));
-        let Projection::Perspective(p) = app.world().get::<Projection>(camera).unwrap() else { unreachable!() };
-        assert_eq!(p.fov, before);
-        assert!(crate::player_body::arms_magnification(before, 70.0) < crate::player_body::arms_magnification(before, 55.0));
-        assert_eq!(crate::player_body::PIPBOY_FOV, 47.0);
-        row.put(app.world_mut(), 0.0);
-        assert_eq!(app.world().resource::<FirstPersonFov>().0, Some(55.0));
-    }
-}
-
 /// The display sync of this name (or INI text, `DisplaySync::parse`); false: not one.
 fn set_display_sync(world: &mut World, name: &str) -> bool {
     let Some(d) = DisplaySync::parse(name) else { return false };
@@ -656,5 +629,32 @@ fn set_overlay(world: &mut World, on: bool) {
     let mut overlays = world.query_filtered::<&mut Visibility, With<Overlay>>();
     for mut v in overlays.iter_mut(world) {
         *v = if on { Visibility::Inherited } else { Visibility::Hidden };
+    }
+}
+
+#[cfg(test)]
+mod compact_view_tests {
+    use super::*;
+
+    #[test]
+    fn weapon_view_setting_reduces_hands_without_changing_world_camera_or_pipboy() {
+        use nvf_play::free_cam::FirstPersonFov;
+        let mut app = App::new();
+        register_weapon_view(&mut app);
+        let camera = app.world_mut().spawn((FlyCam { yaw: 0.0, pitch: 0.0, speed: 0.0 }, Projection::Perspective(PerspectiveProjection::default()))).id();
+        let before = match app.world().get::<Projection>(camera).unwrap() {
+            Projection::Perspective(p) => p.fov, _ => unreachable!(),
+        };
+        assert!(app.world().resource::<FirstPersonFov>().0.is_none());
+        let settings = app.world().resource::<nvf_play::settings::Settings>();
+        let row = settings.list()[settings.index("weapon-field-of-view").unwrap()];
+        row.put(app.world_mut(), 0.5);
+        assert_eq!(app.world().resource::<FirstPersonFov>().0, Some(70.0));
+        let Projection::Perspective(p) = app.world().get::<Projection>(camera).unwrap() else { unreachable!() };
+        assert_eq!(p.fov, before);
+        assert!(crate::player_body::arms_magnification(before, 70.0) < crate::player_body::arms_magnification(before, 55.0));
+        assert_eq!(crate::player_body::PIPBOY_FOV, 47.0);
+        row.put(app.world_mut(), 0.0);
+        assert_eq!(app.world().resource::<FirstPersonFov>().0, Some(55.0));
     }
 }

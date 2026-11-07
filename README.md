@@ -9,7 +9,7 @@
 
 **Mojave Native** is the Mac adaptation of **NVForever's Rust reimplementation of the Fallout: New Vegas engine**. Our goal is a responsive, native **64-bit Apple Silicon** version with **Metal rendering**, using your own original game and DLC data.
 
-**Current stage: experimental source preview. There is no public playable app to download yet.** A local ARM64 release build exists and earlier work exercised parts of rendering and movement. The latest build still needs a complete, reproducible play test with sound and save/load. See the [current status](STATUS.md).
+**Current stage: experimental source preview. There is no public playable app to download yet.** The latest local ARM64 build ran on M4 Pro/Metal, produced radio/effect audio and restored a save in a fresh process without taking screen focus. A complete, reproducible player-controlled test and measured display performance are still needed. See the [current status](STATUS.md).
 
 ## What comes next
 

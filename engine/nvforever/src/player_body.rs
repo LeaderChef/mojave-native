@@ -2763,7 +2763,7 @@ mod tests {
         assert!(!serde_json::from_str::<serde_json::Value>(&old).unwrap().as_object().unwrap().contains_key("young"));
         let old: fnv_game::game::PlayerState = serde_json::from_str(&old).unwrap();
         assert_eq!(BodyAppearance::from_player(Some(&old), change), adult);
-        assert_eq!(BodyAppearance::from_player(None, change).young, false);
+        assert!(!BodyAppearance::from_player(None, change).young);
     }
 
     #[test]

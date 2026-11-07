@@ -595,6 +595,11 @@ pub struct Sfx {
     pub voice_stolen: u32,
     /// Per SOUN: one-shots started, those started over its oldest voice, refused.
     per_sound: HashMap<FormId, [u32; 3]>,
+    /// Decoded files nothing plays, and when each was first seen so ([`release_files`]).
+    unused: nvf_assets::release::Unused<String>,
+    /// Real seconds of the last [`release_files`] sweep, and the files it has let go of.
+    swept_at: f64,
+    pub files_released: u64,
 }
 
 impl Sfx {
@@ -631,6 +636,9 @@ impl Sfx {
             voice_limited: 0,
             voice_stolen: 0,
             per_sound: HashMap::new(),
+            unused: nvf_assets::release::Unused::default(),
+            swept_at: 0.0,
+            files_released: 0,
         }
     }
 }
@@ -968,6 +976,58 @@ fn file_now(sfx: &mut Sfx, vfs: &Arc<fnv_vfs::Vfs>, path: &str, name: &str) -> F
         Some(FileState::Decoding(..)) => FileNow::Pending,
         Some(FileState::Broken) | None => FileNow::Broken,
     }
+}
+
+/// Whether a decoded file is in use: a playing holds its handle or shares its samples
+/// (a placed or reverbed playing is an asset of its own over the same samples).
+fn file_in_use(h: &Handle<PcmSound>, assets: &Assets<PcmSound>) -> bool {
+    nvf_assets::release::held_beyond(h, 1) || assets.get(h).is_some_and(|p| Arc::strong_count(&p.samples) > 1)
+}
+
+impl Sfx {
+    /// The decoded files kept: (files, those nothing plays, their samples' bytes).
+    pub fn file_share(&self, assets: &Assets<PcmSound>) -> (usize, usize, u64) {
+        let (mut n, mut idle, mut bytes) = (0, 0, 0u64);
+        for state in self.files.values() {
+            if let FileState::Ready(h) = state {
+                n += 1;
+                idle += usize::from(!file_in_use(h, assets));
+                bytes += assets.get(h).map_or(0, |p| (p.samples.len() * size_of::<f32>()) as u64);
+            }
+        }
+        (n, idle, bytes)
+    }
+}
+
+/// Let go of decoded sound files nothing has played for a while, as the asset caches do
+/// with models and textures (nvf_assets `release.rs`, the same [`KeepLimits`]). Without
+/// it every file heard stayed decoded for the whole session: decoded samples are 32-bit,
+/// about 170 KB a second of mono 44.1 kHz sound, and the RAM a long session used only
+/// grew [observed 2026-11-06, the stress tour; design]. A file asked for again is decoded
+/// again; a playing keeps its own samples, so dropping the cache's entry never cuts one.
+///
+/// [`KeepLimits`]: nvf_assets::KeepLimits
+fn release_files(real: Res<Time<Real>>, limits: Option<Res<nvf_assets::KeepLimits>>, sfx: Option<ResMut<Sfx>>, assets: Res<Assets<PcmSound>>) {
+    let Some(mut sfx) = sfx else { return };
+    let now = real.elapsed_secs_f64();
+    if now - sfx.swept_at < nvf_assets::release::SWEEP_SECS as f64 {
+        return;
+    }
+    sfx.swept_at = now;
+    let limits = limits.map_or_else(nvf_assets::KeepLimits::default, |l| *l);
+    let Sfx { files, unused, .. } = &mut *sfx;
+    let entries: Vec<(String, bool)> = files
+        .iter()
+        .filter_map(|(path, state)| match state {
+            FileState::Ready(h) => Some((path.clone(), file_in_use(h, &assets))),
+            _ => None,
+        })
+        .collect();
+    let drop = unused.sweep(now, entries, limits.secs, limits.max);
+    for path in &drop {
+        files.remove(path);
+    }
+    sfx.files_released += drop.len() as u64;
 }
 
 /// Take in the decodes the worker threads have finished: a sound ready to play, or a
@@ -1531,7 +1591,7 @@ impl Plugin for SfxPlugin {
             .configure_sets(Update, (SfxStep::Prepare, SfxStep::Ambient, SfxStep::Play).chain().in_set(SfxSet))
             .add_systems(Update, (listener_submerged, prepare).chain().in_set(SfxStep::Prepare))
             .add_systems(Update, (play, pan_sounds).chain().in_set(SfxStep::Play))
-            .add_systems(Last, report);
+            .add_systems(Last, (release_files, report));
         add_late_start(app);
         crate::reverb::build(app);
     }
@@ -1540,6 +1600,43 @@ impl Plugin for SfxPlugin {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn cache_pressure_preserves_playing_handles_and_shared_samples() {
+        // [Design] Pressure may discard idle decoded files, never a currently playing
+        // asset or the samples shared by a panned/reverbed playing. No device is opened.
+        let mut assets = Assets::<PcmSound>::default();
+        let sound = |samples| PcmSound { samples, channels: 1, rate: 22050, pan: None, reverb: None };
+        let active = assets.add(sound(vec![0.1; 16].into()));
+        let idle = assets.add(sound(vec![0.2; 16].into()));
+        let samples: Arc<[f32]> = vec![0.3; 16].into();
+        let playing = sound(samples.clone());
+        let shared = assets.add(sound(samples));
+        let mut sfx = Sfx::new(FxForms::default());
+        sfx.files.insert("active.wav".into(), FileState::Ready(active.clone()));
+        sfx.files.insert("idle.wav".into(), FileState::Ready(idle));
+        sfx.files.insert("shared.wav".into(), FileState::Ready(shared));
+        let mut clock = Time::<Real>::default();
+        clock.advance_by(Duration::from_secs(3));
+        let mut app = App::new();
+        app.insert_resource(sfx).insert_resource(assets).insert_resource(clock)
+            .insert_resource(nvf_assets::KeepLimits { secs: 0.0, max: 0 })
+            .add_systems(Update, release_files);
+        app.update();
+        let cache = app.world().resource::<Sfx>();
+        assert_eq!(cache.files_released, 1);
+        assert!(!cache.files.contains_key("idle.wav"));
+        assert!(cache.files.contains_key("active.wav"));
+        assert!(cache.files.contains_key("shared.wav"));
+        assert_eq!(&playing.samples[..], &[0.3; 16]);
+        drop(active);
+        drop(playing);
+        app.world_mut().resource_mut::<Time<Real>>().advance_by(Duration::from_secs(3));
+        app.update();
+        let cache = app.world().resource::<Sfx>();
+        assert_eq!(cache.files_released, 3);
+        assert!(cache.files.is_empty());
+    }
 
     #[test]
     fn the_voice_limit_holds_back_a_crowd() {

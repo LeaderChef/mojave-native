@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "snapshotDate": "2026-11-07",
   "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
-  "unchangedComparedWithRecordedBase": 1398,
+  "unchangedComparedWithRecordedBase": 1393,
   "modifiedComparedWithRecordedBase": [
     {
       "path": ".gitignore",
@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "d54cbd127cf1b0d4dcf6b1f79a542d10d959f093e14d97246d9535d7bca9c06b",
+      "sha256": "a4dcdc8d403650ce38151a3bc6a76eaaccbe7677acd37b5a65412a11ebf68c81",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -189,9 +189,19 @@
       "recordedBaseSha256": "4c8f9be913a5ca2e3c34aeb3f20c70982666dcc1a1f04e4b083dd3eba9179df0"
     },
     {
+      "path": "engine/nvf-play/src/ambient.rs",
+      "sha256": "a442c9e3316ec5cb6099e5c09958cbc8ca7961ba2cd1ea8d3158f9cf25178bdb",
+      "recordedBaseSha256": "07b5ec278888cf90978dfc98201c5a9efce332800baac4375382d20d0f7bd1c7"
+    },
+    {
       "path": "engine/nvf-play/src/audio_out.rs",
       "sha256": "2235809edc613d166d18e1dae5f73c60f86241b06ff67e3c9567e5e088e76f6c",
       "recordedBaseSha256": "9f64bb709426eb74dd0d4b582e5468e0fcfdb0ed5cf75ad80d5d8ad70e62ef8c"
+    },
+    {
+      "path": "engine/nvf-play/src/bindings.rs",
+      "sha256": "2ea94e159841162ed42d165e44375f33fe254224d54ef14fad581bb1649d32e0",
+      "recordedBaseSha256": "fd33f0a02eafd90f4372261da779188661481ef55224de0a3a08fa4e406fa52c"
     },
     {
       "path": "engine/nvf-play/src/combat.rs",
@@ -209,14 +219,14 @@
       "recordedBaseSha256": "617fd66df9677f3530c4fa5068cea6a00beb55c5d5bb45b804d3faee2a0b60c4"
     },
     {
-      "path": "engine/nvf-play/src/dropped/tests.rs",
-      "sha256": "601f2a1b998464a1c1372a06d57d5c31d67d886a3dd103ebef308e6b102ef389",
-      "recordedBaseSha256": "d76f1882a4f9e6dc8865413929ff42340a75c7b8254b09417e6cd038829a4453"
-    },
-    {
       "path": "engine/nvf-play/src/dropped.rs",
       "sha256": "fbed0d3f8516575afbf5a06e582b111f8e768084fe5a71c730192663759a3093",
       "recordedBaseSha256": "bf09d34573d3fd66b4b2a4b23ea1996aa783eaa7f20ed9bbf00ece4c3e39c1bb"
+    },
+    {
+      "path": "engine/nvf-play/src/dropped/tests.rs",
+      "sha256": "601f2a1b998464a1c1372a06d57d5c31d67d886a3dd103ebef308e6b102ef389",
+      "recordedBaseSha256": "d76f1882a4f9e6dc8865413929ff42340a75c7b8254b09417e6cd038829a4453"
     },
     {
       "path": "engine/nvf-play/src/flashlight.rs",
@@ -235,28 +245,8 @@
     },
     {
       "path": "engine/nvf-play/src/lib.rs",
-      "sha256": "9888ffb12c1f72afda6921b7667a19d6261073558ab6d65e6dd3df93cf7d0ab7",
+      "sha256": "32043d10c0fcb8eb911e91dd668605582b1b5bc225e630f20ec0b6a25ffb1989",
       "recordedBaseSha256": "c589b00dd0e0206ff4209982e9977fe77afb60e1c2c0cad5878e443807c9e57b"
-    },
-    {
-      "path": "engine/nvf-play/src/menu/look.rs",
-      "sha256": "e2ef61ba7aad15801decab96d2a91684d54752c10230f5b4d4ab90ce43d48e56",
-      "recordedBaseSha256": "cbce782d3f9f46e7b9da51900f8851b2447759b7879e3c906e9ae3eb6666c694"
-    },
-    {
-      "path": "engine/nvf-play/src/menu/model/tests.rs",
-      "sha256": "eaf1ee5b32b6f9d6481f06676f0abb7402f253a30d1256149d788c7cf873d586",
-      "recordedBaseSha256": "19357c90bb040c5d6e124ffbcef16ab6627519dd50a303af4e5ed00f2b524edb"
-    },
-    {
-      "path": "engine/nvf-play/src/menu/model.rs",
-      "sha256": "217372fca22386d111f203833cff8d3ffc90c89800434eab4dee5d29b99c054a",
-      "recordedBaseSha256": "c2d21cb1e67444e9d345a13bd3e9ee1d5c597f4aac5d2f0fdc3f50889dfd5e92"
-    },
-    {
-      "path": "engine/nvf-play/src/menu/test_aid.rs",
-      "sha256": "1c6b9910e0ee0f401481453110d744a3cda4f9d0e63312efc4e5180fd2490e63",
-      "recordedBaseSha256": "0728def90d84030a624265bd3d42cdfc03e72ada704f6a09be38b0020a8d852c"
     },
     {
       "path": "engine/nvf-play/src/menu.rs",
@@ -264,14 +254,44 @@
       "recordedBaseSha256": "563303b496a8bebca57999041a30764ec6ffd68cccffc3c96314cccd57e95846"
     },
     {
-      "path": "engine/nvf-play/src/phys/tests.rs",
-      "sha256": "c75d460ac15735465c5a09874a811a9f06d505a7e13a6950a7653b3f10377d8c",
-      "recordedBaseSha256": "3688eea450172794add97284aaf6e9abe351254e961c12de538f1c34cfd889ea"
+      "path": "engine/nvf-play/src/menu/look.rs",
+      "sha256": "e2ef61ba7aad15801decab96d2a91684d54752c10230f5b4d4ab90ce43d48e56",
+      "recordedBaseSha256": "cbce782d3f9f46e7b9da51900f8851b2447759b7879e3c906e9ae3eb6666c694"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/model.rs",
+      "sha256": "217372fca22386d111f203833cff8d3ffc90c89800434eab4dee5d29b99c054a",
+      "recordedBaseSha256": "c2d21cb1e67444e9d345a13bd3e9ee1d5c597f4aac5d2f0fdc3f50889dfd5e92"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/model/tests.rs",
+      "sha256": "eaf1ee5b32b6f9d6481f06676f0abb7402f253a30d1256149d788c7cf873d586",
+      "recordedBaseSha256": "19357c90bb040c5d6e124ffbcef16ab6627519dd50a303af4e5ed00f2b524edb"
+    },
+    {
+      "path": "engine/nvf-play/src/menu/test_aid.rs",
+      "sha256": "1c6b9910e0ee0f401481453110d744a3cda4f9d0e63312efc4e5180fd2490e63",
+      "recordedBaseSha256": "0728def90d84030a624265bd3d42cdfc03e72ada704f6a09be38b0020a8d852c"
+    },
+    {
+      "path": "engine/nvf-play/src/music.rs",
+      "sha256": "cd81651c1d87b6e2986a79b23da9b412b70959853890d88eec5cbbf9a4614ea9",
+      "recordedBaseSha256": "4ebe3634d07b7676fac95bbaf34866526dae67a43956b3a3c4d0f945b59aef4d"
+    },
+    {
+      "path": "engine/nvf-play/src/pause.rs",
+      "sha256": "c688c7eab5ccb1c1902a4a8d494ed9e6ad79bde7d21276cd75d98a989dfe504a",
+      "recordedBaseSha256": "2a718e0fdd17ea0c95e2566c077e4a3e1da6024b5f59d9deefe955f12e6ce784"
     },
     {
       "path": "engine/nvf-play/src/phys.rs",
       "sha256": "46ab62bbe7016cbeb590897faaf4aa91b601b37b4b63688a2cf3834fa949303c",
       "recordedBaseSha256": "5fc2ab9c98afdc076e8916fefcead156a0a22db72bfd38051cdfc055d3bf04cf"
+    },
+    {
+      "path": "engine/nvf-play/src/phys/tests.rs",
+      "sha256": "c75d460ac15735465c5a09874a811a9f06d505a7e13a6950a7653b3f10377d8c",
+      "recordedBaseSha256": "3688eea450172794add97284aaf6e9abe351254e961c12de538f1c34cfd889ea"
     },
     {
       "path": "engine/nvf-play/src/pipboy/data.rs",
@@ -280,7 +300,7 @@
     },
     {
       "path": "engine/nvf-play/src/radio.rs",
-      "sha256": "920e857899f48b8090533b38538ef3f3b24cfa3eb26f4ceca4cf5269ecc7216b",
+      "sha256": "57ed327e56a95b1cdcffba580a1c0fe3aa89696d00962e09d298cbd015a9b1ec",
       "recordedBaseSha256": "f5c443a6d3eb11e5005578f4398c730deece5b63f202b3951bb0e7409be9e2fb"
     },
     {
@@ -292,6 +312,11 @@
       "path": "engine/nvf-play/src/script.rs",
       "sha256": "cd7c72378a1adcab11e5654f8e1ec2e4c3e60c434b8437d690472f54cf35a74b",
       "recordedBaseSha256": "414ccb95616d844c94ef87fca138f6d863125678a0cf66146b5f3567df98e69f"
+    },
+    {
+      "path": "engine/nvf-play/src/sfx.rs",
+      "sha256": "07bed602bec87041bbe636aded1c2480c4015303fc129baf278bf04e984e4e6c",
+      "recordedBaseSha256": "bfea6392e8e5a9904489910233ea59f537253c4c2daa73efe9f8a5daaa367170"
     },
     {
       "path": "engine/nvf-play/src/sim.rs",
@@ -340,12 +365,12 @@
     },
     {
       "path": "engine/nvforever/src/player_body.rs",
-      "sha256": "b9744dbbc62e5ab99f2d0f07ecf6075eabc965dc0593c0bf527ec2f79874e5ee",
+      "sha256": "df79bb4a822407415614859c719b7a2cfa45be70d5e599a14c0d8f7ac4606f59",
       "recordedBaseSha256": "782ad1183d7da6196eb82f8aec7d1ae5e0f54034da794c536f193a14a7e53a36"
     },
     {
       "path": "engine/nvforever/src/settings.rs",
-      "sha256": "eb3d582b7db1e9f3c1d5a79ff3b241a772d4dd6197269eb65057ceb6e478024d",
+      "sha256": "0a189691ea875f29dfd7a738eb613837de675660da24e36f17658792d9f6959f",
       "recordedBaseSha256": "b00a50a7b4a4ed8cc94e16bce4be745576a7ec0dacb4b63d7f508b50aca9a2eb"
     },
     {
@@ -365,7 +390,7 @@
     },
     {
       "path": "CREDITS.md",
-      "sha256": "2d4d34b57a4a3972983557fb67c06952472ef7dcb16aa706fafe10b3269dfa3e"
+      "sha256": "fb49fd6a91655fce629090364151184780c7b8a536515a7c289528e2af162318"
     },
     {
       "path": "MOJAVE-NATIVE-SOURCE-NOTICE.md",
@@ -373,15 +398,15 @@
     },
     {
       "path": "RESEARCH.md",
-      "sha256": "c6dd859d898c3839cab1c0cf1edfdea51f99653f8de7a422d42ac18e92f68e04"
+      "sha256": "f75c83dcd4cb09b7dac2dfa3cff0b2827569cc07d6aec238a881c8514393a9e1"
     },
     {
       "path": "ROADMAP.md",
-      "sha256": "c9d6d23fe11bc9c4661545636c54130cfdb02af54a16c3a5df7716ad770fa7a8"
+      "sha256": "ca0a2f7b1ab69fa3346ea22108d95540a5903435810afdd523932061a03db8df"
     },
     {
       "path": "STATUS.md",
-      "sha256": "f99f0e716d71219882dcbdf158c8bd16d21bcfb8ccddc9ac99dcbbc3b32e2f7c"
+      "sha256": "271f25e7ec0ff4c40f4ab475d877e85829a192ed2eeae98f4833b080ca29dbf5"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -397,7 +422,7 @@
     },
     {
       "path": "assets/README.md",
-      "sha256": "d501d8df36e881f107fe9ef9039b1ddb972538ae672454e6a07cf5910844c5b0"
+      "sha256": "672d1325090c9c865fa042e8783271d6b555aeed488775810e729a9ae34edebf"
     },
     {
       "path": "assets/mojave-native-landscape.png",
@@ -424,12 +449,12 @@
       "sha256": "84a530037735646971054ed1b1cfde466990788c99c143ed14b2c6c6a36e2aac"
     },
     {
-      "path": "crates/fnv-game/src/production/tests.rs",
-      "sha256": "fb31d2ad24b267370a5b959ef593740b9020572fce2eb8a492ff773b40835367"
-    },
-    {
       "path": "crates/fnv-game/src/production.rs",
       "sha256": "ed00c59eb314aaba8416c29d0b97dedc0cd55fcbf4ef89232907504fac6f4e53"
+    },
+    {
+      "path": "crates/fnv-game/src/production/tests.rs",
+      "sha256": "fb31d2ad24b267370a5b959ef593740b9020572fce2eb8a492ff773b40835367"
     },
     {
       "path": "crates/fnv-game/tests/ttw_plugin_metadata.rs",
@@ -440,36 +465,40 @@
       "sha256": "61d1e02c966e7394500e9d00960ec6ddb46fca34fa89e6d063d3d1fed5b429cd"
     },
     {
-      "path": "crates/fnv-sim/src/world/accepted_time/tests.rs",
-      "sha256": "e2dfa09685ce30409337f2c67bd92f416ea65f1a2c6f886e1f1503adc230e482"
-    },
-    {
       "path": "crates/fnv-sim/src/world/accepted_time.rs",
       "sha256": "e9dcb4d80ca79e58d8df9c03cbce3c1ddfb78293e77637dd33debec8458497a4"
     },
     {
-      "path": "crates/fnv-sim/src/world/escrow/tests.rs",
-      "sha256": "38af81a09589f4af1cc43fbad07e15f206541b006b216145d2de1d6a2c7ded2d"
+      "path": "crates/fnv-sim/src/world/accepted_time/tests.rs",
+      "sha256": "e2dfa09685ce30409337f2c67bd92f416ea65f1a2c6f886e1f1503adc230e482"
     },
     {
       "path": "crates/fnv-sim/src/world/escrow.rs",
       "sha256": "bdfe63d8ab0a93d494c0361e0c8ffd6ac154cbcc443a1149066b46d0f70b028c"
     },
     {
-      "path": "crates/fnv-sim/src/world/production/tests.rs",
-      "sha256": "06f0404ba69e80629b37b90c96cbbd1d501fda4c656c3c139338536cc6e26fc4"
+      "path": "crates/fnv-sim/src/world/escrow/tests.rs",
+      "sha256": "38af81a09589f4af1cc43fbad07e15f206541b006b216145d2de1d6a2c7ded2d"
     },
     {
       "path": "crates/fnv-sim/src/world/production.rs",
       "sha256": "8a89e126437d94a9aeb87d753fd7798224d29303856464b3cc85c23b042ecec4"
     },
     {
-      "path": "crates/fnv-sim/src/world/transfer_exact/tests.rs",
-      "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
+      "path": "crates/fnv-sim/src/world/production/tests.rs",
+      "sha256": "06f0404ba69e80629b37b90c96cbbd1d501fda4c656c3c139338536cc6e26fc4"
     },
     {
       "path": "crates/fnv-sim/src/world/transfer_exact.rs",
       "sha256": "b183a1cd3bb0ca8839823f757244543c4ae677910d6d7d38842b3472327e072b"
+    },
+    {
+      "path": "crates/fnv-sim/src/world/transfer_exact/tests.rs",
+      "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-input-audio-2026-11-07.md",
+      "sha256": "bda14bcf3ab658166cdefc5bfac28ef7a552f275843a0d0018313acf036ec763"
     },
     {
       "path": "docs/spec-notes/accepted-work-time.md",
@@ -540,16 +569,20 @@
       "sha256": "6481cf3959d21e769bc567651a6e56a44fa0f205f0e31732e3012e7f4c4a128b"
     },
     {
-      "path": "engine/nvf-play/src/crafting/production_aid/tests.rs",
-      "sha256": "2541d4497998e3966d964fe794b57e1d2d28fdc4a31e50409d20789f303fb5a7"
-    },
-    {
       "path": "engine/nvf-play/src/crafting/production_aid.rs",
       "sha256": "b88bec34f66a8a11a5376dd3bc0664a2636535b927f510fbe7fa0243b57569f6"
     },
     {
+      "path": "engine/nvf-play/src/crafting/production_aid/tests.rs",
+      "sha256": "2541d4497998e3966d964fe794b57e1d2d28fdc4a31e50409d20789f303fb5a7"
+    },
+    {
       "path": "engine/nvf-play/src/crafting/transaction_tests.rs",
       "sha256": "4098c6218da74dd9a05ca2af877bd17ca6b4887a312965cff00a055508650a25"
+    },
+    {
+      "path": "engine/nvf-play/src/file_bytes.rs",
+      "sha256": "ee627b273caba3f3ed4e31990ef4fa20e25b923d17a2336d97c125411e7d4b00"
     },
     {
       "path": "engine/nvf-play/src/game_settings.rs",
@@ -594,5 +627,26 @@
   ],
   "binaryDistributed": false,
   "freshExportBuildVerified": false,
-  "fullGameplayAccepted": false
+  "fullGameplayAccepted": false,
+  "integratedMaintainerChanges": [
+    {
+      "pr": 1699,
+      "author": "LootJunkieAzza",
+      "head": "0f89a8bdd00d07a224b2aa489e6dd5a73f9ef95a",
+      "purpose": "Release unused audio file cache data"
+    },
+    {
+      "pr": 1724,
+      "author": "LootJunkieAzza",
+      "head": "71411f2f32fe150af42c9f8278df6e090868c34a",
+      "purpose": "Finer low-end mouse sensitivity"
+    }
+  ],
+  "latestPrivateDevelopmentBuild": {
+    "sha256": "9083779db3c649038ca187bcb17239e3ef514f27f8f4209d9375303dbb31fac6",
+    "architecture": "Mach-O 64-bit ARM64",
+    "boundedSilentRuntimeAndSaveReloadPassed": true,
+    "fullGameplayAccepted": false,
+    "freshExportBuildVerified": false
+  }
 }
