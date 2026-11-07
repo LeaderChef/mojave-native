@@ -467,7 +467,9 @@ fn not_now(world: &World) -> Option<String> {
     if rt.game.dialogue.is_some() {
         return Some("in a conversation".into());
     }
-    if rt.game.menu.is_some() || rt.game.message_box.is_some() {
+    // A closed box keeps its chosen button until the owner reads GetButtonPressed.
+    // That retained answer is not a live modal (answered-message-save-guard.md).
+    if rt.game.menu.is_some() || !rt.game.boxes.is_empty() || rt.game.message_box.as_ref().is_some_and(|m| m.pressed.is_none()) {
         return Some("a script's menu or message box is open".into());
     }
     let state = *world.resource::<State<PlayState>>().get();
@@ -955,6 +957,9 @@ pub fn read_for_load(path: &std::path::Path, current: &[PluginEntry]) -> Result<
 
 #[cfg(test)]
 mod production_tests;
+
+#[cfg(test)]
+mod message_guard_tests;
 
 #[cfg(test)]
 mod tests {

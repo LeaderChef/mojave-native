@@ -1,0 +1,3 @@
+; Authored informational box. Its result is intentionally not polled or discarded.
+MessageBoxEx "J6 authored save-guard notice|OK"
+PrintC "J6 save guard: notice opened, leave its answer available to its owner"

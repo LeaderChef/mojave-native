@@ -78,3 +78,18 @@ expect = [
   "J6 needs invariant=1",
   "bHardcoreNeedsFix is an always-on native need-floor invariant",
 ]
+
+[[scenario]]
+name = "answered-message-save-guard"
+source = "[observed] Native close_menu retains a chosen button for GetButtonPressed; docs/spec-notes/answered-message-save-guard.md. An authored informational message is acknowledged normally before the real QuickSave input. Companion evidence verifies the actual file and a fresh process load; engine regressions preserve owner/read-once and active-menu guards."
+areas = ["save", "scripts", "native-mac"]
+paths = ["engine/nvf-play/src/save.rs", "engine/nvf-play/src/save/message_guard_tests.rs", "tools/smoke/fixtures/answered-save-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/answered-save-home", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3", NVF_PLAY_TEST_KEYS = "12:f5" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music"]
+run_seconds = 16
+expect = [
+  "J6 save guard: notice opened, leave its answer available to its owner",
+  "test aid: closed menu 1001 after",
+  "save: QuickSave key",
+  { re = 'save: wrote .*quicksave[.]nvfsave', label = "QuickSave writes a real native save after the notice closes" },
+]
