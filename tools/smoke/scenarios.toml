@@ -1,0 +1,16 @@
+# Authored scenario for the limited public source snapshot.
+# The full upstream smoke runner is not included in this snapshot.
+
+[[scenario]]
+name = "documented-animation-groups"
+source = "[documented] GECK AnimGroups; docs/spec-notes/animation-group-catalogue.md. Own fixture compiles and dispatches documented group names through ScriptRunner. Separate crate/Game tests verify numeric codes and queue flags. This scenario does not assert rendered animation or blending."
+areas = ["scripts", "animation", "native-mac"]
+paths = ["crates/fnv-script/data/encodings.json", "crates/fnv-script/tests/animation_groups.rs", "crates/fnv-game/tests/synthetic.rs", "tools/smoke/fixtures/animation-groups-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/animation-groups-home" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music", "--no-messages"]
+run_seconds = 20
+expect = [
+  "script runner: ln_j6_animation_groups_probe.txt compiled",
+  "script runner: ln_j6_animation_groups_probe.txt ran (new game)",
+  "J6 animation groups: documented names compiled and dispatched",
+]

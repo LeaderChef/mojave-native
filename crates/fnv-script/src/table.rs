@@ -6,8 +6,9 @@
 //!   reference, opcodes, condition indices, use counts, Begin-block names.
 //! - `crates/fnv-script/data/encodings.json` (`fnv.script.encodings/1`, compiled into
 //!   the crate): how each parameter of a function is encoded in the bytecode where that
-//!   is not the default tagged value, and the spellings of enumerated codes. Every entry
-//!   is observed in the shipped masters (docs/spec-notes/scripts.md §2.4).
+//!   is not the default tagged value, and the spellings of enumerated codes. Encodings
+//!   are observed in shipped masters (docs/spec-notes/scripts.md §2.4); animation names
+//!   are completed from GECK's documented AnimGroups (animation-group-catalogue.md).
 //!
 //! The interpreter dispatches on opcode; names are for diagnostics and the decompiler.
 

@@ -5,10 +5,10 @@ No public playable release yet.
 | Area | Evidence / state |
 | --- | --- |
 | Architecture | Local release build identifies as Mach-O 64-bit ARM64 |
-| Latest local candidate | SHA256 `3a77f6b1bb0be732f2ae80bf3a2b4876a82ca3c60fef6e9a733eb757ada53bb9` |
+| Latest local candidate | SHA256 `a88aead795d1d4a3dc8a39028a8ac79ee4b758caea4bbe20b3760c6b40bff085` |
 | Latest candidate gameplay | Focused player acceptance incomplete for this exact build |
 | Mouse and sound updates | Adapted merged maintainer PRs [1699](https://github.com/LootJunkieAzza/NVForever/pull/1699) and [1724](https://github.com/LootJunkieAzza/NVForever/pull/1724): unused sound data can be released; finer sensitivity down to 5% |
-| Integrated-source checks | Four inline argument regressions (three red before) now pass; 2292 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
+| Integrated-source checks | Four inline argument regressions (three red before) now pass; 2295 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
 | Bounded runtime | Owned base game + nine add-ons ran on M4 Pro/Metal; normal exit, zero GPU validation errors, no window activation |
 | Session recipe views | Actual MIC Drinks menu plus authored runtime labels/filter checked in a windowless Metal run; no mod bodies rewritten |
 | Latest sound evidence | 28.076s private silent mixer output; finite samples, peak 0.721925, no values over full scale; physical output/latency not checked |
@@ -61,3 +61,9 @@ The [runtime-enum argument repair](docs/handoff/mojave-runtime-enums-2026-11-07.
 UI Plus and Nuclear Sunset helpers return/store the expected actor values in six
 private native calls. The new ARM64 build passes its silent windowless UDF fixture;
 this is not complete mod/UI, human gameplay or current-binary save/reload acceptance.
+
+The [documented animation-group repair](docs/handoff/mojave-animation-groups-2026-11-07.md) completes the 245-entry name
+catalogue and reduces failures in the same selected source corpus from 144 to 138.
+Twenty-seven Game cases verify codes and queue modes; an authored fixture executes
+in the new windowless ARM64/Metal build. Rendered animation and full mod gameplay
+remain separate acceptance work. The patch is stacked on runtime-enum PR #5.

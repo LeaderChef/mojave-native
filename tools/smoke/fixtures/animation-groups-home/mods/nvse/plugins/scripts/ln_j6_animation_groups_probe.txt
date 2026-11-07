@@ -1,0 +1,13 @@
+; Authored name-resolution smoke fixture; contains no original mod code.
+; Crate/Game tests independently assert group codes, flags and queued requests.
+Player.PlayGroup DynamicIdle 0
+Player.PlayGroup TurnRight 1
+Player.PlayGroup AimIS 2
+Player.PlayGroup AttackLeft 0
+Player.PlayGroup Attack3 1
+Player.PlayGroup Attack4 2
+Player.PlayGroup BlockHit 0
+Player.PlayGroup JumpStart 1
+Player.PlayGroup JumpLoop 2
+Player.PlayGroup Idle 1
+Print "J6 animation groups: documented names compiled and dispatched"
