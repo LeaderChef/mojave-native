@@ -984,6 +984,12 @@ impl<'a> Gen<'a> {
         // and so does a vanilla `if` or `set` that calls an extender function
         // (`if rItem.GetBaseObject == rGun`) [observed: the peer's nvse-inv probes compile in
         // the original with xNVSE].
+        if matches!(kw, Kw::Set { on: Some(_), .. }) && (self.co || self.calls_extender()) {
+            // Mapping this spelling to Let would drop its statement caller. Only the
+            // observed vanilla grammar is supported here (reference-prefixed-set.md).
+            self.diag("unsupported_prefixed_set_expression", true, self.text.clone());
+            return;
+        }
         if self.co || (matches!(kw, Kw::If(_) | Kw::ElseIf(_) | Kw::Set { .. }) && self.calls_extender()) {
             let x = lex::xtokens(&self.text);
             let mapped = match kw {
@@ -1167,7 +1173,14 @@ impl<'a> Gen<'a> {
                 // udf.return_value, ext-bytecode.md].
                 self.emit(None, op::RETURN, &[]);
             }
-            Kw::Set { target, expr } => {
+            Kw::Set { on, target, expr } => {
+                let on = match on {
+                    Some(name) => match self.reference(name) {
+                        Some(r) => Some(r),
+                        None => { self.diag("unresolved_name", true, name.clone()); return; }
+                    },
+                    None => None,
+                };
                 let mut body = Vec::new();
                 let tv = if target.len() == 1 { self.atom(&target[0]) } else { None };
                 match tv {
@@ -1181,7 +1194,7 @@ impl<'a> Gen<'a> {
                 let e = self.expr(expr);
                 put16(&mut body, e.len() as u16);
                 body.extend_from_slice(&e);
-                self.emit(None, op::SET, &body);
+                self.emit(on, op::SET, &body);
             }
             Kw::Call(toks) if self.co || (self.extended && (self.function(&toks[0]).is_none() || toks.iter().any(|t| t.kind == lex::Kind::Open))) => {
                 // An inline expression among the arguments, or an extender function: the

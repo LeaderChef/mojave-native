@@ -93,7 +93,7 @@ fn var(v: VarRef) -> Token {
     Token::Var { var: v }
 }
 fn set(v: VarRef, e: Vec<Token>) -> Stmt {
-    Stmt::Set { target: v, expr: Expr(e) }
+    Stmt::Set { on: None, target: v, expr: Expr(e) }
 }
 fn call(opcode: u16, args: Vec<Arg>) -> Stmt {
     Stmt::Call { call: Call { on: None, opcode, has_params: !args.is_empty(), args } }

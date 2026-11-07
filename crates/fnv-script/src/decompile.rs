@@ -245,7 +245,10 @@ impl Decompiler<'_> {
     fn stmts(&self, s: &[Stmt], out: &mut Vec<String>) {
         for st in s {
             match st {
-                Stmt::Set { target, expr } => out.push(format!("set {} to {}", self.var(target), self.expr(expr))),
+                Stmt::Set { on, target, expr } => {
+                    let prefix = on.map(|r| format!("{}.", self.slot(r))).unwrap_or_default();
+                    out.push(format!("{prefix}set {} to {}", self.var(target), self.expr(expr)));
+                }
                 Stmt::If { arms, otherwise } => {
                     for (i, a) in arms.iter().enumerate() {
                         out.push(Self::with_expr(if i == 0 { "if" } else { "elseif" }, self.expr(&a.cond)));

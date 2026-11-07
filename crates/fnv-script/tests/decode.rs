@@ -294,7 +294,7 @@ fn expression_tokens() {
     let bytes = set(&tag(b'f', 1), &e);
     let d = run(&t, &bytes);
     assert_eq!(d.report.raw_total(), 0);
-    let Stmt::Set { target, expr } = &d.program.top[0] else { panic!() };
+    let Stmt::Set { target, expr, .. } = &d.program.top[0] else { panic!() };
     assert_eq!(*target, VarRef { on: None, var: VarSlot::Local { index: 1, letter: VarLetter::Float } });
     assert_eq!(expr.0.len(), 10);
     assert!(matches!(&expr.0[0], Token::Call { call } if call.opcode == GET_STAGE_DONE && call.args.len() == 2));
