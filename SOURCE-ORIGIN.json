@@ -774,6 +774,14 @@
     {
       "path": "docs/handoff/mojave-movement-alias-2026-11-07.json",
       "sha256": "99e8ccc4432a8291bc7ef5c5651a81b194fca3f68f0faa264dab15ba60142af8"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+      "sha256": "624d95445abb054f1ddda6ec98c35e2a9dc0ae3c52a110b8f5f1dc6fa943eb26"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.json",
+      "sha256": "fd6c81108a42542f3b1823293a39cc167c06da74464a0a2bc133880bbcd74e2f"
     }
   ],
   "binaryDistributed": false,
@@ -799,10 +807,12 @@
     "freshExportBuildVerified": false,
     "secondMachineVerified": false,
     "bundledCatalogueRuntimePassed": true,
-    "saveReloadVerifiedForThisBinary": false,
+    "saveReloadVerifiedForThisBinary": true,
     "fullGameplayAccepted": false,
     "record": "docs/handoff/mojave-movement-alias-2026-11-07.md",
-    "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a"
+    "catalogueSHA256": "0f3dacf8e960c6f5cd068e11a382b52be28e5685eb20a2cb7c5083cf30937f2a",
+    "saveReloadRecord": "docs/handoff/mojave-mac-save-roundtrip-2026-11-07.md",
+    "saveReloadScope": "Two native processes; base + nine official add-ons; one scene; inventory, actor value, reference flag and body restore. UI/full mod/long-session acceptance remains."
   },
   "localCompatibilityChanges": [
     {
