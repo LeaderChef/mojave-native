@@ -187,6 +187,33 @@ impl RecipeCategoryDef {
     }
 }
 
+impl<'a> crate::game::Game<'a> {
+    /// Parsed crafting rules with this session's presentation overrides. The result
+    /// borrows the immutable registry until a name or category actually differs.
+    /// This does not grant crafting eligibility or persist temporary categories.
+    pub fn recipe_view(&self, form: FormId) -> Option<std::borrow::Cow<'a, RecipeDef>> {
+        let recipe = self.data.recipes.get(&form)?;
+        let name = self.form_name(form).unwrap_or(&recipe.name);
+        let category = self.gaps.recipe_categories.get(&(form, false)).copied().or(recipe.category);
+        let subcategory = self.gaps.recipe_categories.get(&(form, true)).copied().or(recipe.subcategory);
+        if name == recipe.name && category == recipe.category && subcategory == recipe.subcategory {
+            return Some(std::borrow::Cow::Borrowed(recipe));
+        }
+        let mut current = recipe.clone();
+        current.name = name.to_owned();
+        current.category = category;
+        current.subcategory = subcategory;
+        Some(std::borrow::Cow::Owned(current))
+    }
+
+    /// A cloned category can have its own runtime name without a parsed RCCT row.
+    pub fn recipe_category_name(&self, form: FormId) -> String {
+        self.form_name(form).map(str::to_owned).or_else(||
+            self.data.recipe_categories.get(&self.unclone(form)).map(|category| category.name.clone()))
+            .unwrap_or_default()
+    }
+}
+
 fn zstring(b: &[u8]) -> String {
     // In this run's code page (fnv_util::text, #1439).
     fnv_util::text::decode_z(b).trim().to_string()

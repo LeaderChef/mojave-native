@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "snapshotDate": "2026-11-07",
   "baseIdentitySource": "Recorded acquisition manifest, not Git ancestry in this exported snapshot",
-  "unchangedComparedWithRecordedBase": 1391,
+  "unchangedComparedWithRecordedBase": 1390,
   "modifiedComparedWithRecordedBase": [
     {
       "path": ".gitignore",
@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "03f30a3bd5d26bef444caf42639992eea007cf0c372f91c36dc841d4ec74bb11",
+      "sha256": "b8eb6d4e9c9202bd606bc89dd89351f9811a22aca21c3259613bb64c0b5127e8",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -40,7 +40,7 @@
     },
     {
       "path": "crates/fnv-game/src/crafting.rs",
-      "sha256": "38143a9ce7cdf9495417282dae88099ce8b63aa09cf998b139bcae8604c47a1d",
+      "sha256": "1bc704ecbe2a439a1ef76e5337f41e6a931a37be8f9583375c3df6477f8704c8",
       "recordedBaseSha256": "cbf5a3fa6a4ecf2d8dd3a1684ca3e46c56275568e3fd40941e53c18f1643417e"
     },
     {
@@ -54,8 +54,13 @@
       "recordedBaseSha256": "44e007ac2a78a7bb80b7f66989c637207599a8862aa1606d10046c07172777de"
     },
     {
+      "path": "crates/fnv-game/src/functions/misc.rs",
+      "sha256": "fad6634b0985e1765d98871ffaed3021ff5467736d2eff3fb09ce9b8d773cf05",
+      "recordedBaseSha256": "bb6a796b7c0e3eabf6c17bd48d89088c3ec9ace5fa771842ecbd88866a3fe0f8"
+    },
+    {
       "path": "crates/fnv-game/src/game.rs",
-      "sha256": "6b1870f975fbfb42e6ef3a75051834fac8fef37d48df0459ec6964a39f4ca4e8",
+      "sha256": "91f86ee14d815c5ae6b1cffa5456c7489f666f0ca596138b8e9c096e185d2834",
       "recordedBaseSha256": "0042d45ca379b78396c0784f32e55873159364237f309a1660811ee2f242ea37"
     },
     {
@@ -109,6 +114,11 @@
       "recordedBaseSha256": "3c3ae5600f023736ec6b3dd9d72b18a21d2856630bc700c8106d2e3a2053e00d"
     },
     {
+      "path": "crates/fnv-script/src/compile/gen.rs",
+      "sha256": "60e1739859d81ca9aabd3673aeb334c23a5d7138796a9756050c25e4a9636bff",
+      "recordedBaseSha256": "54857b8324e3ef89e721d1b4e361e00e058d0494a7947ae30a7ac743863f647a"
+    },
+    {
       "path": "crates/fnv-script/src/compile/gen/x.rs",
       "sha256": "8b3f69d05d3d99315b041bef9cba4ccf49c5c06edd12a18a8684da9567899139",
       "recordedBaseSha256": "6d86888dc1cb0e1e13d653adf2e6d1283c625ea47d506bd7b39d12c5f8ab2a41"
@@ -160,7 +170,7 @@
     },
     {
       "path": "docs/spec-notes/crafting.md",
-      "sha256": "412221ec51aa076059a77e6d830671d5f60b887baaeb052263ba20e8fb3957e5",
+      "sha256": "6a73d8d56468bf3b24d39a07ac439bee374c4bcb697f96a59e84a6db3c3f30bb",
       "recordedBaseSha256": "cedfdf6947d7e9daef3b40b3d732ec9e37762d2bff6f0a1304fbd9119d8d319d"
     },
     {
@@ -172,6 +182,11 @@
       "path": "docs/spec-notes/physics.md",
       "sha256": "a7ae62e0ebd1c0f8df3f91d8f9c98c6e4fdb57b6419571c45819a8b055a8153b",
       "recordedBaseSha256": "81bf8819518a6530e4cbc99ccc8e2f8ccf745a902eae20a13ac004d4cf53deea"
+    },
+    {
+      "path": "docs/spec-notes/script-compiler.md",
+      "sha256": "01682e20323a1a137718bd73944fda25866cf2789be811f4973c98260036cf7d",
+      "recordedBaseSha256": "77a2201f005790842b470ef1d702c4ca2f1f599fc77ec1493a7ad0c454f43317"
     },
     {
       "path": "docs/spec-notes/scripts.md",
@@ -215,7 +230,7 @@
     },
     {
       "path": "engine/nvf-play/src/crafting.rs",
-      "sha256": "f0f1531f8765760491c3acb0e38976fd3da542a92d4a15b7c420b8ac623a1666",
+      "sha256": "fa801171c1317f3dc13a7329787c9e4085dadd2e6141f537cd312f7f4b04d0e2",
       "recordedBaseSha256": "617fd66df9677f3530c4fa5068cea6a00beb55c5d5bb45b804d3faee2a0b60c4"
     },
     {
@@ -377,16 +392,6 @@
       "path": "schemas/script/functions.json",
       "sha256": "af59e86855530622ac6ab39cd3eb0f982473496497649f46a13d0b9223d2874f",
       "recordedBaseSha256": "eb681de0f1cfd4d2252add9842373459f02f56c5c54d5aba9c2a7d9f47cec1c4"
-    },
-    {
-      "path": "crates/fnv-script/src/compile/gen.rs",
-      "sha256": "60e1739859d81ca9aabd3673aeb334c23a5d7138796a9756050c25e4a9636bff",
-      "recordedBaseSha256": "54857b8324e3ef89e721d1b4e361e00e058d0494a7947ae30a7ac743863f647a"
-    },
-    {
-      "path": "docs/spec-notes/script-compiler.md",
-      "sha256": "01682e20323a1a137718bd73944fda25866cf2789be811f4973c98260036cf7d",
-      "recordedBaseSha256": "77a2201f005790842b470ef1d702c4ca2f1f599fc77ec1493a7ad0c454f43317"
     }
   ],
   "addedComparedWithRecordedBase": [
@@ -416,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "8e3a90da819ba2adf4b557d5b783fed9c920b527af598b4f5295c209587f068f"
+      "sha256": "0b373ec1c58248cefcabbeb8bc3ef5dc9d2e216a3fbfa39e22e938739a1bd4c2"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -507,8 +512,16 @@
       "sha256": "6adae709d6ada1ae67752b8f12c7e885deb3d8deb910a7a7fefb40423de0eb6d"
     },
     {
+      "path": "docs/handoff/mojave-foreach-grouping-2026-11-07.md",
+      "sha256": "b36fda22ef3bdd70fe3adc9a68e1f0baaa73057dc5aa52f02d12eee643533737"
+    },
+    {
       "path": "docs/handoff/mojave-mac-input-audio-2026-11-07.md",
       "sha256": "bda14bcf3ab658166cdefc5bfac28ef7a552f275843a0d0018313acf036ec763"
+    },
+    {
+      "path": "docs/handoff/mojave-recipe-menu-2026-11-07.md",
+      "sha256": "ee562cc22e847f59ae5c618ad409f506c8066155c7ada99f534609277bab3ee1"
     },
     {
       "path": "docs/spec-notes/accepted-work-time.md",
@@ -584,7 +597,7 @@
     },
     {
       "path": "engine/nvf-play/src/crafting/production_aid/tests.rs",
-      "sha256": "2541d4497998e3966d964fe794b57e1d2d28fdc4a31e50409d20789f303fb5a7"
+      "sha256": "f1ae68a4450c7845ebbf6077507284a4dbaba1ca2cdff19f83c13e5c78bd5328"
     },
     {
       "path": "engine/nvf-play/src/crafting/transaction_tests.rs",
@@ -633,10 +646,6 @@
     {
       "path": "mod-credits-ledger.json",
       "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
-    },
-    {
-      "path": "docs/handoff/mojave-foreach-grouping-2026-11-07.md",
-      "sha256": "b36fda22ef3bdd70fe3adc9a68e1f0baaa73057dc5aa52f02d12eee643533737"
     }
   ],
   "binaryDistributed": false,
@@ -657,12 +666,14 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "eacf11bd5ba34b5d4fc784a6bb8b766854fade60b513433afe8a1c224a3d40b7",
+    "sha256": "ef20596a936b1fcbe3808f170f86b0e1d14ef715036cd0d50a5f2450bdd06a98",
     "architecture": "Mach-O 64-bit ARM64",
-    "boundedSilentRuntimeAndSaveReloadPassed": true,
+    "targetedNativeRecipeMenuPassed": true,
+    "saveReloadVerifiedForThisBinary": false,
+    "priorSaveReloadRecord": "docs/handoff/mojave-loaded-types-2026-11-07.md",
     "fullGameplayAccepted": false,
     "freshExportBuildVerified": false,
-    "record": "docs/handoff/mojave-loaded-types-2026-11-07.md"
+    "record": "docs/handoff/mojave-recipe-menu-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -675,6 +686,16 @@
       "realModBodiesExecuted": false,
       "candidateAppReplaced": false,
       "includedInCurrentLocalCandidate": true
+    },
+    {
+      "change": "Live recipe presentation and temporary-category menu admission",
+      "record": "docs/handoff/mojave-recipe-menu-2026-11-07.md",
+      "originalMicScriptsExecuted": 2,
+      "namesMatched": 59,
+      "subcategoryChangesMatched": 122,
+      "targetedNativeMenuPassed": true,
+      "sessionStatePersistenceAdded": false,
+      "fullNuclearSunsetAccepted": false
     }
   ],
   "nativeLoadedTypeRepair": {

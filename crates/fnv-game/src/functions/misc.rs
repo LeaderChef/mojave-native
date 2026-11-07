@@ -391,7 +391,7 @@ pub fn show_barter_menu(g: &mut Game, ctx: &Ctx, a: &Args) -> Result<Value, Stri
 /// category is an error of the call.
 pub fn show_recipe_menu(g: &mut Game, ctx: &Ctx, a: &Args) -> Result<Value, String> {
     let category = a.form(0)?;
-    if !g.data.recipe_categories.contains_key(&category) {
+    if !g.data.recipe_categories.contains_key(&g.unclone(category)) {
         return Err(format!("{category} is not a recipe category"));
     }
     let station = ctx.subject().ok();

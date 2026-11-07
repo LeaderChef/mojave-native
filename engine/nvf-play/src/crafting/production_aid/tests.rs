@@ -84,6 +84,8 @@ fn fixture() -> Fixture {
     data.edids.insert("workbenchrecipes".into(), CATEGORY);
     data.edid_of.insert(CATEGORY, "WorkbenchRecipes".into());
     data.recipes.insert(RECIPE, recipe.clone());
+    data.sigs.insert(RECIPE, *b"RCPE");
+    data.sigs.insert(CATEGORY, *b"RCCT");
     data.recipe_categories.insert(CATEGORY, fnv_game::crafting::RecipeCategoryDef { name: "Workbench".into(), subcategory: false });
     let data: &'static fnv_game::GameData = Box::leak(Box::new(data));
     let mut sim = SimState { forms, refs, world: fnv_sim::World::new(forms, refs, SimConfig::default()) };
@@ -116,6 +118,79 @@ impl Fixture {
     fn finish(&mut self, id: u64, collect: bool) -> (bool, Vec<UiSound>) {
         self.with_sounds(|f, sounds| finish_order(&mut f.runtime, &mut f.sim, id, collect, sounds, Some(&mut f.corner)))
     }
+}
+
+#[test]
+fn recipe_menu_follows_script_renames_and_cloned_subcategory_without_changing_stock() {
+    let mut f = fixture();
+    let before_stock = f.sim.world.snapshot();
+    let mut open = Open { category: CATEGORY, station: Some(BENCH), filter: 0,
+        selected: 0, first: 0, drawn: None, quantity: None, order_mode: false };
+    let before = view(&mut f.runtime, &mut f.sim, &open);
+    assert_eq!(before.rows[0].label, "Synthetic queued recipe (2)");
+    assert_eq!(before.filters, 0);
+
+    // Actual native VM mutations, including a session clone absent from GameData.
+    let source = "Begin Function { }\nref r := GetSelf\nref c := TempCloneForm WorkbenchRecipes\nLNSetName \"Revised batch\" r\nLNSetName \"Salvaged supplies\" c\nSetRecipeSubcategory r c\nSetFunctionValue c\nEnd";
+    let clone = f.runtime.game.run_query(source, fnv_game::game::RunCtx {
+        self_ref: Some(RECIPE), ..Default::default()
+    }).unwrap();
+    let fnv_script::vm::XVal::Ref(clone) = clone else { panic!("expected a category clone") };
+    assert_ne!(clone, 0);
+    assert_eq!(f.runtime.game.unclone(FormId(clone)), CATEGORY);
+    f.runtime.game.run_query("Begin Function { }\nLNSetName \"Sorted ingredient\"\nEnd",
+        fnv_game::game::RunCtx { self_ref: Some(INPUT), ..Default::default() }).unwrap();
+    assert!(!f.runtime.game.data.recipe_categories.contains_key(&FormId(clone)));
+
+    let all = view(&mut f.runtime, &mut f.sim, &open);
+    assert_eq!(all.rows[0].label, "Revised batch (2)");
+    assert_eq!(all.filters, 1);
+    assert_eq!(all.ingredients, [("Sorted ingredient".into(), 4, 1)]);
+    assert!(all.rows[0].ready);
+    open.filter = 1;
+    let filtered = view(&mut f.runtime, &mut f.sim, &open);
+    assert_eq!(filtered.title, "SALVAGED SUPPLIES");
+    assert_eq!(filtered.rows, all.rows);
+
+    // Opening that exact runtime subcategory directly uses the same live membership.
+    open.category = FormId(clone);
+    open.filter = 0;
+    assert_eq!(view(&mut f.runtime, &mut f.sim, &open).rows, all.rows);
+
+    // The actual script-call admission must retain the cloned category, not reject
+    // it just because that session form is absent from the parsed record map.
+    let ctx = fnv_game::functions::Ctx { unit: "recipe view regression".into(), opcode: 0x1250,
+        on: Some(BENCH), self_ref: None, action_ref: None, quest: None, inst: None, in_condition: false };
+    let argument = [fnv_script::vm::ArgValue::Value(fnv_script::vm::Value::Ref(clone))];
+    fnv_game::functions::misc::show_recipe_menu(&mut f.runtime.game, &ctx,
+        &fnv_game::functions::Args(&argument)).expect("a real category clone can open its recipe menu");
+    assert_eq!(f.runtime.game.recipe_requests.last().unwrap().category, FormId(clone));
+    assert_eq!(f.runtime.game.recipe_requests.last().unwrap().station, Some(BENCH));
+    let requests = f.runtime.game.recipe_requests.len();
+    for invalid in [0, INPUT.0, 0xFF12_3456] {
+        let argument = [fnv_script::vm::ArgValue::Value(fnv_script::vm::Value::Ref(invalid))];
+        assert!(fnv_game::functions::misc::show_recipe_menu(&mut f.runtime.game, &ctx,
+            &fnv_game::functions::Args(&argument)).is_err());
+        assert_eq!(f.runtime.game.recipe_requests.len(), requests);
+    }
+
+    // A primary-category move also changes membership and the "made at" label.
+    let source = "Begin Function { }\nref r := GetSelf\nref c := TempCloneForm WorkbenchRecipes\nLNSetName \"Portable bench\" c\nSetRecipeCategory r c\nSetFunctionValue c\nEnd";
+    let moved = f.runtime.game.run_query(source, fnv_game::game::RunCtx {
+        self_ref: Some(RECIPE), ..Default::default()
+    }).unwrap();
+    let fnv_script::vm::XVal::Ref(moved) = moved else { panic!("expected a primary category clone") };
+    assert_ne!(moved, 0);
+    assert_eq!(f.runtime.game.unclone(FormId(moved)), CATEGORY);
+    open.category = CATEGORY;
+    assert!(view(&mut f.runtime, &mut f.sim, &open).rows.is_empty());
+    open.category = FormId(moved);
+    let moved_view = view(&mut f.runtime, &mut f.sim, &open);
+    assert_eq!(moved_view.rows, all.rows);
+    assert_eq!(moved_view.made_at, "Portable bench");
+    assert_eq!(f.sim.world.snapshot(), before_stock);
+    assert_eq!(f.runtime.game.data.recipes[&RECIPE], f.recipe);
+    assert!(f.runtime.game.production.is_pristine());
 }
 
 #[test]

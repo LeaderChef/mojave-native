@@ -2626,6 +2626,20 @@ impl<'a> Game<'a> {
         !self.events[errors..].iter().any(|e| matches!(&e.kind, EventKind::ScriptError { unit, .. } if *unit == key))
     }
 
+    /// The session's full name, shared by script strings and presentation consumers.
+    /// References use their base name unless renamed themselves; temporary clones
+    /// inherit the original record's name unless renamed. No plugin data is changed.
+    pub fn form_name(&self, form: FormId) -> Option<&str> {
+        if form == FormId::PLAYER_REF {
+            if let Some(name) = self.player.name.as_deref() {
+                return Some(name);
+            }
+        }
+        let named = |id: FormId| self.name_overrides.get(&id)
+            .or_else(|| self.data.full_names.get(&self.unclone(id))).map(String::as_str);
+        named(form).or_else(|| crate::functions::base_of(self, form).and_then(named))
+    }
+
     /// A whole function script from source, run once as nvf_capture's query step runs one
     /// (xnvse-capture.md §5): its `Begin Function` block with fresh variables, on
     /// `ctx.self_ref`; the value is what SetFunctionValue set (0 when nothing). The
@@ -5339,15 +5353,7 @@ impl Host for Exec<'_, '_> {
     /// The form's name, a reference's its base form's [documented: ToString]; the player's
     /// the name typed in the name menu [observed: probe strings/04 gives the player's name].
     fn form_text(&mut self, form: u32) -> Option<String> {
-        let f = FormId(form);
-        if f == FormId::PLAYER_REF {
-            if let Some(n) = self.game.player.name.clone() {
-                return Some(n);
-            }
-        }
-        let g = &*self.game;
-        let named = |x: FormId| g.name_overrides.get(&x).or_else(|| g.data.full_names.get(&g.unclone(x))).cloned();
-        named(f).or_else(|| crate::functions::base_of(g, f).and_then(named))
+        self.game.form_name(FormId(form)).map(str::to_owned)
     }
 
     fn get_var(&mut self, var: &VarRef) -> Result<Value, String> {

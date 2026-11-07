@@ -9,7 +9,7 @@
 
 **Mojave Native** is the Mac adaptation of **NVForever's Rust reimplementation of the Fallout: New Vegas engine**. Our goal is a responsive, native **64-bit Apple Silicon** version with **Metal rendering**, using your own original game and DLC data.
 
-**Current stage: experimental source preview. There is no public playable app to download yet.** The latest local ARM64 build ran on M4 Pro/Metal, produced radio/effect audio and restored a save in a fresh process without taking screen focus. A complete, reproducible player-controlled test and measured display performance are still needed. See the [current status](STATUS.md).
+**Current stage: experimental source preview. There is no public playable app to download yet.** The latest local ARM64 build renders on M4 Pro/Metal and checks runtime recipe names/categories in the native menu without taking screen focus. Earlier recorded builds also mixed game audio and restored a save in a fresh process. A complete, reproducible player-controlled test and measured display performance are still needed. See the [current status](STATUS.md).
 
 ## What comes next
 
@@ -47,7 +47,7 @@ Mojave Native's Mac adaptations are separate from these creators' work. Suitable
 <details>
 <summary><b>Build evidence, ownership and licences</b></summary>
 
-A local **Mach-O 64-bit ARM64 release executable** built successfully. Shared compiler fixes improved a fixed **337-input** ScriptRunner corpus from **316 to 321** successful compilations without new failures. The grouped-header fix removes two MIC item/recipe script compile blockers. The latest native client also repairs loaded-form enumeration and finds all 291 owned base/DLC recipes after a fresh save reload; full MIC menus still need runtime validation. See the [runtime correction](docs/handoff/mojave-loaded-types-2026-11-07.md). Compilation is not a mod-compatibility percentage. This source export still needs fresh build reproduction. Full playthrough, TTW/Nuclear Sunset compatibility, Long 15 gameplay, Drivables integration and Mac/Windows shared sessions have not been demonstrated here.
+A local **Mach-O 64-bit ARM64 release executable** built successfully. Shared compiler fixes improved a fixed **337-input** ScriptRunner corpus from **316 to 321** successful compilations without new failures. The grouped-header fix removes two MIC item/recipe script compile blockers. Loaded-form enumeration finds all 291 owned base/DLC recipes after a fresh save reload in the earlier recorded client. Two unchanged MIC scripts now execute, and the latest client displays their runtime recipe category through the native menu. See the [loaded-record correction](docs/handoff/mojave-loaded-types-2026-11-07.md) and [bounded menu evidence](docs/handoff/mojave-recipe-menu-2026-11-07.md). This does not establish full MIC or Nuclear Sunset gameplay. Compilation is not a mod-compatibility percentage. This source export still needs fresh build reproduction. Full playthrough, TTW/Nuclear Sunset compatibility, Long 15 gameplay, Drivables integration and Mac/Windows shared sessions have not been demonstrated here.
 
 Bring your own lawfully acquired New Vegas and DLC data. TTW/Nuclear Sunset also require the appropriate owned Fallout 3 data. Game files, mod archives, converted assets, credentials and private saves are not bundled. Credit does not grant permission to redistribute another creator's work.
 

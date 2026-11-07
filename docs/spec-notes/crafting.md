@@ -108,3 +108,45 @@ within these per-item input/output bounds, ignoring skill and visibility. If no
 positive input or output row imposes a bound it keeps the original
 `u32::MAX` fallback. The engine menu's separate no-input policy limits its offer
 to one making; the core does not invent a new UI or NPC production policy.
+
+## 5. Runtime recipe presentation
+
+[documented] [SetRecipeSubcategory](https://geckwiki.com/index.php/SetRecipeSubcategory)
+changes which submenu contains a recipe. [LNSetName](https://geckwiki.com/index.php/LNSetName)
+and [SetNameEx](https://geckwiki.com/index.php/SetNameEx) rename the base form;
+[LNGetName](https://geckwiki.com/index.php/LNGetName) reads its current full name.
+[TempCloneForm](https://geckwiki.com/index.php/TempCloneForm) creates a distinct
+session-only base form; the mod must recreate it after restarting the game.
+
+[observed, native Game VM, J6 2026-11-07] Two unchanged selected MIC ScriptRunner
+files renamed 58 ingestibles and one recipe and reassigned 122 recipes to four
+named category clones. Their getters returned those same forms and names. The
+old recipe menu still read `GameData.recipes` and `recipe_categories` directly,
+so those changes were absent from its rows and filters. This was a presentation
+consumer gap; the two script bodies and their setters were not changed.
+
+[design] A session recipe view combines the parsed definition with the existing
+name/category/subcategory overrides. It borrows the parsed recipe when no field
+changes, and otherwise owns a presentation copy. Recipe identifiers, conditions,
+skills, ingredients, output order and quantities remain those of the parsed
+recipe. The menu uses this view to select category membership, sort labels,
+choose subcategory filters and display category/ingredient names. Category names
+resolve the runtime clone's name before the original category's fallback name.
+The VM and UI share one full-name lookup, retaining its existing reference and
+player-name behavior.
+
+This view neither edits plugin data nor grants ingredients, output, skill or
+production credit. Instant crafting retains its actual live checks and atomic
+exchange. Delayed production retains its independently saved static recipe and
+station bindings; this presentation change does not promise support for queued
+orders opened directly on an ephemeral category clone. Session overrides are
+not made save-persistent by this change. Native VM evidence does not prove the
+whole modpack or its rendered menu is accepted.
+
+### Admission of session category clones
+
+[design, J6 2026-11-07] `ShowRecipeMenu` validates a category against its
+original parsed RCCT (`Game::unclone`) while retaining the exact session ID in
+the request. A temporary category clone is a category and can have distinct
+membership and a session name. Null, unknown forms and non-category forms stay
+rejected. This does not bypass the production station-binding rules.

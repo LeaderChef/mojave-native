@@ -40,7 +40,7 @@
 //! rows in font 2; Accept and Exit at y 670; observed: the screenshots for the rest].
 //! Test aid `NVF_PLAY_TEST_RECIPE=<seconds>:<action>[,…]`: `down`, `up`, `filter` (the
 //! right arrow), `accept`, `exit`, `more` and `less` (the prompt's amount), `cancel` (the
-//! prompt), `shot` (a screenshot `recipe_menu.png` in the working folder). Open the menu through a script, e.g. the console aid's `player.craft
+//! prompt), `inspect` (log the current live labels and filter), `shot` (a screenshot `recipe_menu.png` in the working folder). Open the menu through a script, e.g. the console aid's `player.craft
 //! WorkbenchRecipes`.
 //!
 //! [design] At an actual station, Queue (Q) instead reserves the selected batch for a
@@ -69,6 +69,7 @@ use crate::ui_pointer::{Button, PointerState};
 use fnv_game::crafting::{missing, skill_name, RecipeDef, RECIPE_MENU};
 use fnv_sim::FormId;
 use nvf_assets::GameData;
+use std::borrow::Cow;
 
 /// The menu's size and where its boxes are, in its file's units [documented:
 /// recipe_menu.xml `RM_MainRect`, `RM_ItemsRect`, `RM_ContainerRect`].
@@ -226,9 +227,9 @@ fn label(r: &RecipeDef) -> String {
 
 /// The recipes a category lists for the player now: its own or its subcategory's, their
 /// conditions passing, by name.
-fn listed(rt: &mut crate::script::Runtime, category: FormId) -> Vec<&'static RecipeDef> {
-    let data: &'static fnv_game::data::GameData = rt.game.data;
-    let mut out: Vec<&RecipeDef> = data.recipes.values().filter(|r| r.listed_under(category)).collect();
+fn listed(rt: &mut crate::script::Runtime, category: FormId) -> Vec<Cow<'static, RecipeDef>> {
+    let mut out: Vec<_> = rt.game.data.recipes.keys().filter_map(|&form| rt.game.recipe_view(form))
+        .filter(|r| r.listed_under(category)).collect();
     out.retain(|r| rt.game.conditions_pass(&r.conditions, Some(FormId::PLAYER_REF), None, "recipe"));
     out.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()).then(a.form.0.cmp(&b.form.0)));
     out
@@ -245,33 +246,34 @@ fn lacks(rt: &mut crate::script::Runtime, r: &RecipeDef) -> Vec<fnv_game::crafti
 fn view(rt: &mut crate::script::Runtime, sim: &mut SimState, open: &Open) -> View {
     let forms = sim.forms;
     crate::script::with_world(rt, sim, |rt| {
-        let data = rt.game.data;
         let all = listed(rt, open.category);
         // The subcategories in the list, by name.
-        let mut subs: Vec<(String, FormId)> = all.iter().filter_map(|r| r.subcategory).filter(|s| *s != open.category).map(|s| (data.recipe_categories.get(&s).map_or_else(String::new, |c| c.name.clone()), s)).collect();
+        let mut subs: Vec<(String, FormId)> = all.iter().filter_map(|r| r.subcategory).filter(|s| *s != open.category).map(|s| (rt.game.recipe_category_name(s), s)).collect();
         subs.sort();
         subs.dedup();
         let filter = subs.get(open.filter.wrapping_sub(1)).map(|s| s.1);
         let have = |rt: &mut crate::script::Runtime, item: FormId| rt.game.world.item_count(FormId::PLAYER_REF, item).unwrap_or(0) as i64;
         // The recipes that can be made now come first, each part by name (owner's
         // request 2026-10-26).
-        let mut listed: Vec<(&RecipeDef, bool)> = all.into_iter().filter(|r| filter.is_none_or(|f| r.subcategory == Some(f))).map(|r| (r, lacks(rt, r).is_empty())).collect();
-        listed.sort_by_key(|&(_, ready)| !ready);
-        let shown: Vec<&RecipeDef> = listed.iter().map(|l| l.0).collect();
-        let rows: Vec<RowView> = listed.iter().map(|&(r, ready)| RowView { recipe: r.form, label: label(r), ready }).collect();
+        let mut listed: Vec<_> = all.into_iter().filter(|r| filter.is_none_or(|f| r.subcategory == Some(f))).map(|r| { let ready = lacks(rt, &r).is_empty(); (r, ready) }).collect();
+        listed.sort_by_key(|(_, ready)| !ready);
+        let shown: Vec<&RecipeDef> = listed.iter().map(|l| l.0.as_ref()).collect();
+        let rows: Vec<RowView> = listed.iter().map(|(r, ready)| RowView { recipe: r.form, label: label(r), ready: *ready }).collect();
         let selected = open.selected.min(rows.len().saturating_sub(1));
         let title = match filter {
             None => "RECIPES".to_string(),
             Some(_) => subs[open.filter - 1].0.to_uppercase(),
         };
         let chosen = shown.get(selected).copied();
-        let name = |id: FormId| crate::menu::model::display_name(forms, id);
-        let made_at = chosen.and_then(|r| r.category).and_then(|c| data.recipe_categories.get(&c)).map_or_else(String::new, |c| c.name.clone());
+        let made_at = chosen.and_then(|r| r.category).map_or_else(String::new, |c| rt.game.recipe_category_name(c));
         let skill = chosen.and_then(|r| r.skill).map(|(av, level)| (skill_name(av).to_string(), fnv_game::functions::actor_value_capped(&mut rt.game, FormId::PLAYER_REF, av).max(0.0).floor() as u32, level));
         let ingredients = chosen.map(|r| {
             let rows = r.batch(1).map(|b| b.ingredients.into_iter().map(|(i, n)| (i, n as u32)).collect())
                 .unwrap_or_else(|| r.ingredients.clone());
-            rows.into_iter().map(|(i, n)| (name(i), have(rt, i).max(0) as u32, n)).collect()
+            rows.into_iter().map(|(i, n)| {
+                let name = rt.game.form_name(i).map(str::to_owned).unwrap_or_else(|| crate::menu::model::display_name(forms, i));
+                (name, have(rt, i).max(0) as u32, n)
+            }).collect()
         }).unwrap_or_default();
         let item = chosen.and_then(|r| r.outputs.first()).and_then(|o| match forms.get(o.0).map(|b| &b.data) {
             Some(fnv_sim::forms::BaseData::Item(it)) => Some((it.weight, it.value, it.icon.clone())),
@@ -304,7 +306,8 @@ fn scripts_open(
     rt.game.recipe_requests.clear();
     let open = Open { category: r.category, station: r.station, filter: 0, selected: 0, first: 0, drawn: None, quantity: None, order_mode: false };
     let v = view(rt, &mut sim, &open);
-    let name = rt.game.data.recipe_categories.get(&r.category).map_or_else(|| r.category.to_string(), |c| c.name.clone());
+    let name = rt.game.recipe_category_name(r.category);
+    let name = if name.is_empty() { r.category.to_string() } else { name };
     let first: Vec<&str> = v.rows.iter().take(6).map(|r| r.label.as_str()).collect();
     info!(
         "recipe menu: open {name} ({} recipes listed of {} known, {} ready; station {}): {}",
@@ -361,6 +364,10 @@ fn keys(
         commands.spawn(bevy::render::view::screenshot::Screenshot::primary_window()).observe(bevy::render::view::screenshot::save_to_disk("recipe_menu.png"));
     }
     let v = open.drawn.clone().unwrap_or_else(|| view(rt, &mut sim, open));
+    if act("inspect") {
+        let labels: Vec<_> = v.rows.iter().map(|row| row.label.as_str()).collect();
+        info!("test aid recipe view: title={:?}; filters={}; rows={}; labels={labels:?}", v.title, v.filters, v.rows.len());
+    }
     if act("status") {
         let status = production_aid::actual_station(open.station).and_then(|station| {
             crate::script::with_world(rt, &mut sim, |rt| production_aid::station_summary(&rt.game, station))
@@ -410,11 +417,11 @@ fn keys(
             open.quantity = None;
             let queue = std::mem::take(&mut open.order_mode);
             let chosen = v.rows.get(open.selected.min(v.rows.len().saturating_sub(1))).map(|r| r.recipe);
-            if let Some(recipe) = chosen.and_then(|f| rt.game.data.recipes.get(&f)) {
+            if let Some(recipe) = chosen.and_then(|f| rt.game.recipe_view(f)) {
                 if queue {
-                    production_aid::queue_recipe(rt, &mut sim, open.station, open.category, recipe, to as u32, &mut sounds, corner.as_deref_mut());
+                    production_aid::queue_recipe(rt, &mut sim, open.station, open.category, &recipe, to as u32, &mut sounds, corner.as_deref_mut());
                 } else {
-                    make_recipe(rt, &mut sim, recipe, to as u32, &mut sounds, corner.as_deref_mut());
+                    make_recipe(rt, &mut sim, &recipe, to as u32, &mut sounds, corner.as_deref_mut());
                 }
                 follow_made(rt, &mut sim, open, recipe.form);
             }
@@ -465,8 +472,8 @@ fn keys(
     // timestamp and no conversion of normal queued recipes into real-time work.
     if act("queue-host") {
         let chosen = v.rows.get(open.selected.min(n.saturating_sub(1))).map(|r| r.recipe);
-        if let Some(recipe) = chosen.and_then(|form| rt.game.data.recipes.get(&form)) {
-            production_aid::queue_host_recipe(rt, &mut sim, open.station, open.category, recipe, &mut sounds, corner.as_deref_mut());
+        if let Some(recipe) = chosen.and_then(|form| rt.game.recipe_view(form)) {
+            production_aid::queue_host_recipe(rt, &mut sim, open.station, open.category, &recipe, &mut sounds, corner.as_deref_mut());
             follow_made(rt, &mut sim, open, recipe.form);
             open.drawn = None;
         }
@@ -494,14 +501,14 @@ fn keys(
     }
     if queue || keys.any_just_pressed([KeyCode::KeyA, KeyCode::Enter, KeyCode::NumpadEnter]) || clicked == Some(RecipeButton::Accept) || act("accept") {
         let chosen = v.rows.get(open.selected.min(n.saturating_sub(1))).map(|r| r.recipe);
-        let Some(recipe) = chosen.and_then(|f| rt.game.data.recipes.get(&f)) else { return };
+        let Some(recipe) = chosen.and_then(|f| rt.game.recipe_view(f)) else { return };
         // Any can be made: how many? (module notes)
         let most = crate::script::with_world(rt, &mut sim, |rt| {
-            if !lacks(rt, recipe).is_empty() {
+            if !lacks(rt, &recipe).is_empty() {
                 return 0;
             }
             let counts: Vec<(FormId, i64)> = recipe.ingredients.iter().map(|&(i, _)| (i, rt.game.world.item_count(FormId::PLAYER_REF, i).unwrap_or(0) as i64)).collect();
-            times_possible(recipe, |i| counts.iter().find(|c| c.0 == i).map_or(0, |c| c.1))
+            times_possible(&recipe, |i| counts.iter().find(|c| c.0 == i).map_or(0, |c| c.1))
         });
         if most >= 1 {
             if queue {
@@ -515,9 +522,9 @@ fn keys(
             return;
         }
         if queue {
-            production_aid::queue_recipe(rt, &mut sim, open.station, open.category, recipe, 1, &mut sounds, corner.as_deref_mut());
+            production_aid::queue_recipe(rt, &mut sim, open.station, open.category, &recipe, 1, &mut sounds, corner.as_deref_mut());
         } else {
-            make_recipe(rt, &mut sim, recipe, 1, &mut sounds, corner.as_deref_mut());
+            make_recipe(rt, &mut sim, &recipe, 1, &mut sounds, corner.as_deref_mut());
         }
         follow_made(rt, &mut sim, open, recipe.form);
         // What the player has changed: draw it again.
