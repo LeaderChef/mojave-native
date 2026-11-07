@@ -1,6 +1,6 @@
 # Contributing to Mojave Native
 
-This experimental source export is being prepared for public review. Start by reproducing the source build in BUILD-MAC.md; it has not yet been demonstrated from this fresh export. Keep evidence and known limits explicit.
+This experimental source export has passed a fresh same-host ARM64 release build and a relocated silent Metal startup. Start with BUILD-MAC.md; independent reproduction on another contributor's Mac is still needed. Keep build, gameplay and full-mod evidence separate.
 
 ## Work streams
 

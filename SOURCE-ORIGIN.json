@@ -15,12 +15,12 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "36edd53d2e9c936e41014cc07578ad18c8ab28162f1a61e4e97dba4a5994545d",
+      "sha256": "2115c97f8752f9e7bdbcec4bf98329b915a0def92c96c6c4f40ca791a0171ef5",
       "recordedBaseSha256": "7d7a7d21f7c9609f208b21c9abde1462cf54b6bdd5cd498fa6e5437f291b1b77"
     },
     {
       "path": "README.md",
-      "sha256": "dce251f1653c069fd09ce06f2c171adba45569b64ccf5a6c48144ced1d52aa88",
+      "sha256": "27adf11e50345cff63fea7d391b7217ac43b3ad1ec1b0880db1021497f81c87f",
       "recordedBaseSha256": "0ce4b40f3ab94b571db747aec16ae6f4420819f08da2de55e5f4e22e26da5615"
     },
     {
@@ -401,7 +401,7 @@
     },
     {
       "path": "BUILD-MAC.md",
-      "sha256": "3e70637712a8f42df45ce79229123769ac89f28e54cd01639eaae61db698ab82"
+      "sha256": "6b2a2268d16d2e366f4f99b40aeb700d66b2ee6eb653745c030229aaae6909c0"
     },
     {
       "path": "CREDITS.md",
@@ -409,7 +409,7 @@
     },
     {
       "path": "MOJAVE-NATIVE-SOURCE-NOTICE.md",
-      "sha256": "6593b61d219eb1167b6d46c8e21f7243c74827c6a3975ce1d592202dba867bb7"
+      "sha256": "1bdcf688d9064dd5ab70c171e350016f797eba4b88df8ed8acb8b48e1cadaa5f"
     },
     {
       "path": "RESEARCH.md",
@@ -421,7 +421,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "3c8affdbf1db244aeeccc69d5c019da8b5c0883914fb3e29f270f038fdd397d9"
+      "sha256": "4bc4771f53671d2b5773b505a021a8ec23c5eb4de42a8554542262bc217b3547"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -538,6 +538,14 @@
     {
       "path": "docs/handoff/mojave-recipe-menu-2026-11-07.md",
       "sha256": "ee562cc22e847f59ae5c618ad409f506c8066155c7ada99f534609277bab3ee1"
+    },
+    {
+      "path": "docs/handoff/mojave-source-build-2026-11-07.json",
+      "sha256": "41086b8193e8612c768af69154e213c9200ab560ea207a8d17ba9032e0e76349"
+    },
+    {
+      "path": "docs/handoff/mojave-source-build-2026-11-07.md",
+      "sha256": "b2be71855e639bc8628c6dc3207c77d269a76459561546a64b4cb92943340d01"
     },
     {
       "path": "docs/spec-notes/accepted-work-time.md",
@@ -668,6 +676,22 @@
       "sha256": "f23e94cfd479d153938839c76b38c9cec7b9a10c55df4e5abb8d8e1bcade7a26"
     },
     {
+      "path": "launcher/core/LauncherCore.swift",
+      "sha256": "56cd73dcd325ba91156eeb6ac319436415cc15ae5afb72b8487a8b5ecbb1123b"
+    },
+    {
+      "path": "launcher/core/README.md",
+      "sha256": "d6b25a88278ff6786d36bd24841ee5be66599e3910e10d1573cc932d23cb48af"
+    },
+    {
+      "path": "launcher/core/SelfTests.swift",
+      "sha256": "acc9a890c2c732e2391bc56a958a21d467d0f8f8a008f61c3ba11678eb99ecc8"
+    },
+    {
+      "path": "launcher/core/main.swift",
+      "sha256": "70a948fe740697644257a4e398d7aea8c64ef897103a0bf566ba19c38815a9b0"
+    },
+    {
       "path": "mod-credits-ledger.json",
       "sha256": "7047da2ac8b3729cd9c46cd4c729c288257ce39549569677458a344ad78a8ebf"
     }
@@ -690,13 +714,14 @@
     }
   ],
   "latestPrivateDevelopmentBuild": {
-    "sha256": "058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75",
+    "sha256": "dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe",
     "architecture": "Mach-O 64-bit ARM64",
-    "targetedInlineArgumentsPassed": true,
+    "freshExportBuildVerified": true,
+    "secondMachineVerified": false,
+    "relocatedBundledCatalogueRuntimePassed": true,
     "saveReloadVerifiedForThisBinary": false,
     "fullGameplayAccepted": false,
-    "freshExportBuildVerified": false,
-    "record": "docs/handoff/mojave-inline-arguments-2026-11-07.md"
+    "record": "docs/handoff/mojave-source-build-2026-11-07.md"
   },
   "localCompatibilityChanges": [
     {
@@ -751,5 +776,22 @@
     "boundedRuntimeAndFreshReloadPassed": true,
     "realModBodiesExecuted": false,
     "fullModGameplayAccepted": false
+  },
+  "previousPrivateDevelopmentBuild": {
+    "sha256": "058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75",
+    "architecture": "Mach-O 64-bit ARM64",
+    "targetedInlineArgumentsPassed": true,
+    "saveReloadVerifiedForThisBinary": false,
+    "fullGameplayAccepted": false,
+    "freshExportBuildVerified": false,
+    "record": "docs/handoff/mojave-inline-arguments-2026-11-07.md"
+  },
+  "publicSourceReproduction": {
+    "record": "docs/handoff/mojave-source-build-2026-11-07.md",
+    "receipt": "docs/handoff/mojave-source-build-2026-11-07.json",
+    "freshTarget": true,
+    "sourceInputsUnchanged": true,
+    "sameHostOnly": true,
+    "publicCoreRunnerVerified": true
   }
 }

@@ -5,21 +5,21 @@ No public playable release yet.
 | Area | Evidence / state |
 | --- | --- |
 | Architecture | Local release build identifies as Mach-O 64-bit ARM64 |
-| Latest local candidate | SHA256 `058b26813021b00fc3ff358da9460e07ac31ea876ebfa75f746cba837038ee75` |
+| Latest local candidate | SHA256 `dc037352e65baa74241cd3fe354da503158640b8c75bab657eae1ec870a2ffbe` |
 | Latest candidate gameplay | Focused player acceptance incomplete for this exact build |
 | Mouse and sound updates | Adapted merged maintainer PRs [1699](https://github.com/LootJunkieAzza/NVForever/pull/1699) and [1724](https://github.com/LootJunkieAzza/NVForever/pull/1724): unused sound data can be released; finer sensitivity down to 5% |
-| Latest validation | Four inline argument regressions (three red before) now pass; 2289 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
+| Integrated-source checks | Four inline argument regressions (three red before) now pass; 2289 release workspace tests pass, 8 unchanged ignored; root and engine all-target release Clippy pass |
 | Bounded runtime | Owned base game + nine add-ons ran on M4 Pro/Metal; normal exit, zero GPU validation errors, no window activation |
 | Session recipe views | Actual MIC Drinks menu plus authored runtime labels/filter checked in a windowless Metal run; no mod bodies rewritten |
 | Latest sound evidence | 28.076s private silent mixer output; finite samples, peak 0.721925, no values over full scale; physical output/latency not checked |
 | Save/load evidence | Earlier executable `eacf11bd` only: manual save restored in a fresh process and saved again; checked player fields and position roundtripped; nonblank 512x288 thumbnails |
 | Earlier world work | Some rendering/movement exercised; not a complete playthrough |
 | Shared compiler changes | Fixed 337-input corpus: 321 pass, 16 errors, no new failures; grouped foreach headers now compile and execute in focused VM checks |
-| Loaded recipe records | All 291 owned base/DLC recipes, 11 categories, 640 quests and 226 ingestibles enumerated in the native client and after fresh reload; two exact original MIC scripts execute; the actual Drinks menu and a controlled runtime-name/filter probe pass in the latest client |
+| Loaded recipe records | All 291 owned base/DLC recipes, 11 categories, 640 quests and 226 ingestibles enumerated in the native client and after fresh reload; two exact original MIC scripts execute; the actual Drinks menu and a controlled runtime-name/filter probe passed in the recorded earlier candidate |
 | Full mod experience | TTW/Nuclear Sunset dependency warnings and missing native extension behavior remain |
 | Long 15 | Planned; no accepted native gameplay claim |
 | New Vegas Drivables | Future vehicles/NPC-traffic integration after the author's release; no native implementation accepted |
-| Community source | Source-only export/reproduction work in progress; old archives cannot stand in for current matching source |
+| Community source | Recorded public export built from an empty target on the maintainer's Mac; second-Mac reproduction remains open |
 | Multiplayer | Future goal; no completed shared-session test |
 
 Next focused acceptance: setup → menu → movement → interaction/combat → sound → save → normal exit → reopen/load, using an owned base-game/DLC profile. Publish hardware, settings, revision and remaining faults with that result.
@@ -49,3 +49,9 @@ The [inline-only argument repair](docs/handoff/mojave-inline-arguments-2026-11-0
 healing results match their getters in a disposable native Game state. A silent
 Metal run separately verifies the authored getter/arithmetic inventory fixture.
 Current-binary save/reload and human gameplay remain unaccepted.
+
+The [fresh-source build and launcher relocation](docs/handoff/mojave-source-build-2026-11-07.md) passed on the same Mac.
+The new engine runs scripts with the catalogue in the relocated application,
+without using the earlier private development schema paths. All 38 launcher-core
+checks pass. This does not extend earlier mod/save/audio results to this exact
+new executable, and is not a public playable release or second-machine proof.
