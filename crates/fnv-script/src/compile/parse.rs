@@ -45,7 +45,7 @@ pub enum Kw {
     Else,
     EndIf,
     Return,
-    Set { target: Vec<Tok>, expr: Vec<Tok> },
+    Set { on: Option<String>, target: Vec<Tok>, expr: Vec<Tok> },
     /// `[Ref.]Function args…`, or a line the code generator reports as unknown.
     Call(Vec<Tok>),
     /// `let <assignment>`, or the Let macro (`x = 1`, `x += 1`), in the extender's tokens
@@ -158,6 +158,11 @@ pub fn statement(l: &Line) -> Result<Statement, ParseError> {
     let head = &toks[0];
     let rest = toks[1..].to_vec();
     let err = |msg: &str| ParseError { line: l.no, msg: msg.to_string() };
+    let set = |on| -> Result<Kw, ParseError> {
+        let Some(k) = rest.iter().position(|t| t.is_word("to")) else { return Err(err("Set without To")) };
+        if k == 0 { return Err(err("Set without a variable")); }
+        Ok(Kw::Set { on, target: rest[..k].to_vec(), expr: rest[k + 1..].to_vec() })
+    };
     if head.kind == Kind::Word {
         if let Some(mut kw) = extender(l) {
             let decls = kw.xtoks_mut().map(inline_decls).unwrap_or_default();
@@ -166,6 +171,8 @@ pub fn statement(l: &Line) -> Result<Statement, ParseError> {
     }
     let kw = if head.kind != Kind::Word {
         Kw::Call(toks.clone())
+    } else if let Some((on, _)) = head.text.rsplit_once('.').filter(|(on, name)| !on.is_empty() && name.eq_ignore_ascii_case("set")) {
+        set(Some(on.to_string()))?
     } else {
         match head.text.to_ascii_lowercase().as_str() {
             "scn" | "scriptname" => Kw::ScriptName(rest.first().map(|t| t.text.clone())),
@@ -179,13 +186,7 @@ pub fn statement(l: &Line) -> Result<Statement, ParseError> {
             "else" => Kw::Else,
             "endif" => Kw::EndIf,
             "return" => Kw::Return,
-            "set" => {
-                let Some(k) = rest.iter().position(|t| t.is_word("to")) else { return Err(err("Set without To")) };
-                if k == 0 {
-                    return Err(err("Set without a variable"));
-                }
-                Kw::Set { target: rest[..k].to_vec(), expr: rest[k + 1..].to_vec() }
-            }
+            "set" => set(None)?,
             w => match DeclType::from_word(w) {
                 Some(ty) => {
                     let x = xtokens(&l.text);
@@ -255,7 +256,7 @@ mod tests {
         assert_eq!(k[1], Kw::Decl { ty: DeclType::Int, names: vec!["a".into()], init: None });
         assert_eq!(k[2], Kw::Decl { ty: DeclType::Ref, names: vec!["r".into()], init: None });
         assert!(matches!(&k[3], Kw::Begin { block, args } if block == "OnTrigger" && args.len() == 1));
-        assert!(matches!(&k[4], Kw::Set { target, expr } if target.len() == 1 && expr.len() == 3));
+        assert!(matches!(&k[4], Kw::Set { target, expr, .. } if target.len() == 1 && expr.len() == 3));
         assert!(matches!(&k[5], Kw::If(e) if e.len() == 1));
         assert_eq!(k[6], Kw::Else);
         assert_eq!(k[7], Kw::EndIf);

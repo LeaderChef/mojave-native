@@ -40,7 +40,8 @@ pub fn uses(p: &Program) -> (Vec<&VarRef>, Vec<RefIndex>) {
         b.params.iter().flatten().for_each(|a| arg_vars(a, &mut vars, &mut refs));
     }
     p.walk(&mut |s| match s {
-        Stmt::Set { target, expr } => {
+        Stmt::Set { on, target, expr } => {
+            refs.extend(*on);
             vars.push(target);
             expr_vars(expr, &mut vars, &mut refs);
         }

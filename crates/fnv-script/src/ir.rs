@@ -219,6 +219,9 @@ pub enum Marker {
 #[serde(tag = "stmt", rename_all = "snake_case")]
 pub enum Stmt {
     Set {
+        /// Statement caller, distinct from target ownership (reference-prefixed-set.md).
+        #[serde(skip_serializing_if = "Option::is_none", default)]
+        on: Option<RefIndex>,
         target: VarRef,
         expr: Expr,
     },

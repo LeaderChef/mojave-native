@@ -518,7 +518,7 @@ fn piece(c: &mut Ctx<'_>, f: &Flat<'_>) -> Piece {
     if f.opcode >= op::FIRST_FUNCTION && f.opcode != 0xFFFF {
         return Piece::Stmt(Stmt::Call { call: call(c, f.on, f.opcode, f.body) });
     }
-    if f.on.is_some() {
+    if f.on.is_some() && f.opcode != op::SET {
         return raw(c, "reference prefix before a statement that is not a call");
     }
     let mut r = Rd::new(f.body);
@@ -577,7 +577,7 @@ fn piece(c: &mut Ctx<'_>, f: &Flat<'_>) -> Piece {
                 return raw(c, "expression length does not match the body");
             }
             let e = expr(c, r.rest());
-            Piece::Stmt(Stmt::Set { target, expr: e })
+            Piece::Stmt(Stmt::Set { on: f.on, target, expr: e })
         }
         0xFFFF => raw(c, "truncated statement"),
         _ => raw(c, "unknown statement opcode or body"),

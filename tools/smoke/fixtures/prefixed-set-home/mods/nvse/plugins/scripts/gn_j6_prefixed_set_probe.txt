@@ -1,0 +1,11 @@
+; Authored caller/target probe. Does not change the player's actor values.
+float expected
+float actual
+Set expected to Player.GetAV Luck
+Player.Set actual to GetAV Luck
+PrintC "J6 prefixed Set expected=%.4f actual=%.4f" expected actual
+If expected > 0 && actual == expected
+    PrintC "J6 prefixed Set caller and local target matched"
+Else
+    PrintC "J6 prefixed Set probe failed"
+EndIf

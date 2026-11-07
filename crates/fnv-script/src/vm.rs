@@ -353,11 +353,13 @@ pub struct Vm<'t, 'h> {
     host: &'h mut dyn Host,
     opts: RunOpts,
     steps: u64,
+    /// Default function caller while a reference-prefixed Set expression runs.
+    statement_on: Option<Value>,
 }
 
 impl<'t, 'h> Vm<'t, 'h> {
     pub fn new(table: &'t FunctionTable, host: &'h mut dyn Host, opts: RunOpts) -> Self {
-        Vm { table, host, opts, steps: 0 }
+        Vm { table, host, opts, steps: 0, statement_on: None }
     }
 
     /// Statements executed so far.
@@ -457,8 +459,12 @@ impl<'t, 'h> Vm<'t, 'h> {
         while i < stmts.len() {
             self.step()?;
             match &stmts[i] {
-                Stmt::Set { target, expr } => {
-                    let v = self.eval(expr)?;
+                Stmt::Set { on, target, expr } => {
+                    let caller = on.map(|r| self.host.ref_value(r)).transpose().map_err(VmError::Host)?;
+                    let previous = std::mem::replace(&mut self.statement_on, caller);
+                    let value = self.eval(expr);
+                    self.statement_on = previous;
+                    let v = value?;
                     // A call in the expression that stops the script (a call on an
                     // empty reference) leaves the variable unchanged.
                     if self.host.take_return() {
@@ -640,7 +646,7 @@ impl<'t, 'h> Vm<'t, 'h> {
         }
         let on = match c.on {
             Some(r) => Some(self.host.ref_value(r).map_err(VmError::Host)?),
-            None => None,
+            None => self.statement_on,
         };
         let mut args = Vec::with_capacity(c.args.len());
         for a in &c.args {
@@ -1521,7 +1527,7 @@ impl Vm<'_, '_> {
         }
         let on = match &c.on {
             Some(e) => Some(self.xeval(e)?.value()?),
-            None => None,
+            None => self.statement_on,
         };
         let mut args = Vec::with_capacity(c.args.len());
         for (k, a) in c.args.iter().enumerate() {

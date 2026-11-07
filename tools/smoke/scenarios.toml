@@ -93,3 +93,16 @@ expect = [
   "save: QuickSave key",
   { re = 'save: wrote .*quicksave[.]nvfsave', label = "QuickSave writes a real native save after the notice closes" },
 ]
+
+[[scenario]]
+name = "reference-prefixed-set"
+source = "[observed] Owned TTW reference-prefixed Set is rejected as an unknown function and its stored prefix is decoded Raw. docs/spec-notes/reference-prefixed-set.md preserves caller versus assignment ownership. This authored probe compares implicit Player caller to an explicit Player control without changing actor values."
+areas = ["scripts", "native-mac"]
+paths = ["crates/fnv-script/src/", "crates/fnv-script/tests/reference_prefixed_set.rs", "tools/smoke/fixtures/prefixed-set-home/"]
+env = { NVFOREVER_HOME = "{repo}/tools/smoke/fixtures/prefixed-set-home", NVF_PLAY_TEST_SCRIPT_MENUS = "0.3" }
+args = ["--cell", "GSDocMitchellHouse", "--play", "--background-test", "--no-sound", "--no-voice", "--no-music"]
+run_seconds = 4
+expect = [
+  "J6 prefixed Set caller and local target matched",
+]
+forbid = ["J6 prefixed Set probe failed"]
