@@ -1,0 +1,77 @@
+{
+  "status": "failed",
+  "accepted": false,
+  "binarySHA256": "a5f7ffc5e4fb6eb472fb459aa5732353c631ed2afdb7c953ecc808b377a8f571",
+  "samples": {
+    "A": {
+      "days": 1000.0,
+      "hour": 12.00041676,
+      "dehydration": 10.1597041
+    },
+    "B": {
+      "days": 1000.00012207,
+      "hour": 12.00233269,
+      "dehydration": 10.85676782
+    },
+    "C": {
+      "days": 1000.00018311,
+      "hour": 12.0047493,
+      "dehydration": 11.75690408
+    },
+    "L": {
+      "days": 5.0000577,
+      "hour": 12.00624847,
+      "dehydration": 12.4663916
+    }
+  },
+  "checks": {
+    "savedOwnedNewGameState": true,
+    "freshProcess": true,
+    "saveFileUnchangedByLoad": true,
+    "inventoryDeltaPersisted": true,
+    "disabledReferencePersisted": true,
+    "actorValuePersisted": true,
+    "gameBodyRestored": true,
+    "engineStateRestored": true,
+    "sourceStartupRecognizesNativeClock": true,
+    "disableAttemptExplicitlyDiagnosed": true,
+    "realGetterStillReportsEnabled": true,
+    "getterStillEnabledAfterLoad": true,
+    "allFourSamplesPresent": true,
+    "clockAndNeedsAdvanceBeforeAndAfterDisableAttempt": true,
+    "clockAndNeedsNotResetAfterLoad": false,
+    "binaryUnchanged": true
+  },
+  "saveSHA256": "f8bba9cce4da6d10676701588b085bbef4bf8ebb29cd8cf95ca9e5a6437103cf",
+  "saveBytes": 340872,
+  "currentBinarySaveReloadVerified": false,
+  "visibleGameplayAccepted": false,
+  "hardwareAudioVerified": false,
+  "presentedFPSVerified": false,
+  "longSessionVerified": false,
+  "fullTTWVerified": false,
+  "fullNuclearSunsetVerified": false,
+  "multiplayerVerified": false,
+  "runs": [
+    {
+      "name": "write",
+      "exitCode": 0,
+      "seconds": 36.51,
+      "noForegroundActivation": true,
+      "timedOut": false,
+      "windowlessRunner": true,
+      "metalAdapter": true,
+      "gpuValidationErrors": 0
+    },
+    {
+      "name": "load",
+      "exitCode": 0,
+      "seconds": 16.98,
+      "noForegroundActivation": true,
+      "timedOut": false,
+      "windowlessRunner": true,
+      "metalAdapter": true,
+      "gpuValidationErrors": 0
+    }
+  ]
+}

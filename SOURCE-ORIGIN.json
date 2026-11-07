@@ -451,7 +451,7 @@
     },
     {
       "path": "STATUS.md",
-      "sha256": "9589852eb99b8a0cc9068d098f28b8d114a3ff7d2efc7ba683a59eaa4a789844"
+      "sha256": "8b556a62fcc3d8611dd0e037af511a9f1afe60463c286163300517631f928e77"
     },
     {
       "path": "UPSTREAM-CONTRIBUTING.md",
@@ -840,6 +840,18 @@
     {
       "path": "tools/smoke/fixtures/native-clock-home/mods/nvse/plugins/scripts/ln_j6_native_clock_probe.txt",
       "sha256": "b452f57356f77a9570deebbb318aaa615eadcad2f1f7d3a4680dd6dc8bda8c71"
+    },
+    {
+      "path": "docs/handoff/mojave-mac-save-roundtrip-11-2026-11-07.md",
+      "sha256": "19ebe589ca7e49c1c30affea2a8d0434325febb9cfc91e93713164c25cc0fee7"
+    },
+    {
+      "path": "docs/handoff/mojave-native-clock-2026-11-07.md",
+      "sha256": "b8155e63f240f9e97e001abc47c3cc6fb6e3d8982303fb9a2aba7e4b2f842f84"
+    },
+    {
+      "path": "docs/handoff/mojave-native-clock-2026-11-07.json",
+      "sha256": "dac5dd15e7752d0fb7f222334e0da4562674eb60a4db917feb21f628debfe41c"
     }
   ],
   "binaryDistributed": false,
@@ -968,5 +980,15 @@
     "sourceInputsUnchanged": true,
     "sameHostOnly": true,
     "publicCoreRunnerVerified": true
+  },
+  "unacceptedPrivateDevelopmentBuild": {
+    "sha256": "a5f7ffc5e4fb6eb472fb459aa5732353c631ed2afdb7c953ecc808b377a8f571",
+    "record": "docs/handoff/mojave-native-clock-2026-11-07.md",
+    "releaseBuildPassed": true,
+    "runtimeAccepted": false,
+    "failedContract": "GameDaysPassed survives fresh-process save/load",
+    "packaged": false,
+    "selectedForUser": false,
+    "fullTTWAccepted": false
   }
 }
